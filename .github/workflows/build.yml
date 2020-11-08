@@ -13,7 +13,7 @@ jobs:
         
       - name: Build Win32
         shell: cmd
-        run: call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe" /p:Configuration=Release /p:Platform=Win32 /p:OutDir=.\Win32\ .\TeamProject.vcxproj
+        run: call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe" /p:Configuration=Release /p:Platform=Win32 /p:OutDir=.\Win32\ .\BoardGame.vcxproj
 
       - name: CMake Clean
         shell: powershell
@@ -25,7 +25,7 @@ jobs:
 
       - name: Build x64
         shell: cmd
-        run: call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe" /p:Configuration=Release /p:Platform=x64 /p:OutDir=.\x64\ .\TeamProject.vcxproj
+        run: call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe" /p:Configuration=Release /p:Platform=x64 /p:OutDir=.\x64\ .\BoardGame.vcxproj
         
       - uses: actions/upload-artifact@v2
         with:
