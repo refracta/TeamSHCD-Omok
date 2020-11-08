@@ -1,0 +1,35 @@
+name: Build Project
+on: [push]
+jobs:
+  build_artifacts:
+    name: Build Artifacts
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: CMake Win32
+        shell: cmd
+        run: call cmake -G "Visual Studio 16 2019" -A Win32 CMakeLists.txt
+        
+      - name: Build Win32
+        shell: cmd
+        run: call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe" /p:Configuration=Release /p:Platform=Win32 /p:OutDir=.\Win32\ .\TeamProject.vcxproj
+
+      - name: CMake Clean
+        shell: powershell
+        run: Remove-Item .\CMakeFiles\ -Recurse; Remove-Item .\CMakeCache.txt
+
+      - name: CMake x64
+        shell: cmd
+        run: call cmake -G "Visual Studio 16 2019" -A x64 CMakeLists.txt
+
+      - name: Build x64
+        shell: cmd
+        run: call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe" /p:Configuration=Release /p:Platform=x64 /p:OutDir=.\x64\ .\TeamProject.vcxproj
+        
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: |
+            Win32/BoardGame.exe
+            x64/BoardGame.exe
