@@ -1,3 +1,5 @@
+#include <Windows.h>
+#include <time.h>
 #include "inc/systemutils.h"
 
 /**

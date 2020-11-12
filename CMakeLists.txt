@@ -3,4 +3,4 @@ project(BoardGame C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(BoardGame main.c gamehandler.c  "systemutils.c" "inc/systemutils.h" "inc/consoleutils.h")
+add_executable(BoardGame main.c gamehandler.c  "systemutils.c" "inc/systemutils.h" "consoleutils.c" "inc/consoleutils.h")
