@@ -10,6 +10,8 @@ typedef enum
 void set_cursor_visibility(bool);
 void set_cursor_position(int, int);
 void set_print_color(int, int);
+void set_console_size(int, int);
+void set_console_title(const char*);
 void clear_console();
 int get_key_input();
 int wait_with_handler(unsigned long, int (*)(int));
