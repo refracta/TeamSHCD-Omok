@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdbool.h>
 
 #include "inc/gamehandler.h"
@@ -17,7 +18,7 @@ typedef enum
  */
 struct GameData 
 {
-	int status;
+	GameStatus status;
 };
 
 void run_intro(struct GameData* data)
