@@ -1,3 +1,6 @@
+#define CONSOLE_COLS 120
+#define CONSOLE_LINES 30
+
 #define RG_BLACK "¡Ü"
 #define RG_WHITE "¡Û"
 
