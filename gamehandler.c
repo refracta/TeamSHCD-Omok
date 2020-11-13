@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdbool.h>
 
 #include "inc/gamehandler.h"
@@ -5,7 +6,7 @@
 #include "inc/systemutils.h"
 
 /**
- * @brief °ÔÀÓÀÌ °¡Áö´Â »óÈ² ¿­°ÅÇü
+ * @brief ê²Œì„ì´ ê°€ì§€ëŠ” ìƒí™© ì—´ê±°í˜•
  */
 typedef enum
 {
@@ -13,11 +14,11 @@ typedef enum
 } GameStatus;
 
 /**
- * @brief °ÔÀÓ¿¡¼­ »ç¿ëÇÏ´Â µ¥ÀÌÅÍµéÀ» Æ÷ÇÔÇÏ´Â ±¸Á¶Ã¼
+ * @brief ê²Œì„ì—ì„œ ì‚¬ìš©í•˜ëŠ” ë°ì´í„°ë“¤ì„ í¬í•¨í•˜ëŠ” êµ¬ì¡°ì²´
  */
 struct GameData 
 {
-	int status;
+	GameStatus status;
 };
 
 void run_intro(struct GameData* data)
@@ -53,7 +54,7 @@ void run_game(struct GameData* data)
 }
 
 /**
- * @brief °ÔÀÓ ·çÇÁ¸¦ Ã³¸®ÇÏ´Â ÇÔ¼ö
+ * @brief ê²Œì„ ë£¨í”„ë¥¼ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
  */
 void game_loop(struct GameData* data) 
 {
@@ -72,7 +73,7 @@ void game_loop(struct GameData* data)
 }
 
 /**
- * @brief °ÔÀÓÀ» ½ÃÀÛÇÏ´Â ÇÔ¼öÀÔ´Ï´Ù.
+ * @brief ê²Œì„ì„ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜ì…ë‹ˆë‹¤.
  */
 void start_game() 
 {
