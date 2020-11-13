@@ -59,6 +59,25 @@ void set_print_color(int text_color, int background_color)
 }
 
 /**
+ * @brief 화면의 크기를 설정한다
+ * @cols 텍스트 열의 수
+ * @lines 텍스트 행의 수
+ */
+void set_console_size(int cols, int lines) {
+	char cmd[BUFSIZ];
+	sprintf("mode con: cols=%d lines=%d", cols, lines);
+	system(cmd);
+}
+
+/**
+ * @brief 창 제목을 설정한다.
+ * @title 창 제목
+ */
+void set_console_title(const char* title) {
+	SetConsoleTitle(title);
+}
+
+/**
  * @brief 화면을 초기화한다.
  */
 void clear_console()
@@ -71,9 +90,9 @@ void clear_console()
  * @return getchar() value
  */
 int get_key_input() {
-	while (true) 
+	while (true)
 	{
-		if (kbhit()) 
+		if (kbhit())
 		{
 			return getch();
 		}
