@@ -6,8 +6,9 @@ void play_put_stone_animation(char grid[][13], int stone_x, int stone_y);
 
 /**
 * @brief 돌이 있는 배열을 입력받아서 격자와 함께 출력해주는 함수
-* @param grid[][13] 돌 위치가 담긴 배열(13x13 격자, 흑돌은 'b', 백돌은 'w')
-* @return 없음.
+* @param grid 돌 위치가 담긴 배열(13x13 격자, 흑돌은 'b', 백돌은 'w')
+* @param width 격자의 가로 크기
+* @param height 격자의 세로 크기
 */
 void render_grid(char** grid, int width, int height)
 {
@@ -38,7 +39,7 @@ void render_grid(char** grid, int width, int height)
 			else
 				printf("%s", RG_GRID_TYPE_5); //모서리가 아닌 격자
 			if (j != last_w_index) 
-				printf("%s", RG_GRID_TYPE_H);//격자가 위아래로 길어져서 가로문자 하나를 넣어 정사각형으로 보이게 함.dfffsfdsdf
+				printf("%s", RG_GRID_TYPE_H); //격자가 위아래로 길어져서 가로문자 하나를 넣어 정사각형으로 보이게 함
 		}
 		printf("\n");
 	}

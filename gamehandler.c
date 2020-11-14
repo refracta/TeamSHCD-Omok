@@ -47,20 +47,6 @@ void run_main(struct GameData* data)
 {
 	printf("WELCOME TO MAIN!");
 	wait_with_handler(5000, keytest);
-
-	/* render_grid test case
-	char** grid = generate_grid(19, 19);
-	grid[0][0] = 'b';
-	grid[0][18] = 'w';
-	grid[18][0] = 'b';
-	grid[8][2] = 'w';
-	grid[8][1] = 'b';
-	grid[8][0] = 'w';
-	grid[8][4] = 'b';
-	grid[8][7] = 'w';
-	grid[18][18] = 'b';
-	render_grid(grid, 19, 19);
-	*/
 }
 
 void run_game(struct GameData* data)

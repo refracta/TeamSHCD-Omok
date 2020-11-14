@@ -14,4 +14,4 @@
 #define RG_GRID_TYPE_8 "¦¨"
 #define RG_GRID_TYPE_9 "¦¤"
 #define RG_GRID_TYPE_H "¦¡"
-#define RG_GRID_TYPE_V "¦¢" //asdasfsd
+#define RG_GRID_TYPE_V "¦¢"
