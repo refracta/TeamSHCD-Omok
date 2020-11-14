@@ -32,6 +32,10 @@ void set_cursor_position(int x, int y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), position);
 }
 
+/**
+ * @brief 콘솔의 출력 위치를 가져온다.
+ * @return 출력 위치 구조체
+ */
 COORD get_cursor_position()
 {
 	CONSOLE_SCREEN_BUFFER_INFO cbsi;
@@ -47,25 +51,35 @@ COORD get_cursor_position()
 	}
 }
 
-
 /**
  * @brief 출력 텍스트의 색깔을 설정한다.
- * @param text_color 텍스트의 색깔
+ * @param tbcolor 텍스트의 색깔 + 텍스트의 배경 색깔 * 16
  * @param background_color 텍스트의 배경 색깔
  */
-void set_print_color(int text_color, int background_color)
+void set_print_color(int tbcolor)
 {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), text_color + background_color * 16);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), tbcolor);
+}
+
+
+/**
+ * @brief 출력 텍스트의 색깔값을 가져온다
+ * @return 출력 텍스트의 색깔값 (텍스트의 색깔 + 텍스트의 배경 색깔 * 16)
+ */
+short get_print_color() {
+	CONSOLE_SCREEN_BUFFER_INFO info;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+	return info.wAttributes;
 }
 
 /**
- * @brief 화면의 크기를 설정한다
+ * @brief 화면의 크기를 설정한다.
  * @cols 텍스트 열의 수
  * @lines 텍스트 행의 수
  */
 void set_console_size(int cols, int lines) {
 	char cmd[BUFSIZ];
-	sprintf("mode con: cols=%d lines=%d", cols, lines);
+	sprintf(cmd, "mode con: cols=%d lines=%d", cols, lines);
 	system(cmd);
 }
 
@@ -137,7 +151,7 @@ int wait_with_handler(unsigned long ms, int (*handler)(int))
  * @param y 세로줄 출력 위치
  * @param format 포맷 문자열
  */
-void xyprint(int x, int y, char* format, ...)
+void xyprintf(int x, int y, char* format, ...)
 {
 	char buffer[BUFSIZ];
 	int buffer_size = sizeof(buffer);
@@ -162,6 +176,9 @@ void xyprint(int x, int y, char* format, ...)
 	}
 
 	COORD position = get_cursor_position();
+	x = x < 0 ? position.X : x;
+	y = y < 0 ? position.Y : y;
+
 	int delta = 0;
 	char* target = buffer_ptr;
 	for (int i = 0; i < length; i++)
@@ -174,7 +191,6 @@ void xyprint(int x, int y, char* format, ...)
 			target = buffer_ptr + i + 1;
 		}
 	}
-	set_cursor_position(position.X, position.Y);
 
 	if (buffer_ptr != buffer)
 	{

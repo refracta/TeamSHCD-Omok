@@ -1,85 +1,196 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <windows.h>
 
 #include "inc/gamehandler.h"
 #include "inc/consoleutils.h"
 #include "inc/systemutils.h"
+#include "inc/interfacerenderer.h"
+#include "inc/environment.h"
+#include "inc/gameutils.h"
 #include "inc/gamecore.h"
+#include "inc/gamerenderer.h"
 
 /**
- * @brief Í≤åÏûÑÏù¥ Í∞ÄÏßÄÎäî ÏÉÅÌô© Ïó¥Í±∞Ìòï
+ * @brief ∞‘¿”¿Ã ∞°¡ˆ¥¬ ªÛ»≤ ø≠∞≈«¸
  */
 typedef enum
 {
-	INTRO, MAIN, GAME
+	GS_INTRO, GS_MAIN, GS_GAME, GS_HELP
 } GameStatus;
 
 /**
- * @brief Í≤åÏûÑÏóêÏÑú ÏÇ¨Ïö©ÌïòÎäî Îç∞Ïù¥ÌÑ∞Îì§ÏùÑ Ìè¨Ìï®ÌïòÎäî Íµ¨Ï°∞Ï≤¥
+ * @brief ∞‘¿”ø°º≠ ªÁøÎ«œ¥¬ µ•¿Ã≈ÕµÈ¿ª ∆˜«‘«œ¥¬ ±∏¡∂√º
  */
-struct GameData 
+typedef struct 
 {
 	GameStatus status;
-};
+	int tick;
+} GameData;
 
-void run_intro(struct GameData* data)
-{
-	set_cursor_visibility(false);
-
-	set_print_color(WHITE, BLACK);
-	printf("THIS IS INTRO");
-
-	set_print_color(RED, WHITE);
-	xyprint(5, 5, "ABCDE\nFGHIJ\nKLNMO\nPQRST\nUVWXY\nZ");
-	
-	wait(3000);
-	set_print_color(WHITE, BLACK);
+/**
+ * @brief «ˆ¿Á ∞‘¿”¿« ªÛ≈¬∏¶ ∫Ø∞Ê«’¥œ¥Ÿ. ∞‘¿” µ•¿Ã≈Õ¿« ªÛ≈¬ ∫Øºˆ∏¶ ∫Ø∞Ê«œ∞Ì, ªÛ≈¬ ∫Ø∞ÊΩ√¿« √ ±‚»≠ ¿€æ˜¿ª ºˆ«‡«—¥Ÿ.
+ * @param data ∞‘¿” µ•¿Ã≈Õ ±∏¡∂√º¿« ∆˜¿Œ≈Õ
+ * @param data ∞‘¿” ªÛ≈¬ ø≠∞≈«¸
+ */
+void change_status(GameData* data, GameStatus status) {
+	data->status = status;
+	data->tick = 0;
+	set_print_color(TO_TBCOLOR(WHITE, BLACK));
 	clear_console();
-	data->status = MAIN;
-}
-
-int keytest(int c) {
-	xyprint(10, 10, "KeyCode: %d (%c)", c, c);
-	return -1;
-}
-
-void run_main(struct GameData* data)
-{
-	printf("WELCOME TO MAIN!");
-	wait_with_handler(5000, keytest);
-}
-
-void run_game(struct GameData* data)
-{
-
 }
 
 /**
- * @brief Í≤åÏûÑ Î£®ÌîÑÎ•º Ï≤òÎ¶¨ÌïòÎäî Ìï®Ïàò
+ * @brief ¿Œ∆Æ∑Œ Ω∫≈µøÎ ≈∞ «⁄µÈ∑Ø
+ * @param c getch π›»Ø ∞™
+ * @return ≈∞ «⁄µÈ∑Ø ªÛºˆ
  */
-void game_loop(struct GameData* data) 
+int skip_intro(int c) {
+	return 0;
+}
+
+/**
+ * @brief ¿Œ∆Æ∑Œ ªÛ≈¬ø°º≠ Ω««‡µ«¥¬ «‘ºˆ
+ * @param data ∞‘¿” µ•¿Ã≈Õ ±∏¡∂√º¿« ∆˜¿Œ≈Õ
+ */
+void run_intro(GameData* data)
 {
-	switch (data->status)
-	{
-		case INTRO:
-			run_intro(data);
+	draw_intro(data->tick++);
+	if (wait_with_handler(20, skip_intro) > -1 || data->tick > INTRO_FULL_TICK) {
+		change_status(data, GS_MAIN);
+	}
+}
+
+/**
+ * @brief ∏ﬁ¿Œ »≠∏È ∏ﬁ¥∫ ø≠∞≈«¸
+ */
+typedef enum
+{
+	MM_OMOK = 0, MM_NMOK, MM_HELP, MM_EXIT
+} MainMenu;
+
+
+/**
+ * @brief ∏ﬁ¿Œ »≠∏È ∏ﬁ¥∫∏¶ Ω««‡«—¥Ÿ.
+ * @param º±≈√«— ∏ﬁ¥∫ ªˆ¿Œ
+ */
+int run_main_menu() {
+	MenuData menu;
+	menu.name = " ∏ﬁ¥∫";
+	char** list = malloc(sizeof(char*) * 4);
+	list[0] = " ø¿∏Ò";
+	list[1] = " n∏Ò";
+	list[2] = "µµøÚ∏ª";
+	list[3] = "≥™∞°±‚";
+	menu.list = list;
+	menu.length = 4;
+	menu.current_index = 0;
+
+	menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);
+	menu.name_tbcolor = TO_TBCOLOR(WHITE, GRAY);
+	menu.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
+	menu.selected_tbcolor = TO_TBCOLOR(JADE, LIGHT_RED);
+
+	menu.x = 51;
+	menu.y = 17;
+
+	int index = run_menu(&menu, true);
+	free(list);
+	return index;
+}
+
+/**
+ * @brief ∏ﬁ¿Œ ªÛ≈¬ø°º≠ Ω««‡µ«¥¬ «‘ºˆ
+ * @param data ∞‘¿” µ•¿Ã≈Õ ±∏¡∂√º¿« ∆˜¿Œ≈Õ
+ */
+void run_main(GameData* data)
+{
+	xyprintf(32, 6, "===================================================");
+	xyprintf(32, 8, "            ø¿∏Ò «¡∑Œ±◊∑• - ±∏∏•µπ (∞°¡¶)");
+	xyprintf(32, 9, "µπ¿Ã ¿⁄ø¨¿˚¿∏∑Œ ¥‚∞≈≥™ ±¿ÃæÓ ∏º≠∏Æ∞° π´µæÓ¡¯ µπ.");
+	xyprintf(32, 11, "===================================================");
+	int selection = run_main_menu();
+	switch (selection) {
+		case MM_OMOK:
+			change_status(data, GS_GAME);
 			break;
-		case MAIN:
-			run_main(data);
+		case MM_NMOK:
+			xyprintf(32, 12, "√ﬂ»ƒ¡ˆø¯ øπ¡§¿‘¥œ¥Ÿ.");
+			wait(1000);
+			xyprintf(32, 12, "                    ");
 			break;
-		case GAME:
-			run_game(data);
+		case MM_HELP:
+			change_status(data, GS_HELP);
+			break;
+		case MM_EXIT:
+			exit(0);
 			break;
 	}
 }
 
 /**
- * @brief Í≤åÏûÑÏùÑ ÏãúÏûëÌïòÎäî Ìï®ÏàòÏûÖÎãàÎã§.
+ * @brief ∞‘¿” ªÛ≈¬ø°º≠ Ω««‡µ«¥¬ «‘ºˆ
+ * @param data ∞‘¿” µ•¿Ã≈Õ ±∏¡∂√º¿« ∆˜¿Œ≈Õ
+ */
+void run_game(GameData* data)
+{
+	char** grid = generate_grid(19, 19);
+	grid[1][2] = SG_BLACK;
+	grid[1][3] = SG_WHITE;
+	render_grid(grid, 19, 19);
+	get_key_input();
+	free_grid(grid, 19);
+	clear_console();
+}
+
+/**
+ * @brief µµøÚ∏ª ªÛ≈¬ø°º≠ Ω««‡µ«¥¬ «‘ºˆ
+ * @param data ∞‘¿” µ•¿Ã≈Õ ±∏¡∂√º¿« ∆˜¿Œ≈Õ
+ */
+void run_help(GameData* data)
+{
+	xyprintf(32, 12, "µµøÚ∏ª¿‘¥œ¥Ÿ.");
+}
+
+/**
+ * @brief ∞‘¿” ∑Á«¡∏¶ √≥∏Æ«—¥Ÿ.
+ */
+void game_loop(GameData* data) 
+{
+	switch (data->status)
+	{
+		case GS_INTRO:
+			run_intro(data);
+			break;
+		case GS_MAIN:
+			run_main(data);
+			break;
+		case GS_GAME:
+			run_game(data);
+			break;
+		case GS_HELP:
+			run_help(data);
+			break;
+	}
+}
+
+/**
+ * @brief ∞‘¿” Ω√¿€Ω√ √ ±‚»≠ ¿€æ˜¿ª ¡¯«‡«—¥Ÿ.
+ */
+void init_game() 
+{
+	set_cursor_visibility(false);
+	set_console_size(CONSOLE_COLS, CONSOLE_LINES);
+}
+
+/**
+ * @brief ∞‘¿”¿ª Ω√¿€«—¥Ÿ.
  */
 void start_game() 
 {
-	struct GameData data;
-	data.status = INTRO;
+	init_game();
+	GameData data;
+	change_status(&data, GS_INTRO);
 	while (true) 
 	{
 		game_loop(&data);

@@ -1,0 +1,2 @@
+#define CONSOLE_COLS 120
+#define CONSOLE_LINES 30

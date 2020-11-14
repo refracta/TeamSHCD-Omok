@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include "inc/gamerenderer.h"
-
-void render_grid(char** grid, int width, int height);
-void play_put_stone_animation(char grid[][13], int stone_x, int stone_y);
+#include "inc/gamecore.h"
+#include "inc/consoleutils.h"
 
 /**
 * @brief 돌이 있는 배열을 입력받아서 격자와 함께 출력해주는 함수
@@ -50,24 +49,14 @@ void render_grid(char** grid, int width, int height)
 		for (int j = 0; j < width; j++)
 		{
 			if (grid[i][j] == 'b')
-				xyprint(j * 2, i, RG_BLACK); //까만돌은 속이 차있어서 왼쪽 격자 튀어나오는 부분을 해결 안해도 됨.
+				xyprintf(j * 2, i, RG_BLACK); //까만돌은 속이 차있어서 왼쪽 격자 튀어나오는 부분을 해결 안해도 됨.
 			else if (grid[i][j] == 'w')
 			{
 				if ((grid[i][j - 1] == 'w' || grid[i][j - 1] == 'b') || j == 0) //흰돌(비어있는 동그라미)에서 1. 바로 앞에 돌이 놓여있거나 2. 첫 열에 놓는 경우엔 격자버그 처리 안함
-					xyprint(j * 2, i, RG_WHITE);
+					xyprintf(j * 2, i, RG_WHITE);
 				else
-					xyprint(j * 2 - 1, i, " " RG_WHITE); //나머지 경우엔, 한 칸 앞에서부터 [공백 + 돌]을 그린다.
+					xyprintf(j * 2 - 1, i, " " RG_WHITE); //나머지 경우엔, 한 칸 앞에서부터 [공백 + 돌]을 그린다.
 			}
 		}
 	}
-}
-
-/**
-* @brief 
-* @param 
-* @return 
-*/
-void play_put_stone_animation(char grid[][13], int stone_x, int stone_y)
-{
-	return;
 }

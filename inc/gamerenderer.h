@@ -1,6 +1,3 @@
-#define CONSOLE_COLS 120
-#define CONSOLE_LINES 30
-
 #define RG_BLACK "¡Ü"
 #define RG_WHITE "¡Û"
 
@@ -15,3 +12,5 @@
 #define RG_GRID_TYPE_9 "¦¤"
 #define RG_GRID_TYPE_H "¦¡"
 #define RG_GRID_TYPE_V "¦¢"
+
+void render_grid(char** grid, int width, int height);
