@@ -4,6 +4,7 @@
 #include "inc/gamehandler.h"
 #include "inc/consoleutils.h"
 #include "inc/systemutils.h"
+#include "inc/gamecore.h"
 
 /**
  * @brief 게임이 가지는 상황 열거형
