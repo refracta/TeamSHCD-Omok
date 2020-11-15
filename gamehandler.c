@@ -27,6 +27,7 @@ typedef enum
 typedef struct
 {
 	GameStatus status;
+	bool status_inited;
 	int tick;
 } GameData;
 
@@ -37,6 +38,7 @@ typedef struct
  */
 void change_status(GameData* data, GameStatus status) {
 	data->status = status;
+	data->status_inited = false;
 	data->tick = 0;
 	set_print_color(TO_TBCOLOR(WHITE, BLACK));
 	clear_console();
@@ -134,6 +136,10 @@ void run_main(GameData* data)
  */
 void run_game(GameData* data)
 {
+	if (!data->status_inited) {
+		set_console_size(CONSOLE_COLS, CONSOLE_LINES * 2);
+		data->status_inited = true;
+	}
 	char** grid = generate_grid(19, 19);
 	grid[1][2] = SG_BLACK;
 	grid[1][3] = SG_WHITE;
