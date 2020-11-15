@@ -8,7 +8,13 @@
 #include <wchar.h>
 #include <stdbool.h>
 
-bool isFullWidth(wchar_t c) {
+/**
+* @brief 문자열이 전각인지 검사한다.
+* @param s wchar_t 문자열
+* @return 전각 여부 bool
+*/
+bool isFullWidth(wchar_t c) 
+{
 	if (c < 256 || (c >= 0xff61 && c <= 0xff9f)) {
 		return false;
 	}
@@ -18,7 +24,13 @@ bool isFullWidth(wchar_t c) {
 	}
 }
 
-int strrlen(wchar_t * s) {
+/**
+* @brief 전각은 2글자로, 반각은 1글자로 계산한 문자의 길이를 계산한다.
+* @param s wchar_t 문자열
+* @return 문자열의 길이 
+*/
+int strrlen(wchar_t * s) 
+{
 	int len = wcslen(s);
 	int rlen = len;
 	for (int i = 0; i < len; i++) {
@@ -31,7 +43,8 @@ int strrlen(wchar_t * s) {
 * @brief 지정한 틱의 인트로 애니메이션 장면을 그린다.
 * @param tick 인트로 애니메이션 틱
 */
-void draw_intro(int tick) {
+void draw_intro(int tick) 
+{
 	if (tick == 0) {
 		clear_console();
 		set_cursor_position(0, 0);
@@ -105,11 +118,13 @@ void draw_intro(int tick) {
 * @brief 메뉴를 그린다.
 * @param data 메뉴 정보 데이터
 */
-void draw_menu(MenuData* data) {
+void draw_menu(MenuData* data) 
+{
 	short color = get_print_color();
 
 	int max_length = strrlen(data->name);
-	for (int i = 0; i < data->length; i++) {
+	for (int i = 0; i < data->length; i++) 
+	{
 		max_length = MAX(max_length, strrlen(data->list[i]));
 	}
 	set_print_color(data->outline_tbcolor);
@@ -119,10 +134,12 @@ void draw_menu(MenuData* data) {
 	set_print_color(data->outline_tbcolor);
 	wprintf(L"─┐ ");
 
-	for (int i = 0; i < data->length; i++) {
+	for (int i = 0; i < data->length; i++) 
+	{
 		set_print_color(data->outline_tbcolor);
 		xywprintf(data->x, data->y + (i + 1), L"│");
-		if (i != data->current_index) {
+		if (i != data->current_index) 
+		{
 			set_print_color(data->name_tbcolor);
 		}
 		else
@@ -135,7 +152,8 @@ void draw_menu(MenuData* data) {
 	}
 
 	xywprintf(data->x, data->y + data->length + 1, L"└───");
-	for (int i = 0; i < max_length; i++) {
+	for (int i = 0; i < max_length; i++) 
+	{
 		wprintf(L"─");
 	}
 	wprintf(L"───┘ ");
