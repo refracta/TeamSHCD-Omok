@@ -109,8 +109,12 @@ int run_main_menu() {
  */
 void run_main(GameData* data)
 {
+	if (!data->status_inited) 
+	{
+		set_console_size(CONSOLE_COLS, CONSOLE_LINES);
+		data->status_inited = true;
+	}
 	xyprintf(30, 1, ASCII_OMOK);
-
 	int selection = run_main_menu();
 	switch (selection) {
 	case MM_OMOK:
@@ -136,7 +140,8 @@ void run_main(GameData* data)
  */
 void run_game(GameData* data)
 {
-	if (!data->status_inited) {
+	if (!data->status_inited) 
+	{
 		set_console_size(CONSOLE_COLS, CONSOLE_LINES * 2);
 		data->status_inited = true;
 	}
