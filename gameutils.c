@@ -27,16 +27,20 @@ int run_menu(MenuData* data, bool disable_escape) {
 			if (data->current_index < data->length - 1) {
 				data->current_index++;
 				draw_menu(data);
+				Beep(349 * 2, 100);
 			}
 			break;
 		case UP_KEY:
 			if (data->current_index > 0) {
 				data->current_index--;
 				draw_menu(data);
+				Beep(349 * 2, 100);
 			}
 			break;
 		case ENTER_KEY:
 			set_locale_default();
+			Beep(494 * 2, 100);
+			Beep(392 * 2, 100);
 			return data->current_index;
 			break;
 		}
