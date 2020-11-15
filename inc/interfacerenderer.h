@@ -71,6 +71,24 @@ typedef struct {
 " / / \n" \
 "  / /")
 
+#define ASCII_OMOK (\
+"                                      _oooo.\n" \
+"                                ,.,o8888P88b\n" \
+"                               ,888PP'   d8b__\n" \
+"           ,ooo.                88[ _oood88888\n" \
+"          d8PPY88.              88d888PP\"'''             __\n" \
+"         ]88   ]88              YPP';88            _,oo8888\n" \
+"         ]88   d8P                  ]88       _ooo888PP\"''\n" \
+"          Y88888P                   ]88__ooo8888P\"''\n" \
+"           ']88                 __ood88888PP'''\n" \
+"            ]88          __,ood8888PP'''_oo8b\n" \
+"            ]88      ,oo8888PP\"''  oood888Y88\n" \
+"            ]88_ooo888PP''        `PPPP'' ]88\n" \
+"       ,ooooo8888P\"''                     ]88\n" \
+"   dod888PPP\"''                           ]88\n" \
+"  888P'''                                  88'\n" \
+"  `'                                        '\"" )
+
 #define INTRO_FULL_TICK 210
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 

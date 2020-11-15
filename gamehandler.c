@@ -94,7 +94,7 @@ int run_main_menu() {
 	menu.selected_tbcolor = TO_TBCOLOR(JADE, LIGHT_RED);
 
 	menu.x = 51;
-	menu.y = 17;
+	menu.y = 19;
 
 	int index = run_menu(&menu, true);
 	free(list);
@@ -107,10 +107,8 @@ int run_main_menu() {
  */
 void run_main(GameData* data)
 {
-	xyprintf(32, 6, "===================================================");
-	xyprintf(32, 8, u8"            오목 프로그램 - 구른돌 (가제)");
-	xyprintf(32, 9, u8"돌이 자연적으로 닳거나 깎이어 모서리가 무디어진 돌.");
-	xyprintf(32, 11, "===================================================");
+	xyprintf(30, 1, ASCII_OMOK);
+
 	int selection = run_main_menu();
 	switch (selection) {
 	case MM_OMOK:
