@@ -17,6 +17,8 @@ typedef enum
 #define TO_BACKGROUND_COLOR(tbcolor) (tbcolor % 16) 
 #define TO_TBCOLOR(text_color, background_color) (16 * background_color + text_color)
 
+void set_locale_korean();
+void set_locale_default();
 void set_encoding_utf8();
 void set_cursor_visibility(bool);
 void set_cursor_position(int, int);

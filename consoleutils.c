@@ -2,10 +2,24 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <time.h>
+#include <locale.h>
 #include <Windows.h>
 #include "inc/systemutils.h"
 #include "inc/consoleutils.h"
 
+/**
+ * @brief wchar_t 계열 문자열 처리를 위해 지역 설정을 ko-KR로 변경합니다.
+ */
+void set_locale_korean() {
+	setlocale(LC_ALL, "ko-KR");
+}
+
+/**
+ * @brief wchar_t 계열 문자열 처리를 위해 지역 설정을 기본 값으로 변경합니다.
+ */
+void set_locale_default() {
+	setlocale(LC_ALL, "C");
+}
 
 /**
  * @brief UTF8 프로젝트의 한글 출력을 위해 콘솔 인코딩을 변경합니다.

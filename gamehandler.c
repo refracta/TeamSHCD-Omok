@@ -108,8 +108,8 @@ int run_main_menu() {
 void run_main(GameData* data)
 {
 	xyprintf(32, 6, "===================================================");
-	xyprintf(32, 8, "            오목 프로그램 - 구른돌 (가제)");
-	xyprintf(32, 9, "돌이 자연적으로 닳거나 깎이어 모서리가 무디어진 돌.");
+	xyprintf(32, 8, u8"            오목 프로그램 - 구른돌 (가제)");
+	xyprintf(32, 9, u8"돌이 자연적으로 닳거나 깎이어 모서리가 무디어진 돌.");
 	xyprintf(32, 11, "===================================================");
 	int selection = run_main_menu();
 	switch (selection) {
@@ -117,7 +117,7 @@ void run_main(GameData* data)
 		change_status(data, GS_GAME);
 		break;
 	case MM_NMOK:
-		xyprintf(32, 12, "추후지원 예정입니다.");
+		xyprintf(32, 12, u8"추후지원 예정입니다.");
 		wait(1000);
 		xyprintf(32, 12, "                    ");
 		break;
@@ -151,7 +151,7 @@ void run_game(GameData* data)
  */
 void run_help(GameData* data)
 {
-	xyprintf(32, 12, "도움말입니다.");
+	xyprintf(32, 12, u8"도움말입니다.");
 }
 
 /**
