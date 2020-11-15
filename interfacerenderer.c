@@ -117,7 +117,7 @@ void draw_menu(MenuData* data) {
 	set_print_color(data->name_tbcolor);
 	wprintf(L"[ %s%*s ]", data->name, (int)(max_length - strrlen(data->name)), L"");
 	set_print_color(data->outline_tbcolor);
-	wprintf(L"─┐");
+	wprintf(L"─┐ ");
 
 	for (int i = 0; i < data->length; i++) {
 		set_print_color(data->outline_tbcolor);
@@ -131,13 +131,13 @@ void draw_menu(MenuData* data) {
 		}
 		wprintf(L"   %s%*s   ", data->list[i], (int)(max_length - strrlen(data->list[i])), L"");
 		set_print_color(data->outline_tbcolor);
-		wprintf(L"│");
+		wprintf(L"│ ");
 	}
 
 	xywprintf(data->x, data->y + data->length + 1, L"└───");
 	for (int i = 0; i < max_length; i++) {
 		wprintf(L"─");
 	}
-	wprintf(L"───┘");
+	wprintf(L"───┘ ");
 	set_print_color(color);
 }
