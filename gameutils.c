@@ -37,6 +37,7 @@ int run_menu(MenuData* data, bool disable_escape) {
 				Beep(349 * 2, 100);
 			}
 			break;
+		case SPACE_KEY:
 		case ENTER_KEY:
 			Beep(494 * 2, 100);
 			Beep(392 * 2, 100);
