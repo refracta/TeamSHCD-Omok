@@ -3,11 +3,11 @@
 #include "inc/systemutils.h"
 
 /**
- * @brief ÁÖ¾îÁø timespec ¸Å°³º¯¼ö¿¡ ½Ã°£À» °è»êÇÏ¿© ÀúÀåÇÑ´Ù.
+ * @brief ì£¼ì–´ì§„ timespec ë§¤ê°œë³€ìˆ˜ì— ì‹œê°„ì„ ê³„ì‚°í•˜ì—¬ ì €ì¥í•œë‹¤.
  * @param spec timespec
  * @description Source from https://stackoverflow.com/questions/5404277/porting-clock-gettime-to-windows
 */
-void unix_time(struct timespec* spec) 
+void unix_time(struct timespec* spec)
 {
     __int64 wintime; GetSystemTimeAsFileTime((FILETIME*)&wintime);
     wintime -= w2ux;  spec->tv_sec = wintime / exp7;
@@ -15,17 +15,17 @@ void unix_time(struct timespec* spec)
 }
 
 /**
- * @brief unix °è¿­¿¡¼­ »ç¿ëÇÏ´Â clock_gettimeÀÇ À©µµ¿ì ±¸ÇöÃ¼
+ * @brief unix ê³„ì—´ì—ì„œ ì‚¬ìš©í•˜ëŠ” clock_gettimeì˜ ìœˆë„ìš° êµ¬í˜„ì²´
  * @param id clk_id
  * @param spec tp
  * @return errno
  */
-int clock_gettime(int id, struct timespec* spec) 
+int clock_gettime(int id, struct timespec* spec)
 {
     static  struct timespec startspec; static double ticks2nano;
     static __int64 startticks, tps = 0;    __int64 tmp, curticks;
     QueryPerformanceFrequency((LARGE_INTEGER*)&tmp);
-    if (tps != tmp) 
+    if (tps != tmp)
     {
         tps = tmp;
         QueryPerformanceCounter((LARGE_INTEGER*)&startticks);
@@ -34,19 +34,19 @@ int clock_gettime(int id, struct timespec* spec)
     QueryPerformanceCounter((LARGE_INTEGER*)&curticks); curticks -= startticks;
     spec->tv_sec = startspec.tv_sec + (curticks / tps);
     spec->tv_nsec = startspec.tv_nsec + (double)(curticks % tps) * ticks2nano;
-    if (!(spec->tv_nsec < exp9)) 
-    { 
-        spec->tv_sec++; spec->tv_nsec -= exp9; 
+    if (!(spec->tv_nsec < exp9))
+    {
+        spec->tv_sec++; spec->tv_nsec -= exp9;
     }
     return 0;
 }
 
 
 /**
- * @brief ÁöÁ¤ÇÑ ½Ã°£µ¿¾È ´ë±âÇÑ´Ù. 
- * @param ms ´ë±âÇÒ ½Ã°£ (¹Ğ¸®ÃÊ)
+ * @brief ì§€ì •í•œ ì‹œê°„ë™ì•ˆ ëŒ€ê¸°í•œë‹¤.
+ * @param ms ëŒ€ê¸°í•  ì‹œê°„ (ë°€ë¦¬ì´ˆ)
  */
-void wait(unsigned long ms) 
+void wait(unsigned long ms)
 {
     Sleep(ms);
 }

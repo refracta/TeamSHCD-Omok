@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <windows.h>
+#include <locale.h>
+#include <wchar.h>
 
 #include "inc/gamehandler.h"
 #include "inc/consoleutils.h"
@@ -12,7 +14,7 @@
 #include "inc/gamerenderer.h"
 
 /**
- * @brief °ÔÀÓÀÌ °¡Áö´Â »óÈ² ¿­°ÅÇü
+ * @brief ê²Œì„ì´ ê°€ì§€ëŠ” ìƒí™© ì—´ê±°í˜•
  */
 typedef enum
 {
@@ -20,18 +22,18 @@ typedef enum
 } GameStatus;
 
 /**
- * @brief °ÔÀÓ¿¡¼­ »ç¿ëÇÏ´Â µ¥ÀÌÅÍµéÀ» Æ÷ÇÔÇÏ´Â ±¸Á¶Ã¼
+ * @brief ê²Œì„ì—ì„œ ì‚¬ìš©í•˜ëŠ” ë°ì´í„°ë“¤ì„ í¬í•¨í•˜ëŠ” êµ¬ì¡°ì²´
  */
-typedef struct 
+typedef struct
 {
 	GameStatus status;
 	int tick;
 } GameData;
 
 /**
- * @brief ÇöÀç °ÔÀÓÀÇ »óÅÂ¸¦ º¯°æÇÕ´Ï´Ù. °ÔÀÓ µ¥ÀÌÅÍÀÇ »óÅÂ º¯¼ö¸¦ º¯°æÇÏ°í, »óÅÂ º¯°æ½ÃÀÇ ÃÊ±âÈ­ ÀÛ¾÷À» ¼öÇàÇÑ´Ù.
- * @param data °ÔÀÓ µ¥ÀÌÅÍ ±¸Á¶Ã¼ÀÇ Æ÷ÀÎÅÍ
- * @param data °ÔÀÓ »óÅÂ ¿­°ÅÇü
+ * @brief í˜„ì¬ ê²Œì„ì˜ ìƒíƒœë¥¼ ë³€ê²½í•©ë‹ˆë‹¤. ê²Œì„ ë°ì´í„°ì˜ ìƒíƒœ ë³€ìˆ˜ë¥¼ ë³€ê²½í•˜ê³ , ìƒíƒœ ë³€ê²½ì‹œì˜ ì´ˆê¸°í™” ì‘ì—…ì„ ìˆ˜í–‰í•œë‹¤.
+ * @param data ê²Œì„ ë°ì´í„° êµ¬ì¡°ì²´ì˜ í¬ì¸í„°
+ * @param data ê²Œì„ ìƒíƒœ ì—´ê±°í˜•
  */
 void change_status(GameData* data, GameStatus status) {
 	data->status = status;
@@ -41,17 +43,17 @@ void change_status(GameData* data, GameStatus status) {
 }
 
 /**
- * @brief ÀÎÆ®·Î ½ºÅµ¿ë Å° ÇÚµé·¯
- * @param c getch ¹İÈ¯ °ª
- * @return Å° ÇÚµé·¯ »ó¼ö
+ * @brief ì¸íŠ¸ë¡œ ìŠ¤í‚µìš© í‚¤ í•¸ë“¤ëŸ¬
+ * @param c getch ë°˜í™˜ ê°’
+ * @return í‚¤ í•¸ë“¤ëŸ¬ ìƒìˆ˜
  */
 int skip_intro(int c) {
 	return 0;
 }
 
 /**
- * @brief ÀÎÆ®·Î »óÅÂ¿¡¼­ ½ÇÇàµÇ´Â ÇÔ¼ö
- * @param data °ÔÀÓ µ¥ÀÌÅÍ ±¸Á¶Ã¼ÀÇ Æ÷ÀÎÅÍ
+ * @brief ì¸íŠ¸ë¡œ ìƒíƒœì—ì„œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+ * @param data ê²Œì„ ë°ì´í„° êµ¬ì¡°ì²´ì˜ í¬ì¸í„°
  */
 void run_intro(GameData* data)
 {
@@ -62,7 +64,7 @@ void run_intro(GameData* data)
 }
 
 /**
- * @brief ¸ŞÀÎ È­¸é ¸Ş´º ¿­°ÅÇü
+ * @brief ë©”ì¸ í™”ë©´ ë©”ë‰´ ì—´ê±°í˜•
  */
 typedef enum
 {
@@ -71,17 +73,17 @@ typedef enum
 
 
 /**
- * @brief ¸ŞÀÎ È­¸é ¸Ş´º¸¦ ½ÇÇàÇÑ´Ù.
- * @param ¼±ÅÃÇÑ ¸Ş´º »öÀÎ
+ * @brief ë©”ì¸ í™”ë©´ ë©”ë‰´ë¥¼ ì‹¤í–‰í•œë‹¤.
+ * @param ì„ íƒí•œ ë©”ë‰´ ìƒ‰ì¸
  */
 int run_main_menu() {
 	MenuData menu;
-	menu.name = " ¸Ş´º";
-	char** list = malloc(sizeof(char*) * 4);
-	list[0] = " ¿À¸ñ";
-	list[1] = " n¸ñ";
-	list[2] = "µµ¿ò¸»";
-	list[3] = "³ª°¡±â";
+	menu.name = L" ë©”ë‰´";
+	wchar_t** list = malloc(sizeof(wchar_t*) * 4);
+	list[0] = L" ì˜¤ëª©";
+	list[1] = L" nëª©";
+	list[2] = L"ë„ì›€ë§";
+	list[3] = L"ë‚˜ê°€ê¸°";
 	menu.list = list;
 	menu.length = 4;
 	menu.current_index = 0;
@@ -100,37 +102,37 @@ int run_main_menu() {
 }
 
 /**
- * @brief ¸ŞÀÎ »óÅÂ¿¡¼­ ½ÇÇàµÇ´Â ÇÔ¼ö
- * @param data °ÔÀÓ µ¥ÀÌÅÍ ±¸Á¶Ã¼ÀÇ Æ÷ÀÎÅÍ
+ * @brief ë©”ì¸ ìƒíƒœì—ì„œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+ * @param data ê²Œì„ ë°ì´í„° êµ¬ì¡°ì²´ì˜ í¬ì¸í„°
  */
 void run_main(GameData* data)
 {
 	xyprintf(32, 6, "===================================================");
-	xyprintf(32, 8, "            ¿À¸ñ ÇÁ·Î±×·¥ - ±¸¸¥µ¹ (°¡Á¦)");
-	xyprintf(32, 9, "µ¹ÀÌ ÀÚ¿¬ÀûÀ¸·Î ´â°Å³ª ±ğÀÌ¾î ¸ğ¼­¸®°¡ ¹«µğ¾îÁø µ¹.");
+	xyprintf(32, 8, "            ì˜¤ëª© í”„ë¡œê·¸ë¨ - êµ¬ë¥¸ëŒ (ê°€ì œ)");
+	xyprintf(32, 9, "ëŒì´ ìì—°ì ìœ¼ë¡œ ë‹³ê±°ë‚˜ ê¹ì´ì–´ ëª¨ì„œë¦¬ê°€ ë¬´ë””ì–´ì§„ ëŒ.");
 	xyprintf(32, 11, "===================================================");
 	int selection = run_main_menu();
 	switch (selection) {
-		case MM_OMOK:
-			change_status(data, GS_GAME);
-			break;
-		case MM_NMOK:
-			xyprintf(32, 12, "ÃßÈÄÁö¿ø ¿¹Á¤ÀÔ´Ï´Ù.");
-			wait(1000);
-			xyprintf(32, 12, "                    ");
-			break;
-		case MM_HELP:
-			change_status(data, GS_HELP);
-			break;
-		case MM_EXIT:
-			exit(0);
-			break;
+	case MM_OMOK:
+		change_status(data, GS_GAME);
+		break;
+	case MM_NMOK:
+		xyprintf(32, 12, "ì¶”í›„ì§€ì› ì˜ˆì •ì…ë‹ˆë‹¤.");
+		wait(1000);
+		xyprintf(32, 12, "                    ");
+		break;
+	case MM_HELP:
+		change_status(data, GS_HELP);
+		break;
+	case MM_EXIT:
+		exit(0);
+		break;
 	}
 }
 
 /**
- * @brief °ÔÀÓ »óÅÂ¿¡¼­ ½ÇÇàµÇ´Â ÇÔ¼ö
- * @param data °ÔÀÓ µ¥ÀÌÅÍ ±¸Á¶Ã¼ÀÇ Æ÷ÀÎÅÍ
+ * @brief ê²Œì„ ìƒíƒœì—ì„œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+ * @param data ê²Œì„ ë°ì´í„° êµ¬ì¡°ì²´ì˜ í¬ì¸í„°
  */
 void run_game(GameData* data)
 {
@@ -144,54 +146,56 @@ void run_game(GameData* data)
 }
 
 /**
- * @brief µµ¿ò¸» »óÅÂ¿¡¼­ ½ÇÇàµÇ´Â ÇÔ¼ö
- * @param data °ÔÀÓ µ¥ÀÌÅÍ ±¸Á¶Ã¼ÀÇ Æ÷ÀÎÅÍ
+ * @brief ë„ì›€ë§ ìƒíƒœì—ì„œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+ * @param data ê²Œì„ ë°ì´í„° êµ¬ì¡°ì²´ì˜ í¬ì¸í„°
  */
 void run_help(GameData* data)
 {
-	xyprintf(32, 12, "µµ¿ò¸»ÀÔ´Ï´Ù.");
+	xyprintf(32, 12, "ë„ì›€ë§ì…ë‹ˆë‹¤.");
 }
 
 /**
- * @brief °ÔÀÓ ·çÇÁ¸¦ Ã³¸®ÇÑ´Ù.
+ * @brief ê²Œì„ ë£¨í”„ë¥¼ ì²˜ë¦¬í•œë‹¤.
  */
-void game_loop(GameData* data) 
+void game_loop(GameData* data)
 {
 	switch (data->status)
 	{
-		case GS_INTRO:
-			run_intro(data);
-			break;
-		case GS_MAIN:
-			run_main(data);
-			break;
-		case GS_GAME:
-			run_game(data);
-			break;
-		case GS_HELP:
-			run_help(data);
-			break;
+	case GS_INTRO:
+		run_intro(data);
+		break;
+	case GS_MAIN:
+		run_main(data);
+		break;
+	case GS_GAME:
+		run_game(data);
+		break;
+	case GS_HELP:
+		run_help(data);
+		break;
 	}
 }
 
 /**
- * @brief °ÔÀÓ ½ÃÀÛ½Ã ÃÊ±âÈ­ ÀÛ¾÷À» ÁøÇàÇÑ´Ù.
+ * @brief ê²Œì„ ì‹œì‘ì‹œ ì´ˆê¸°í™” ì‘ì—…ì„ ì§„í–‰í•œë‹¤.
  */
-void init_game() 
+void init_game()
 {
+	// setlocale(LC_ALL, "ko-KR");
+	set_encoding_utf8();
 	set_cursor_visibility(false);
 	set_console_size(CONSOLE_COLS, CONSOLE_LINES);
 }
 
 /**
- * @brief °ÔÀÓÀ» ½ÃÀÛÇÑ´Ù.
+ * @brief ê²Œì„ì„ ì‹œì‘í•œë‹¤.
  */
-void start_game() 
+void start_game()
 {
 	init_game();
 	GameData data;
 	change_status(&data, GS_INTRO);
-	while (true) 
+	while (true)
 	{
 		game_loop(&data);
 	}

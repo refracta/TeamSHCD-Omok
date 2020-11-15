@@ -1,6 +1,7 @@
 #include "inc/gamehandler.h"
 
-int main() 
+
+int main()
 {
     start_game();
     return 0;

@@ -14,7 +14,7 @@ int run_menu(MenuData* data, bool disable_escape) {
 		}
 		switch (c) {
 		case ESCAPE_KEY:
-			if (!disable_escape) 
+			if (!disable_escape)
 			{
 				return -1;
 			}

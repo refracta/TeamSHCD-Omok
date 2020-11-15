@@ -5,10 +5,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <wchar.h>
+#include <stdbool.h>
+
+bool isFullWidth(wchar_t c) {
+	if (c < 256 || (c >= 0xff61 && c <= 0xff9f)) {
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+int strrlen(wchar_t * s) {
+	int len = wcslen(s);
+	int rlen = len;
+	for (int i = 0; i < len; i++) {
+		rlen += isFullWidth(s[i]);
+	}
+	return rlen;
+}
 
 /**
-* @brief ¡ˆ¡§«— ∆Ω¿« ¿Œ∆Æ∑Œ æ÷¥œ∏ﬁ¿Ãº« ¿Â∏È¿ª ±◊∏∞¥Ÿ.
-* @param tick ¿Œ∆Æ∑Œ æ÷¥œ∏ﬁ¿Ãº« ∆Ω
+* @brief ÏßÄÏ†ïÌïú Ìã±Ïùò Ïù∏Ìä∏Î°ú Ïï†ÎãàÎ©îÏù¥ÏÖò Ïû•Î©¥ÏùÑ Í∑∏Î¶∞Îã§.
+* @param tick Ïù∏Ìä∏Î°ú Ïï†ÎãàÎ©îÏù¥ÏÖò Ìã±
 */
 void draw_intro(int tick) {
 	if (tick == 0) {
@@ -34,11 +55,11 @@ void draw_intro(int tick) {
 	xyprintf(34, 19, "%s", ASCII_PEOPLE2);
 
 	set_print_color(TO_TBCOLOR(RED, BLACK));
-	if (tick % 12 == 0) 
+	if (tick % 12 == 0)
 	{
 		xyprintf(24, 21, "%s", ASCII_SMOKE2);
 	}
-	else if (tick % 6 == 0) 
+	else if (tick % 6 == 0)
 	{
 		xyprintf(24, 21, "%s", ASCII_SMOKE1);
 	}
@@ -49,28 +70,28 @@ void draw_intro(int tick) {
 	{
 		xyprintf(72 - tick, 10, "%s", ASCII_SHC);
 		set_cursor_position(position.X, position.Y);
-	} 
-	else 
+	}
+	else
 	{
 		xyprintf(20, 10, "%s", ASCII_SHC);
-		xyprintf(1, 19, "Java µŒ∏Ì ≈∏ººø‰ ...");
+		xyprintf(1, 19, "Java ÎëêÎ™Ö ÌÉÄÏÑ∏Ïöî ...");
 
-		if (tick > 60 + 30) 
+		if (tick > 60 + 30)
 		{
 			set_print_color(TO_TBCOLOR(GREEN, BLACK));
 			xyprintf(5, 23, "......");
 		}
-		if (tick > 60 + 30 + 30) 
+		if (tick > 60 + 30 + 30)
 		{
 			set_print_color(TO_TBCOLOR(JADE, BLACK));
 			xyprintf(45, 23, "......");
 		}
 		set_cursor_position(position.X, position.Y);
-		if (tick > 70 + 30 + 30 + 30) 
+		if (tick > 70 + 30 + 30 + 30)
 		{
 			if (position.Y <= 30 - 1 - 1) {
 				set_print_color(TO_TBCOLOR(GRAY, BLACK));
-				for (int i = 0; i < 120; i++) 
+				for (int i = 0; i < 120; i++)
 				{
 					printf(".");
 				}
@@ -79,43 +100,44 @@ void draw_intro(int tick) {
 	}
 	set_print_color(color);
 }
- 
+
 /**
-* @brief ∏ﬁ¥∫∏¶ ±◊∏∞¥Ÿ.
-* @param data ∏ﬁ¥∫ ¡§∫∏ µ•¿Ã≈Õ
+* @brief Î©îÎâ¥Î•º Í∑∏Î¶∞Îã§.
+* @param data Î©îÎâ¥ Ï†ïÎ≥¥ Îç∞Ïù¥ÌÑ∞
 */
 void draw_menu(MenuData* data) {
 	short color = get_print_color();
 
-	int max_length = strlen(data->name);
+	int max_length = strrlen(data->name);
 	for (int i = 0; i < data->length; i++) {
-		max_length = MAX(max_length, strlen(data->list[i]));
+		max_length = MAX(max_length, strrlen(data->list[i]));
 	}
 	set_print_color(data->outline_tbcolor);
-	xyprintf(data->x, data->y, "¶£¶°");
+	xywprintf(data->x, data->y, L"‚îå‚îÄ");
 	set_print_color(data->name_tbcolor);
-	printf("[ %s%*s ]", data->name, (int)(max_length - strlen(data->name)), "");
+	wprintf(L"[ %s%*s ]", data->name, (int)(max_length - strrlen(data->name)), L"");
 	set_print_color(data->outline_tbcolor);
-	printf("¶°¶§");
+	wprintf(L"‚îÄ‚îê");
 
 	for (int i = 0; i < data->length; i++) {
 		set_print_color(data->outline_tbcolor);
-		xyprintf(data->x, data->y + (i + 1), "¶¢");
+		xywprintf(data->x, data->y + (i + 1), L"‚îÇ");
 		if (i != data->current_index) {
 			set_print_color(data->name_tbcolor);
 		}
-		else {
+		else
+		{
 			set_print_color(data->selected_tbcolor);
 		}
-		printf("   %s%*s   ", data->list[i], (int)(max_length - strlen(data->list[i])), "");
+		wprintf(L"   %s%*s   ", data->list[i], (int)(max_length - strrlen(data->list[i])), L"");
 		set_print_color(data->outline_tbcolor);
-		printf("¶¢");
+		wprintf(L"‚îÇ");
 	}
 
-	xyprintf(data->x, data->y + data->length + 1, "¶¶¶°¶°¶°");
+	xywprintf(data->x, data->y + data->length + 1, L"‚îî‚îÄ‚îÄ‚îÄ");
 	for (int i = 0; i < max_length; i++) {
-		printf("¶°");
+		wprintf(L"‚îÄ");
 	}
-	printf("¶°¶°¶°¶•");
+	wprintf(L"‚îÄ‚îÄ‚îÄ‚îò");
 	set_print_color(color);
 }

@@ -1,8 +1,8 @@
 #ifndef __INTERFACERENDERER_H__
 #define __INTERFACERENDERER_H__
 typedef struct {
-	char* name;
-	char** list;
+	wchar_t* name;
+	wchar_t** list;
 	int length;
 	int current_index;
 	int x;
@@ -59,7 +59,7 @@ typedef struct {
 "|| | ||\n" \
 "|| | ||\n" \
 "|\\ | /|\n" \
-"¶¶-----¶•")
+"‚îî-----‚îò")
 
 #define ASCII_SMOKE1 (\
 " \\ \\  \n" \
@@ -74,17 +74,17 @@ typedef struct {
 #define INTRO_FULL_TICK 210
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 
-#define RG_MENU_TYPE_1 "¶£"
-#define RG_MENU_TYPE_2 "¶®"
-#define RG_MENU_TYPE_3 "¶§"
-#define RG_MENU_TYPE_4 "¶ß"
-#define RG_MENU_TYPE_5 "¶´"
-#define RG_MENU_TYPE_6 "¶©"
-#define RG_MENU_TYPE_7 "¶¶"
-#define RG_MENU_TYPE_8 "¶™"
-#define RG_MENU_TYPE_9 "¶•"
-#define RG_MENU_TYPE_H "¶°"
-#define RG_MENU_TYPE_V = "¶¢"
+#define RG_MENU_TYPE_1 "‚îå"
+#define RG_MENU_TYPE_2 "‚î¨"
+#define RG_MENU_TYPE_3 "‚îê"
+#define RG_MENU_TYPE_4 "‚îú"
+#define RG_MENU_TYPE_5 "‚îº"
+#define RG_MENU_TYPE_6 "‚î§"
+#define RG_MENU_TYPE_7 "‚îî"
+#define RG_MENU_TYPE_8 "‚î¥"
+#define RG_MENU_TYPE_9 "‚îò"
+#define RG_MENU_TYPE_H "‚îÄ"
+#define RG_MENU_TYPE_V = "‚îÇ"
 
 void draw_intro(int tick);
 void draw_menu(MenuData* data);
