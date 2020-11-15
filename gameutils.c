@@ -38,9 +38,9 @@ int run_menu(MenuData* data, bool disable_escape) {
 			}
 			break;
 		case ENTER_KEY:
-			set_locale_default();
 			Beep(494 * 2, 100);
 			Beep(392 * 2, 100);
+			set_locale_default();
 			return data->current_index;
 			break;
 		}
