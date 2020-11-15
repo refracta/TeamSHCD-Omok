@@ -2,22 +2,22 @@
 #include "inc/gamecore.h"
 
 /**
-* @brief µ¿Àû ÇÒ´çÀ» ÅëÇØ ÀÌÂ÷¿ø ¹è¿­Ã³·³ ¾µ ¼ö ÀÖ´Â °İÀÚ ÀÌÁß Æ÷ÀÎÅÍ¸¦ ¹İÈ¯ÇÑ´Ù.
-* @param width °İÀÚÀÇ °¡·Î ±æÀÌ
-* @param height °İÀÚÀÇ ¼¼·Î ±æÀÌ
-* @return °İÀÚ ÀÌÁß Æ÷ÀÎÅÍ
+* @brief ë™ì  í• ë‹¹ì„ í†µí•´ ì´ì°¨ì› ë°°ì—´ì²˜ëŸ¼ ì“¸ ìˆ˜ ìˆëŠ” ê²©ì ì´ì¤‘ í¬ì¸í„°ë¥¼ ë°˜í™˜í•œë‹¤.
+* @param width ê²©ìì˜ ê°€ë¡œ ê¸¸ì´
+* @param height ê²©ìì˜ ì„¸ë¡œ ê¸¸ì´
+* @return ê²©ì ì´ì¤‘ í¬ì¸í„°
 */
-char** malloc_grid(int width, int height) 
+char** malloc_grid(int width, int height)
 {
-	char** grid = malloc(sizeof(char*) * width);
-    if (grid == NULL) 
+    char** grid = malloc(sizeof(char*) * width);
+    if (grid == NULL)
     {
         return NULL;
     }
     for (int i = 0; i < width; i++)
     {
         grid[i] = malloc(sizeof(char) * height);
-        if (grid[i] == NULL) 
+        if (grid[i] == NULL)
         {
             return NULL;
         }
@@ -26,10 +26,10 @@ char** malloc_grid(int width, int height)
 }
 
 /**
-* @brief µ¿Àû ÇÒ´çÀ» ÅëÇØ »ı¼ºÇÑ °İÀÚ ÀÌÁß Æ÷ÀÎÅÍ¸¦ ÇÒ´ç ÇØÁ¦ÇÑ´Ù.
-* @param width °İÀÚÀÇ °¡·Î ±æÀÌ
+* @brief ë™ì  í• ë‹¹ì„ í†µí•´ ìƒì„±í•œ ê²©ì ì´ì¤‘ í¬ì¸í„°ë¥¼ í• ë‹¹ í•´ì œí•œë‹¤.
+* @param width ê²©ìì˜ ê°€ë¡œ ê¸¸ì´
 */
-void free_grid(char ** grid, int width)
+void free_grid(char** grid, int width)
 {
     for (int x = 0; x < width; x++)
     {
@@ -39,15 +39,15 @@ void free_grid(char ** grid, int width)
 }
 
 /**
-* @brief SG_EMPTY·Î ÃÊ±âÈ­ÇÑ °İÀÚ¸¦ »ı¼ºÇÑ´Ù.
-* @param width °İÀÚÀÇ °¡·Î ±æÀÌ
-* @param width °İÀÚÀÇ ¼¼·Î ±æÀÌ
-* @return °İÀÚ ÀÌÁß Æ÷ÀÎÅÍ
+* @brief SG_EMPTYë¡œ ì´ˆê¸°í™”í•œ ê²©ìë¥¼ ìƒì„±í•œë‹¤.
+* @param width ê²©ìì˜ ê°€ë¡œ ê¸¸ì´
+* @param width ê²©ìì˜ ì„¸ë¡œ ê¸¸ì´
+* @return ê²©ì ì´ì¤‘ í¬ì¸í„°
 */
 char** generate_grid(int width, int height)
 {
     char** grid = malloc_grid(width, height);
-    if (grid == NULL) 
+    if (grid == NULL)
     {
         return NULL;
     }

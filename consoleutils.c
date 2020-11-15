@@ -2,13 +2,35 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <time.h>
+#include <locale.h>
 #include <Windows.h>
 #include "inc/systemutils.h"
 #include "inc/consoleutils.h"
 
 /**
- * @brief ÄÜ¼Ö Ä¿¼­ÀÇ °¡½Ã »óÅÂ¸¦ º¯°æÇÑ´Ù.
- * @param visibility °¡½Ã »óÅÂ
+ * @brief wchar_t ê³„ì—´ ë¬¸ìžì—´ ì²˜ë¦¬ë¥¼ ìœ„í•´ ì§€ì—­ ì„¤ì •ì„ ko-KRë¡œ ë³€ê²½í•©ë‹ˆë‹¤.
+ */
+void set_locale_korean() {
+	setlocale(LC_ALL, "ko-KR");
+}
+
+/**
+ * @brief wchar_t ê³„ì—´ ë¬¸ìžì—´ ì²˜ë¦¬ë¥¼ ìœ„í•´ ì§€ì—­ ì„¤ì •ì„ ê¸°ë³¸ ê°’ìœ¼ë¡œ ë³€ê²½í•©ë‹ˆë‹¤.
+ */
+void set_locale_default() {
+	setlocale(LC_ALL, "C");
+}
+
+/**
+ * @brief UTF8 í”„ë¡œì íŠ¸ì˜ í•œê¸€ ì¶œë ¥ì„ ìœ„í•´ ì½˜ì†” ì¸ì½”ë”©ì„ ë³€ê²½í•©ë‹ˆë‹¤.
+ */
+void set_encoding_utf8() {
+	system("chcp 65001");
+}
+
+/**
+ * @brief ì½˜ì†” ì»¤ì„œì˜ ê°€ì‹œ ìƒíƒœë¥¼ ë³€ê²½í•œë‹¤.
+ * @param visibility ê°€ì‹œ ìƒíƒœ
  */
 void set_cursor_visibility(bool visibility)
 {
@@ -22,9 +44,9 @@ void set_cursor_visibility(bool visibility)
 }
 
 /**
- * @brief ÄÜ¼ÖÀÇ Ãâ·Â À§Ä¡¸¦ ¼³Á¤ÇÑ´Ù.
- * @param x °¡·ÎÁÙ Ãâ·Â À§Ä¡
- * @param y ¼¼·ÎÁÙ Ãâ·Â À§Ä¡
+ * @brief ì½˜ì†”ì˜ ì¶œë ¥ ìœ„ì¹˜ë¥¼ ì„¤ì •í•œë‹¤.
+ * @param x ê°€ë¡œì¤„ ì¶œë ¥ ìœ„ì¹˜
+ * @param y ì„¸ë¡œì¤„ ì¶œë ¥ ìœ„ì¹˜
  */
 void set_cursor_position(int x, int y)
 {
@@ -33,8 +55,8 @@ void set_cursor_position(int x, int y)
 }
 
 /**
- * @brief ÄÜ¼ÖÀÇ Ãâ·Â À§Ä¡¸¦ °¡Á®¿Â´Ù.
- * @return Ãâ·Â À§Ä¡ ±¸Á¶Ã¼
+ * @brief ì½˜ì†”ì˜ ì¶œë ¥ ìœ„ì¹˜ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
+ * @return ì¶œë ¥ ìœ„ì¹˜ êµ¬ì¡°ì²´
  */
 COORD get_cursor_position()
 {
@@ -52,9 +74,9 @@ COORD get_cursor_position()
 }
 
 /**
- * @brief Ãâ·Â ÅØ½ºÆ®ÀÇ »ö±òÀ» ¼³Á¤ÇÑ´Ù.
- * @param tbcolor ÅØ½ºÆ®ÀÇ »ö±ò + ÅØ½ºÆ®ÀÇ ¹è°æ »ö±ò * 16
- * @param background_color ÅØ½ºÆ®ÀÇ ¹è°æ »ö±ò
+ * @brief ì¶œë ¥ í…ìŠ¤íŠ¸ì˜ ìƒ‰ê¹”ì„ ì„¤ì •í•œë‹¤.
+ * @param tbcolor í…ìŠ¤íŠ¸ì˜ ìƒ‰ê¹” + í…ìŠ¤íŠ¸ì˜ ë°°ê²½ ìƒ‰ê¹” * 16
+ * @param background_color í…ìŠ¤íŠ¸ì˜ ë°°ê²½ ìƒ‰ê¹”
  */
 void set_print_color(int tbcolor)
 {
@@ -63,8 +85,8 @@ void set_print_color(int tbcolor)
 
 
 /**
- * @brief Ãâ·Â ÅØ½ºÆ®ÀÇ »ö±ò°ªÀ» °¡Á®¿Â´Ù
- * @return Ãâ·Â ÅØ½ºÆ®ÀÇ »ö±ò°ª (ÅØ½ºÆ®ÀÇ »ö±ò + ÅØ½ºÆ®ÀÇ ¹è°æ »ö±ò * 16)
+ * @brief ì¶œë ¥ í…ìŠ¤íŠ¸ì˜ ìƒ‰ê¹”ê°’ì„ ê°€ì ¸ì˜¨ë‹¤
+ * @return ì¶œë ¥ í…ìŠ¤íŠ¸ì˜ ìƒ‰ê¹”ê°’ (í…ìŠ¤íŠ¸ì˜ ìƒ‰ê¹” + í…ìŠ¤íŠ¸ì˜ ë°°ê²½ ìƒ‰ê¹” * 16)
  */
 short get_print_color() {
 	CONSOLE_SCREEN_BUFFER_INFO info;
@@ -73,9 +95,9 @@ short get_print_color() {
 }
 
 /**
- * @brief È­¸éÀÇ Å©±â¸¦ ¼³Á¤ÇÑ´Ù.
- * @cols ÅØ½ºÆ® ¿­ÀÇ ¼ö
- * @lines ÅØ½ºÆ® ÇàÀÇ ¼ö
+ * @brief í™”ë©´ì˜ í¬ê¸°ë¥¼ ì„¤ì •í•œë‹¤.
+ * @cols í…ìŠ¤íŠ¸ ì—´ì˜ ìˆ˜
+ * @lines í…ìŠ¤íŠ¸ í–‰ì˜ ìˆ˜
  */
 void set_console_size(int cols, int lines) {
 	char cmd[BUFSIZ];
@@ -84,15 +106,15 @@ void set_console_size(int cols, int lines) {
 }
 
 /**
- * @brief Ã¢ Á¦¸ñÀ» ¼³Á¤ÇÑ´Ù.
- * @title Ã¢ Á¦¸ñ
+ * @brief ì°½ ì œëª©ì„ ì„¤ì •í•œë‹¤.
+ * @title ì°½ ì œëª©
  */
 void set_console_title(const char* title) {
 	SetConsoleTitle(title);
 }
 
 /**
- * @brief È­¸éÀ» ÃÊ±âÈ­ÇÑ´Ù.
+ * @brief í™”ë©´ì„ ì´ˆê¸°í™”í•œë‹¤.
  */
 void clear_console()
 {
@@ -100,7 +122,7 @@ void clear_console()
 }
 
 /**
- * @brief »ç¿ëÀÚ°¡ ´©¸¥ Å°¸¦ °¡Á®¿Â´Ù.
+ * @brief ì‚¬ìš©ìžê°€ ëˆ„ë¥¸ í‚¤ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
  * @return getchar() value
  */
 int get_key_input() {
@@ -114,12 +136,12 @@ int get_key_input() {
 }
 
 /**
- * @brief wait Áß Å° ÇÚµé¸µÀ» °°ÀÌ ¼öÇàÇÑ´Ù.
- * @description wait¸¦ UNIT_WAIT·Î ÂÉ°³¾î ¼öÇàÇÏ°í µµÁß Å°°¡ ´­·È´ÂÁö °Ë»çÇÏ¿© handler¿¡ Àü´ÞÇÑ´Ù.
- *	handler(int c)ÀÇ ¹ÝÈ¯°ªÀÌ 1 ÀÌ»óÀÏ ¶§ wait¸¦ ÁßÁöÇÏ°í handlerÀÇ ¹ÝÈ¯ °ªÀ» ¹ÝÈ¯ÇÑ´Ù.
- *	Å° ÇÚµé¸µÀÌ ÀÏ¾î³ªÁö ¾Ê´Â °æ¿ì¿¡´Â Ç×»ó -1À» ¹ÝÈ¯ÇÑ´Ù.
- * @param ms ´ë±âÇÒ ½Ã°£ (¹Ð¸®ÃÊ)
- * @param handler ÅØ½ºÆ®ÀÇ ¹è°æ »ö±ò
+ * @brief wait ì¤‘ í‚¤ í•¸ë“¤ë§ì„ ê°™ì´ ìˆ˜í–‰í•œë‹¤.
+ * @description waitë¥¼ UNIT_WAITë¡œ ìª¼ê°œì–´ ìˆ˜í–‰í•˜ê³  ë„ì¤‘ í‚¤ê°€ ëˆŒë ¸ëŠ”ì§€ ê²€ì‚¬í•˜ì—¬ handlerì— ì „ë‹¬í•œë‹¤.
+ *	handler(int c)ì˜ ë°˜í™˜ê°’ì´ 1 ì´ìƒì¼ ë•Œ waitë¥¼ ì¤‘ì§€í•˜ê³  handlerì˜ ë°˜í™˜ ê°’ì„ ë°˜í™˜í•œë‹¤.
+ *	í‚¤ í•¸ë“¤ë§ì´ ì¼ì–´ë‚˜ì§€ ì•ŠëŠ” ê²½ìš°ì—ëŠ” í•­ìƒ -1ì„ ë°˜í™˜í•œë‹¤.
+ * @param ms ëŒ€ê¸°í•  ì‹œê°„ (ë°€ë¦¬ì´ˆ)
+ * @param handler í…ìŠ¤íŠ¸ì˜ ë°°ê²½ ìƒ‰ê¹”
  */
 int wait_with_handler(unsigned long ms, int (*handler)(int))
 {
@@ -146,15 +168,15 @@ int wait_with_handler(unsigned long ms, int (*handler)(int))
 
 
 /**
- * @brief ÄÜ¼ÖÀÇ x, y À§Ä¡¿¡ printf ÇÔ¼ö¿Í °°Àº ±â´ÉÀ» ¼öÇàÇÑ´Ù.
- * @param x °¡·ÎÁÙ Ãâ·Â À§Ä¡
- * @param y ¼¼·ÎÁÙ Ãâ·Â À§Ä¡
- * @param format Æ÷¸Ë ¹®ÀÚ¿­
+ * @brief ì½˜ì†”ì˜ x, y ìœ„ì¹˜ì— printf í•¨ìˆ˜ì™€ ê°™ì€ ê¸°ëŠ¥ì„ ìˆ˜í–‰í•œë‹¤.
+ * @param x ê°€ë¡œì¤„ ì¶œë ¥ ìœ„ì¹˜
+ * @param y ì„¸ë¡œì¤„ ì¶œë ¥ ìœ„ì¹˜
+ * @param format í¬ë§· ë¬¸ìžì—´
  */
 void xyprintf(int x, int y, char* format, ...)
 {
 	char buffer[BUFSIZ];
-	int buffer_size = sizeof(buffer);
+	int buffer_size = sizeof(buffer) / sizeof(char);
 	char* buffer_ptr = buffer;
 
 	va_list arg_ptr;
@@ -162,9 +184,9 @@ void xyprintf(int x, int y, char* format, ...)
 	int length = vsnprintf(buffer_ptr, buffer_size, format, arg_ptr) + 1;
 	va_end(arg_ptr);
 
-	if (length > sizeof(buffer))
+	if (length > buffer_size)
 	{
-		buffer_ptr = malloc(length);
+		buffer_ptr = malloc(sizeof(char) * length);
 		if (buffer_ptr == NULL) {
 			return;
 		}
@@ -188,6 +210,59 @@ void xyprintf(int x, int y, char* format, ...)
 			buffer_ptr[i] = '\0';
 			set_cursor_position(x, y + delta++);
 			printf("%s", target);
+			target = buffer_ptr + i + 1;
+		}
+	}
+
+	if (buffer_ptr != buffer)
+	{
+		free(buffer_ptr);
+	}
+}
+
+/**
+ * @brief ì½˜ì†”ì˜ x, y ìœ„ì¹˜ì— wprintf í•¨ìˆ˜ì™€ ê°™ì€ ê¸°ëŠ¥ì„ ìˆ˜í–‰í•œë‹¤.
+ * @param x ê°€ë¡œì¤„ ì¶œë ¥ ìœ„ì¹˜
+ * @param y ì„¸ë¡œì¤„ ì¶œë ¥ ìœ„ì¹˜
+ * @param format í¬ë§· ë¬¸ìžì—´
+ */
+void xywprintf(int x, int y, wchar_t* format, ...)
+{
+	wchar_t buffer[BUFSIZ];
+	int buffer_size = sizeof(buffer) / sizeof(wchar_t);
+	wchar_t* buffer_ptr = buffer;
+
+	va_list arg_ptr;
+	va_start(arg_ptr, format);
+	int length = _vsnwprintf(buffer_ptr, buffer_size, format, arg_ptr) + 1;
+	va_end(arg_ptr);
+
+	if (length > buffer_size)
+	{
+		buffer_ptr = malloc(sizeof(wchar_t) * length);
+		if (buffer_ptr == NULL) {
+			return;
+		}
+		buffer_size = length;
+
+		va_start(arg_ptr, format);
+		length = _vsnwprintf(buffer_ptr, buffer_size, format, arg_ptr) + 1;
+		va_end(arg_ptr);
+	}
+
+	COORD position = get_cursor_position();
+	x = x < 0 ? position.X : x;
+	y = y < 0 ? position.Y : y;
+
+	int delta = 0;
+	wchar_t* target = buffer_ptr;
+	for (int i = 0; i < length; i++)
+	{
+		if (buffer_ptr[i] == '\n' || buffer_ptr[i] == '\0')
+		{
+			buffer_ptr[i] = '\0';
+			set_cursor_position(x, y + delta++);
+			wprintf(L"%s", target);
 			target = buffer_ptr + i + 1;
 		}
 	}

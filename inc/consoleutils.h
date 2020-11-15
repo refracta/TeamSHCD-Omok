@@ -1,9 +1,10 @@
 #include <Windows.h>
+#include <wchar.h>
 
 #ifndef __CONSOLEUTILS_H__
 #define __CONSOLEUTILS_H__
 /**
- * @brief ÄÜ¼Ö¿¡¼­ »ç¿ëÇÏ´Â »ö±ò ¿­°ÅÇü
+ * @brief ì½˜ì†”ì—ì„œ ì‚¬ìš©í•˜ëŠ” ìƒ‰ê¹” ì—´ê±°í˜•
  */
 typedef enum
 {
@@ -16,6 +17,9 @@ typedef enum
 #define TO_BACKGROUND_COLOR(tbcolor) (tbcolor % 16) 
 #define TO_TBCOLOR(text_color, background_color) (16 * background_color + text_color)
 
+void set_locale_korean();
+void set_locale_default();
+void set_encoding_utf8();
 void set_cursor_visibility(bool);
 void set_cursor_position(int, int);
 void set_print_color(int);
@@ -26,4 +30,5 @@ COORD get_cursor_position();
 void clear_console();
 int get_key_input();
 int wait_with_handler(unsigned long, int (*)(int));
-void xyprintf(int, int, char *, ...);
+void xyprintf(int, int, char*, ...);
+void xywprintf(int, int, wchar_t*, ...);

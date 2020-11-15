@@ -7,4 +7,7 @@ file(GLOB PROJECT_C_FILES "*.c")
 
 file(GLOB PROJECT_HEADER_FILES "inc/*.h")
 
+add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
+add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
+
 add_executable(BoardGame ${PROJECT_C_FILES} ${PROJECT_HEADER_FILES})

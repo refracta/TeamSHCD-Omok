@@ -1,10 +1,13 @@
 #include <stdbool.h>
+#include <locale.h>
 #include "inc/consoleutils.h"
 #include "inc/systemutils.h"
 #include "inc/interfacerenderer.h"
 #include "inc/keycode.h"
 
 int run_menu(MenuData* data, bool disable_escape) {
+	set_locale_korean();
+	int return_value = -1;
 	draw_menu(data);
 	while (true)
 	{
@@ -14,8 +17,9 @@ int run_menu(MenuData* data, bool disable_escape) {
 		}
 		switch (c) {
 		case ESCAPE_KEY:
-			if (!disable_escape) 
+			if (!disable_escape)
 			{
+				set_locale_default();
 				return -1;
 			}
 			break;
@@ -32,6 +36,7 @@ int run_menu(MenuData* data, bool disable_escape) {
 			}
 			break;
 		case ENTER_KEY:
+			set_locale_default();
 			return data->current_index;
 			break;
 		}

@@ -4,10 +4,10 @@
 #include "inc/consoleutils.h"
 
 /**
-* @brief µ¹ÀÌ ÀÖ´Â ¹è¿­À» ÀÔ·Â¹Ş¾Æ¼­ °İÀÚ¿Í ÇÔ²² Ãâ·ÂÇØÁÖ´Â ÇÔ¼ö
-* @param grid µ¹ À§Ä¡°¡ ´ã±ä ¹è¿­(13x13 °İÀÚ, Èæµ¹Àº 'b', ¹éµ¹Àº 'w')
-* @param width °İÀÚÀÇ °¡·Î Å©±â
-* @param height °İÀÚÀÇ ¼¼·Î Å©±â
+* @brief ëŒì´ ìˆëŠ” ë°°ì—´ì„ ì…ë ¥ë°›ì•„ì„œ ê²©ìì™€ í•¨ê»˜ ì¶œë ¥í•´ì£¼ëŠ” í•¨ìˆ˜
+* @param grid ëŒ ìœ„ì¹˜ê°€ ë‹´ê¸´ ë°°ì—´(13x13 ê²©ì, í‘ëŒì€ 'b', ë°±ëŒì€ 'w')
+* @param width ê²©ìì˜ ê°€ë¡œ í¬ê¸°
+* @param height ê²©ìì˜ ì„¸ë¡œ í¬ê¸°
 */
 void render_grid(char** grid, int width, int height)
 {
@@ -20,42 +20,42 @@ void render_grid(char** grid, int width, int height)
 		for (int j = 0; j < width; j++)
 		{
 			if (i == first_index && j == first_index)
-				printf("%s", RG_GRID_TYPE_7);//ÁÂ»ó´Ü °İÀÚ
+				printf("%s", RG_GRID_TYPE_7);//ì¢Œìƒë‹¨ ê²©ì
 			else if (i == first_index && j == last_w_index)
-				printf("%s", RG_GRID_TYPE_9);//¿ì»ó´Ü °İÀÚ
+				printf("%s", RG_GRID_TYPE_9);//ìš°ìƒë‹¨ ê²©ì
 			else if (i == first_index)
-				printf("%s", RG_GRID_TYPE_8);//»ó´Ü °İÀÚ
+				printf("%s", RG_GRID_TYPE_8);//ìƒë‹¨ ê²©ì
 			else if (i != last_h_index && j == first_index)
-				printf("%s", RG_GRID_TYPE_4);//ÁÂÃø °İÀÚ
+				printf("%s", RG_GRID_TYPE_4);//ì¢Œì¸¡ ê²©ì
 			else if (i != last_h_index && j == last_w_index)
-				printf("%s", RG_GRID_TYPE_6);//¿ìÃø °İÀÚ
+				printf("%s", RG_GRID_TYPE_6);//ìš°ì¸¡ ê²©ì
 			else if (i == last_h_index && j == first_index)
-				printf("%s", RG_GRID_TYPE_1);//ÁÂÇÏ´Ü °İÀÚ
+				printf("%s", RG_GRID_TYPE_1);//ì¢Œí•˜ë‹¨ ê²©ì
 			else if (i == last_h_index && j == last_w_index)
-				printf("%s", RG_GRID_TYPE_3);//¿ìÇÏ´Ü °İÀÚ
+				printf("%s", RG_GRID_TYPE_3);//ìš°í•˜ë‹¨ ê²©ì
 			else if (i == last_h_index)
-				printf("%s", RG_GRID_TYPE_2);//ÇÏ´Ü °İÀÚ
+				printf("%s", RG_GRID_TYPE_2);//í•˜ë‹¨ ê²©ì
 			else
-				printf("%s", RG_GRID_TYPE_5); //¸ğ¼­¸®°¡ ¾Æ´Ñ °İÀÚ
-			if (j != last_w_index) 
-				printf("%s", RG_GRID_TYPE_H); //°İÀÚ°¡ À§¾Æ·¡·Î ±æ¾îÁ®¼­ °¡·Î¹®ÀÚ ÇÏ³ª¸¦ ³Ö¾î Á¤»ç°¢ÇüÀ¸·Î º¸ÀÌ°Ô ÇÔ
+				printf("%s", RG_GRID_TYPE_5); //ëª¨ì„œë¦¬ê°€ ì•„ë‹Œ ê²©ì
+			if (j != last_w_index)
+				printf("%s", RG_GRID_TYPE_H); //ê²©ìê°€ ìœ„ì•„ë˜ë¡œ ê¸¸ì–´ì ¸ì„œ ê°€ë¡œë¬¸ì í•˜ë‚˜ë¥¼ ë„£ì–´ ì •ì‚¬ê°í˜•ìœ¼ë¡œ ë³´ì´ê²Œ í•¨
 		}
 		printf("\n");
 	}
 
-	//µ¹ ³õ±â
+	//ëŒ ë†“ê¸°
 	for (int i = 0; i < height; i++)
 	{
 		for (int j = 0; j < width; j++)
 		{
 			if (grid[i][j] == 'b')
-				xyprintf(j * 2, i, RG_BLACK); //±î¸¸µ¹Àº ¼ÓÀÌ Â÷ÀÖ¾î¼­ ¿ŞÂÊ °İÀÚ Æ¢¾î³ª¿À´Â ºÎºĞÀ» ÇØ°á ¾ÈÇØµµ µÊ.
+				xyprintf(j * 2, i, RG_BLACK); //ê¹Œë§ŒëŒì€ ì†ì´ ì°¨ìˆì–´ì„œ ì™¼ìª½ ê²©ì íŠ€ì–´ë‚˜ì˜¤ëŠ” ë¶€ë¶„ì„ í•´ê²° ì•ˆí•´ë„ ë¨.
 			else if (grid[i][j] == 'w')
 			{
-				if ((grid[i][j - 1] == 'w' || grid[i][j - 1] == 'b') || j == 0) //Èòµ¹(ºñ¾îÀÖ´Â µ¿±×¶ó¹Ì)¿¡¼­ 1. ¹Ù·Î ¾Õ¿¡ µ¹ÀÌ ³õ¿©ÀÖ°Å³ª 2. Ã¹ ¿­¿¡ ³õ´Â °æ¿ì¿£ °İÀÚ¹ö±× Ã³¸® ¾ÈÇÔ
+				if ((grid[i][j - 1] == 'w' || grid[i][j - 1] == 'b') || j == 0) //í°ëŒ(ë¹„ì–´ìˆëŠ” ë™ê·¸ë¼ë¯¸)ì—ì„œ 1. ë°”ë¡œ ì•ì— ëŒì´ ë†“ì—¬ìˆê±°ë‚˜ 2. ì²« ì—´ì— ë†“ëŠ” ê²½ìš°ì—” ê²©ìë²„ê·¸ ì²˜ë¦¬ ì•ˆí•¨
 					xyprintf(j * 2, i, RG_WHITE);
 				else
-					xyprintf(j * 2 - 1, i, " " RG_WHITE); //³ª¸ÓÁö °æ¿ì¿£, ÇÑ Ä­ ¾Õ¿¡¼­ºÎÅÍ [°ø¹é + µ¹]À» ±×¸°´Ù.
+					xyprintf(j * 2 - 1, i, " " RG_WHITE); //ë‚˜ë¨¸ì§€ ê²½ìš°ì—”, í•œ ì¹¸ ì•ì—ì„œë¶€í„° [ê³µë°± + ëŒ]ì„ ê·¸ë¦°ë‹¤.
 			}
 		}
 	}
