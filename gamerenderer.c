@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "inc/gamerenderer.h"
-#include "inc/gamecore.h"
-#include "inc/consoleutils.h"
+
+void render_grid(char** grid, int width, int height);
+void play_put_stone_animation(char grid[][13], int stone_x, int stone_y);
 
 /**
 * @brief 돌이 있는 배열을 입력받아서 격자와 함께 출력해주는 함수
@@ -40,7 +41,7 @@ void render_grid(char** grid, int width, int height)
 			if (j != last_w_index)
 				printf("%s", RG_GRID_TYPE_H); //격자가 위아래로 길어져서 가로문자 하나를 넣어 정사각형으로 보이게 함
 		}
-		printf("\n");
+		printf(" \n");
 	}
 
 	//돌 놓기
@@ -59,4 +60,14 @@ void render_grid(char** grid, int width, int height)
 			}
 		}
 	}
+}
+
+/**
+* @brief
+* @param
+* @return
+*/
+void play_put_stone_animation(char grid[][13], int stone_x, int stone_y)
+{
+	return;
 }
