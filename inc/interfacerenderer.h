@@ -14,7 +14,7 @@ typedef struct {
 } MenuData;
 #endif
 
-#define ASCII_TITLE_SCHD (\
+#define ASCII_TITLE_SHCD (\
 " .d8888b.  888    888  .d8888b.  8888888b. \n" \
 "d88P  Y88b 888    888 d88P  Y88b 888  \"Y88b\n" \
 "Y88b.      888    888 888    888 888    888\n" \

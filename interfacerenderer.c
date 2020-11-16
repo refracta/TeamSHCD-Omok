@@ -55,7 +55,7 @@ void draw_intro(int tick)
 
 	set_print_color(TO_TBCOLOR(WHITE, BLACK));
 	int title_x = 36;
-	xyprintf(title_x, 1, "%s", ASCII_TITLE_SCHD);
+	xyprintf(title_x, 1, "%s", ASCII_TITLE_SHCD);
 	xyprintf(title_x, 9, "-----------SeungHapCha Developers----------");
 
 	set_print_color(TO_TBCOLOR(GREEN, BLACK));
