@@ -33,7 +33,8 @@ int strrlen(wchar_t * s)
 {
 	int len = wcslen(s);
 	int rlen = len;
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < len; i++) 
+	{
 		rlen += isFullWidth(s[i]);
 	}
 	return rlen;
@@ -45,7 +46,8 @@ int strrlen(wchar_t * s)
 */
 void draw_intro(int tick) 
 {
-	if (tick == 0) {
+	if (tick == 0) 
+	{
 		clear_console();
 		set_cursor_position(0, 0);
 	}
@@ -87,7 +89,7 @@ void draw_intro(int tick)
 	else
 	{
 		xyprintf(20, 10, "%s", ASCII_SHC);
-		xyprintf(1, 19, "Java 두명 타세요 ...");
+		xyprintf(1, 19, u8"Java 두명 타세요 ...");
 
 		if (tick > 60 + 30)
 		{
