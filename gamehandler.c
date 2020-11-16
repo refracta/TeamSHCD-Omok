@@ -140,16 +140,18 @@ void run_main(GameData* data)
  */
 void run_game(GameData* data)
 {
-	if (!data->status_inited) 
+	if (!data->status_inited)
 	{
-		set_console_size(CONSOLE_COLS, CONSOLE_LINES * 2);
+		set_console_size(CONSOLE_COLS, (int)(CONSOLE_LINES * 1.5));
 		data->status_inited = true;
 	}
 	char** grid = generate_grid(19, 19);
-	grid[1][2] = SG_BLACK;
+	grid[1][5] = SG_BLACK;
 	grid[1][3] = SG_WHITE;
-	render_grid(grid, 19, 19);
+	char* string = generate_grid_string(grid, 19, 19);
+	printf("%s", string);
 	get_key_input();
+	free(string);
 	free_grid(grid, 19);
 	clear_console();
 }
