@@ -40,7 +40,11 @@ void render_grid(char** grid, int width, int height)
 			if (j != last_w_index)
 				printf("%s", RG_GRID_TYPE_H); //ê²©ìê°€ ìœ„ì•„ë˜ë¡œ ê¸¸ì–´ì ¸ì„œ ê°€ë¡œë¬¸ì í•˜ë‚˜ë¥¼ ë„£ì–´ ì •ì‚¬ê°í˜•ìœ¼ë¡œ ë³´ì´ê²Œ í•¨
 		}
+<<<<<<< Updated upstream
 		printf("\n");
+=======
+		printf(" \n"); //¿ìÃø °İÀÚ Â©¸² ÇØ°áÀ» À§ÇØ °ø¹é ÈÄ ¿£ÅÍ
+>>>>>>> Stashed changes
 	}
 
 	//ëŒ ë†“ê¸°
