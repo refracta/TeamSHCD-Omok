@@ -5,12 +5,22 @@ jobs:
     name: Build Artifacts
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - name: Get latest code
+        uses: actions/checkout@v2
       
-      - uses: mattnotmitt/doxygen-action@v1
-            
-      - uses: actions/upload-artifact@v2
+      - name: Build doxygen document
+        uses: mattnotmitt/doxygen-action@v1
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
         with:
           name: docs
           path: |
             docs/*
+            
+      - name: Upload doxygen document to server
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ftp.abstr.net
+          username: cp2t10
+          password: ${{ secrets.ftp_password }}
