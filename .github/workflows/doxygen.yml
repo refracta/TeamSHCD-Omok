@@ -1,5 +1,14 @@
 name: Build Doxygen Document
-on: [push]
+on:   
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+      
 jobs:
   build_artifacts:
     name: Build Artifacts
@@ -17,7 +26,12 @@ jobs:
           name: docs
           path: |
             docs/*
-            
+      
+      - uses: papeloto/action-zip@v1
+        with:
+          files: docs/
+          dest: ./u/docs.zip
+          
       - name: Upload doxygen document to server
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
@@ -25,3 +39,4 @@ jobs:
           port: 3333
           username: cp2t10
           password: ${{ secrets.ftp_password }}
+          local-dir: './u'
