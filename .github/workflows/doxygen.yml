@@ -18,12 +18,16 @@ jobs:
           name: docs
           path: |
             docs/*
-      
-      - uses: papeloto/action-zip@v1
+
+      - name: Zipping Docs
+        uses: papeloto/action-zip@v1
         with:
           files: docs/
           dest: ./u/docs.zip
-          
+
+      - name: Generate checksum
+        run: shasum -a 512 ./u/docs.zip >> ./u/SHA512_CHECKSUM
+
       - name: Upload doxygen document to server
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
