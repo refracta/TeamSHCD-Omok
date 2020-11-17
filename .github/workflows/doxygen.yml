@@ -1,13 +1,5 @@
 name: Build Doxygen Document
-on:   
-  push:
-    branches:
-      - main
-      - develop
-  pull_request:
-    branches:
-      - main
-      - develop
+on:[push]
       
 jobs:
   build_artifacts:
