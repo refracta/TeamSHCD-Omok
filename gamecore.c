@@ -1,3 +1,7 @@
+/**
+  @file gamecore.c
+  @brief 게임 코어
+*/
 #include <stdlib.h>
 #include "inc/gamecore.h"
 

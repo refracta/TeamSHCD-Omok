@@ -1,3 +1,7 @@
+/**
+  @file interfacerenderer.c
+  @brief 인터페이스 렌더러
+*/
 #include "inc/environment.h"
 #include "inc/consoleutils.h"
 #include "inc/interfacerenderer.h"

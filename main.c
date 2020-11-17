@@ -1,3 +1,7 @@
+/**
+  @file main.c
+  @brief 메인
+*/
 #include "inc/gamehandler.h"
 
 
