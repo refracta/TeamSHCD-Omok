@@ -21,6 +21,7 @@ jobs:
       - name: Upload doxygen document to server
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
-          server: ftp.abstr.net:3333
+          server: ftp.abstr.net
+          port: 3333
           username: cp2t10
           password: ${{ secrets.ftp_password }}
