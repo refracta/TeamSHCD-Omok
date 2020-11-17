@@ -1,3 +1,7 @@
+/**
+  @file gamehandler.c
+  @brief 게임 유틸
+*/
 #include <stdbool.h>
 #include <locale.h>
 #include "inc/consoleutils.h"

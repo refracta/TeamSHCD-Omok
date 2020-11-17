@@ -1,3 +1,7 @@
+/**
+  @file systemutils.c
+  @brief 시스템 유틸
+*/
 #include <Windows.h>
 #include <time.h>
 #include "inc/systemutils.h"

@@ -1,3 +1,7 @@
+/**
+  @file consoleutils.c
+  @brief 콘솔 유틸
+*/
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdarg.h>

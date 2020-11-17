@@ -1,3 +1,7 @@
+/**
+  @file gamehandler.c
+  @brief 게임 렌더러
+*/
 #include <stdio.h>
 #include "inc/gamerenderer.h"
 
