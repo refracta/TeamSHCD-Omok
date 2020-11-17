@@ -1,5 +1,5 @@
 /**
-  @file gamehandler.c
+  @file gameutils.c
   @brief 게임 유틸
 */
 #include <stdbool.h>

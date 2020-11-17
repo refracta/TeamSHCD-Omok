@@ -1,5 +1,5 @@
 /**
-  @file gamehandler.c
+  @file gamerenderer.c
   @brief 게임 렌더러
 */
 #include <stdio.h>
