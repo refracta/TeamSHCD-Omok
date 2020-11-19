@@ -14,3 +14,4 @@
 #define RG_GRID_TYPE_V u8"│"
 
 void render_grid(char** grid, int width, int height);
+char* generate_grid_string(char** grid, int width, int height);
