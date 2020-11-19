@@ -2,13 +2,14 @@
 #include "inc/gamerenderer.h"
 #include <string.h>
 #include <malloc.h>
+#include "inc/consoleutils.h"
 
 void render_grid(char** grid, int width, int height);
 void play_put_stone_animation(char grid[][13], int stone_x, int stone_y);
 char *generate_grid_string(char** grid, int width, int height);
 
 /**
-* @brief 돌이 있는 배열을 입력받아서 격자와 함께 출력해주는 함수
+* @brief [Legacy] 돌이 있는 배열을 입력받아서 격자와 함께 출력해주는 함수
 * @param grid 돌 위치가 담긴 배열(격자, 흑돌은 'b', 백돌은 'w')
 * @param width 격자의 가로 크기
 * @param height 격자의 세로 크기
@@ -73,7 +74,7 @@ void render_grid(char** grid, int width, int height)
 */
 char *generate_grid_string(char** grid, int width, int height)
 {
-	char* grid_string = (char *)calloc(width * height * 2 + 1, sizeof(char));
+	char* grid_string = (char *)calloc(width * height * 2 * 3 + 1, sizeof(char));
 
 	//char* grid_string[1000] = { 0 };
 
@@ -128,6 +129,53 @@ char *generate_grid_string(char** grid, int width, int height)
 
 	return grid_string;
 }
+
+/**
+* @brief 돌이 있는 배열을 입력받아서 돌과 함께 색상을 입혀 지정된 오프셋 위치에 출력하는 함수
+* @param x 출력을 시작할 콘솔의 x좌표
+* @param y 출력을 시작할 콘솔의 y좌표
+* @param grid 돌 위치가 담긴 배열(격자, 흑돌은 'b', 백돌은 'w')
+* @param stone_colors 각 위치마다 해당 돌의 색상이 담길 배열
+* @param width 격자의 가로 크기
+* @param height 격자의 세로 크기
+* @param line_color 격자의 색상
+*/
+void draw_grid(int x, int y, char** grid, short **stone_colors, int width, int height, short line_color)
+{
+	short origin_color = get_print_color();
+	set_print_color(line_color);
+	xyprintf(x, y, "%s", generate_grid_string(grid, width, height));
+
+	for (int i = 0; i < height; i++)
+	{
+		for (int j = 0; j < width; j++)
+		{
+			if (grid[i][j] == 'b')
+			{
+				set_print_color(stone_colors[i][j]);
+				xyprintf(j * 2 + x, i + y, RG_BLACK); //까만돌은 속이 차있어서 왼쪽 격자 튀어나오는 부분을 해결 안해도 됨.
+			}
+			else if (grid[i][j] == 'w')
+			{
+				if ((grid[i][j - 1] == 'w' || grid[i][j - 1] == 'b') || j == 0) //흰돌(비어있는 동그라미)에서 1. 바로 앞에 돌이 놓여있거나 2. 첫 열에 놓는 경우엔 격자버그 처리 안함
+				{
+					set_print_color(stone_colors[i][j]);
+					xyprintf(j * 2 + x, i + y, RG_WHITE);
+				}
+				else
+				{
+					xyprintf(j * 2 - 1 + x, i + y, " " RG_WHITE); //나머지 경우엔, 한 칸 앞에서부터 [공백 + 돌]을 그린다.
+					set_print_color(stone_colors[i][j]);
+					xyprintf(j * 2 + x, i + y, RG_WHITE); //나머지 경우엔, 한 칸 앞에서부터 [공백 + 돌]을 그린다.
+				}
+			}
+		}
+	}
+
+	set_print_color(origin_color);
+	return;
+}
+
 
 /**
 * @brief

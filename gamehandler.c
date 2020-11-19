@@ -148,10 +148,12 @@ void run_game(GameData* data)
 	char** grid = generate_grid(19, 19);
 	grid[1][5] = SG_BLACK;
 	grid[1][3] = SG_WHITE;
-	char* string = generate_grid_string(grid, 19, 19);
-	printf("%s", string);
+
+	short stone_color[19][19]; //stone_color 생성 함수 개발 시 교체 (동적으로)
+	stone_color[1][5] = (short)12;
+	stone_color[1][3] = (short)12;
+	draw_grid(0, 8, grid, stone_color, 19, 19, 11);
 	get_key_input();
-	free(string);
 	free_grid(grid, 19);
 	clear_console();
 }
