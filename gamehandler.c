@@ -154,7 +154,7 @@ void run_game(GameData* data)
 	grid[1][3] = SG_WHITE;
 	render_grid(grid, 19, 19);
 	get_key_input();
-	free_grid(grid, 19);
+	free_double_pointer(grid, 19);
 	clear_console();
 }
 
