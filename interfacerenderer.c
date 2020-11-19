@@ -17,7 +17,7 @@
 * @param s wchar_t 문자열
 * @return 전각 여부 bool
 */
-bool isFullWidth(wchar_t c) 
+bool is_full_width(wchar_t c) 
 {
 	if (c < 256 || (c >= 0xff61 && c <= 0xff9f)) {
 		return false;
@@ -39,7 +39,7 @@ int strrlen(wchar_t * s)
 	int rlen = len;
 	for (int i = 0; i < len; i++) 
 	{
-		rlen += isFullWidth(s[i]);
+		rlen += is_full_width(s[i]);
 	}
 	return rlen;
 }
