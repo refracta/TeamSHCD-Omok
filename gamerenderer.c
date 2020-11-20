@@ -28,17 +28,17 @@ wchar_t* generate_grid_string(char** grid, int width, int height)
 	{
 		for (int j = 0; j < width; j++)
 		{
-			if (grid[i][j] == SG_BLACK)
+			if (grid[j][i] == SG_BLACK)
 			{
-				if ((grid[i][j - 1] == SG_WHITE || grid[i][j - 1] == SG_BLACK) || j == 0)
+				if ((grid[j - 1][i] == SG_WHITE || grid[j - 1][i] == SG_BLACK) || j == 0)
 					wcscat(grid_string, RG_BLACK);
 				else
 					wcscat(grid_string, L" " RG_BLACK);
 				continue;
 			}
-			else if (grid[i][j] == SG_WHITE)
+			else if (grid[j][i] == SG_WHITE)
 			{
-				if ((grid[i][j - 1] == SG_WHITE || grid[i][j - 1] == SG_BLACK) || j == 0)
+				if ((grid[j - 1][i] == SG_WHITE || grid[j - 1][i] == SG_BLACK) || j == 0)
 					wcscat(grid_string, RG_WHITE);
 				else
 					wcscat(grid_string, L" " RG_WHITE);
@@ -62,7 +62,7 @@ wchar_t* generate_grid_string(char** grid, int width, int height)
 				wcscat(grid_string, RG_GRID_TYPE_2);//하단 격자
 			else
 				wcscat(grid_string, RG_GRID_TYPE_5); //모서리가 아닌 격자
-			if ((j == last_w_index) || ((grid[i][j + 1] == SG_WHITE || grid[i][j + 1] == SG_BLACK)))
+			if ((j == last_w_index) || ((grid[j + 1][i] == SG_WHITE || grid[j + 1][i] == SG_BLACK)))
 				continue;
 			wcscat(grid_string, RG_GRID_TYPE_H); //격자가 위아래로 길어져서 가로문자 하나를 넣어 정사각형으로 보이게 함
 		}
@@ -93,9 +93,9 @@ void draw_grid(int x, int y, char** grid, short** stone_colors, int width, int h
 	{
 		for (int j = 0; j < width; j++)
 		{
-			char glyph = grid[i][j];
+			char glyph = grid[j][i];
 			if (glyph != SG_EMPTY) {
-				coloring_stone(x, y, j, i, grid[i][j], stone_colors[i][j]);
+				coloring_stone(x, y, j, i, grid[j][i], stone_colors[j][i]);
 			}
 		}
 	}
