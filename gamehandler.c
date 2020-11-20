@@ -40,7 +40,17 @@ typedef struct
  * @param data 게임 데이터 구조체의 포인터
  * @param data 게임 상태 열거형
  */
-void change_status(GameData* data, GameStatus status) {
+void change_status(GameData* data, GameStatus status) 
+{
+	if (data->status == GS_INTRO && status != GS_INTRO) 
+	{
+		set_default_mode();
+	} 
+	else if (status == GS_INTRO)
+	{
+		set_boost_mode();
+	}
+	
 	data->status = status;
 	data->status_inited = false;
 	data->tick = 0;
@@ -125,9 +135,9 @@ void run_main(GameData* data)
 		change_status(data, GS_GAME);
 		break;
 	case MM_NMOK:
-		xyprintf(32, 12, u8"추후지원 예정입니다.");
+		xywprintf(32, 12, L"추후지원 예정입니다.");
 		wait(1000);
-		xyprintf(32, 12, "                    ");
+		xywprintf(32, 12, L"                    ");
 		break;
 	case MM_HELP:
 		change_status(data, GS_HELP);
@@ -164,7 +174,7 @@ void run_game(GameData* data)
  */
 void run_help(GameData* data)
 {
-	xyprintf(32, 12, u8"도움말입니다.");
+	xywprintf(32, 12, L"도움말입니다.");
 }
 
 /**
@@ -194,8 +204,8 @@ void game_loop(GameData* data)
  */
 void init_game()
 {
-	// setlocale(LC_ALL, "ko-KR");
-	set_encoding_utf8();
+	set_encoding_cp949();
+	set_locale_korean();
 	set_cursor_visibility(false);
 	set_console_size(CONSOLE_COLS, CONSOLE_LINES);
 }

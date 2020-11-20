@@ -26,10 +26,33 @@ void set_locale_default() {
 }
 
 /**
+ * @brief 현재 콘솔 인코딩 설정을 CP949로 변경합니다.
+ */
+void set_encoding_cp949() {
+	system("chcp 949 > NUL");
+}
+
+/**
  * @brief UTF8 프로젝트의 한글 출력을 위해 콘솔 인코딩을 변경합니다.
  */
 void set_encoding_utf8() {
-	system("chcp 65001");
+	system("chcp 65001 > NUL");
+}
+
+/**
+ * @brief ASCII Animation을 위한 빠른 출력 모드로 설정합니다.
+ */
+void set_boost_mode() {
+	set_locale_default();
+	set_encoding_utf8();
+}
+
+/**
+ * @brief 출력 속도는 상대적으로 느리지만 콘솔 한글 입출력 가용성이 최대한 보장되는 기본 모드로 설정합니다.
+ */
+void set_default_mode() {
+	set_locale_korean();
+	set_encoding_cp949();
 }
 
 /**
@@ -127,7 +150,7 @@ void clear_console()
 
 /**
  * @brief 사용자가 누른 키를 가져온다.
- * @return getchar() value
+ * @return getch() value
  */
 int get_key_input() {
 	while (true)

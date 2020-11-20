@@ -10,7 +10,6 @@
 #include "inc/keycode.h"
 
 int run_menu(MenuData* data, bool disable_escape) {
-	set_locale_korean();
 	int return_value = -1;
 	draw_menu(data);
 	while (true)
@@ -23,7 +22,6 @@ int run_menu(MenuData* data, bool disable_escape) {
 		case ESCAPE_KEY:
 			if (!disable_escape)
 			{
-				set_locale_default();
 				return -1;
 			}
 			break;
@@ -45,7 +43,6 @@ int run_menu(MenuData* data, bool disable_escape) {
 		case ENTER_KEY:
 			Beep(494 * 2, 100);
 			Beep(392 * 2, 100);
-			set_locale_default();
 			return data->current_index;
 			break;
 		}
