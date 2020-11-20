@@ -14,15 +14,15 @@ typedef struct {
 } MenuData;
 #endif
 
-#define ASCII_TITLE_SCHD (\
-" .d8888b.   .d8888b.  888    888 8888888b. \n" \
-"d88P  Y88b d88P  Y88b 888    888 888  \"Y88b\n" \
+#define ASCII_TITLE_SHCD (\
+" .d8888b.  888    888  .d8888b.  8888888b. \n" \
+"d88P  Y88b 888    888 d88P  Y88b 888  \"Y88b\n" \
 "Y88b.      888    888 888    888 888    888\n" \
-" \"Y888b.   888        8888888888 888    888\n" \
-"    \"Y88b. 888        888    888 888    888\n" \
+" \"Y888b.   8888888888 888        888    888\n" \
+"    \"Y88b. 888    888 888        888    888\n" \
 "      \"888 888    888 888    888 888    888\n" \
-"Y88b  d88P Y88b  d88P 888    888 888  .d88P\n" \
-" \"Y8888P\"   \"Y8888P\"  888    888 8888888P\" ")
+"Y88b  d88P 888    888 Y88b  d88P 888  .d88P\n" \
+" \"Y8888P\"  888    888  \"Y8888P\"  8888888P\" ")
 
 #define ASCII_SHC (\
 "   ---------------------------. \n" \
@@ -91,18 +91,6 @@ typedef struct {
 
 #define INTRO_FULL_TICK 210
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
-
-#define RG_MENU_TYPE_1 "┌"
-#define RG_MENU_TYPE_2 "┬"
-#define RG_MENU_TYPE_3 "┐"
-#define RG_MENU_TYPE_4 "├"
-#define RG_MENU_TYPE_5 "┼"
-#define RG_MENU_TYPE_6 "┤"
-#define RG_MENU_TYPE_7 "└"
-#define RG_MENU_TYPE_8 "┴"
-#define RG_MENU_TYPE_9 "┘"
-#define RG_MENU_TYPE_H "─"
-#define RG_MENU_TYPE_V = "│"
 
 void draw_intro(int tick);
 void draw_menu(MenuData* data);

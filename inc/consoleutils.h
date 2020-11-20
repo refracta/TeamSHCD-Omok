@@ -19,7 +19,10 @@ typedef enum
 
 void set_locale_korean();
 void set_locale_default();
+void set_encoding_cp949();
 void set_encoding_utf8();
+void set_boost_mode();
+void set_default_mode();
 void set_cursor_visibility(bool);
 void set_cursor_position(int, int);
 void set_print_color(int);
