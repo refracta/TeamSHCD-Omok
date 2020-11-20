@@ -92,17 +92,5 @@ typedef struct {
 #define INTRO_FULL_TICK 210
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 
-#define RG_MENU_TYPE_1 "┌"
-#define RG_MENU_TYPE_2 "┬"
-#define RG_MENU_TYPE_3 "┐"
-#define RG_MENU_TYPE_4 "├"
-#define RG_MENU_TYPE_5 "┼"
-#define RG_MENU_TYPE_6 "┤"
-#define RG_MENU_TYPE_7 "└"
-#define RG_MENU_TYPE_8 "┴"
-#define RG_MENU_TYPE_9 "┘"
-#define RG_MENU_TYPE_H "─"
-#define RG_MENU_TYPE_V = "│"
-
 void draw_intro(int tick);
 void draw_menu(MenuData* data);
