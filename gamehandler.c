@@ -153,6 +153,8 @@ void run_game(GameData* data)
 	stone_color[1][5] = (short)12;
 	stone_color[1][3] = (short)12;
 	draw_grid(0, 8, grid, stone_color, 19, 19, 11);
+	coloring_stone(0, 8, 11, 10, 'w', 13);
+	coloring_stone(0, 8, 9, 10, 'b', 13);
 	get_key_input();
 	free_grid(grid, 19);
 	clear_console();

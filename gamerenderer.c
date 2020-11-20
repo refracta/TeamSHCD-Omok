@@ -140,7 +140,7 @@ char *generate_grid_string(char** grid, int width, int height)
 * @param height 격자의 세로 크기
 * @param line_color 격자의 색상
 */
-void draw_grid(int x, int y, char** grid, short **stone_colors, int width, int height, short line_color)
+void draw_grid(int x, int y, char** grid, short** stone_colors, int width, int height, short line_color)
 {
 	short origin_color = get_print_color();
 	set_print_color(line_color);
@@ -176,6 +176,25 @@ void draw_grid(int x, int y, char** grid, short **stone_colors, int width, int h
 	return;
 }
 
+/**
+* @brief b혹은 w를 입력받아서 지정된 위치에 색상과 함께 돌을 출력한다.
+* @param offset_x 콘솔 상에서 x좌표 오프셋 (콘솔의 왼쪽에서 격자의 시작점까지)
+* @param offset_y 콘솔 상에서 y좌표 오프셋 (콘솔의 위쪽에서 격자의 시작점까지)
+* @param x 출력을 시작할 격자의 x좌표
+* @param y 출력을 시작할 격자의 y좌표
+* @param glyph SG (b 혹은 w)
+* @param color 돌 색상
+*/
+void coloring_stone(int offset_x, int offset_y, int x, int y, char glyph, short color)
+{
+	short origin_color = get_print_color();
+
+	set_print_color(color);
+	xyprintf(x * 2 + offset_x, y + offset_y, glyph == 'b' ? RG_BLACK : (glyph == 'w' ? RG_WHITE : "X"));
+
+	set_print_color(origin_color);
+	return;
+}
 
 /**
 * @brief
