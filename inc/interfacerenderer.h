@@ -12,6 +12,16 @@ typedef struct {
 	short element_tbcolor;
 	short selected_tbcolor;
 } MenuData;
+
+typedef struct {
+	wchar_t* message;
+	int rlen;
+	int x;
+	int y;
+	short outline_tbcolor;
+	short message_tbcolor;
+	short text_tbcolor;
+} PromptData;
 #endif
 
 #define ASCII_TITLE_SHCD (\
@@ -92,5 +102,9 @@ typedef struct {
 #define INTRO_FULL_TICK 210
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 
+#include <stdbool.h>
 void draw_intro(int tick);
 void draw_menu(MenuData* data);
+void draw_prompt(PromptData*);
+bool is_full_width(wchar_t);
+int strrlen(wchar_t*);
