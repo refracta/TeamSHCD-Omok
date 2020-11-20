@@ -87,7 +87,9 @@ void select_stone_position()
 		case ENTER_KEY:
 
 			break;
-
+		}
+	}
+}
 /**
 * @brief 프롬프트를 실행한다.
 * @param data 프롬프트 데이터
