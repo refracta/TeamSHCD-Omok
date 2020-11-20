@@ -21,7 +21,8 @@ int run_menu(MenuData* data, bool disable_escape) {
 	while (true)
 	{
 		int c = get_key_input();
-		if (c == 0xE0 || c == 0) {
+		if (c == 0xE0 || c == 0) 
+		{
 			c = get_key_input();
 		}
 		switch (c) {
@@ -32,15 +33,16 @@ int run_menu(MenuData* data, bool disable_escape) {
 			}
 			break;
 		case DOWN_KEY:
-			// TODO mod base로 변경
-			if (data->current_index < data->length - 1) {
+			if (data->current_index < data->length - 1) 
+			{
 				data->current_index++;
 				draw_menu(data);
 				Beep(349 * 2, 100);
 			}
 			break;
 		case UP_KEY:
-			if (data->current_index > 0) {
+			if (data->current_index > 0) 
+			{
 				data->current_index--;
 				draw_menu(data);
 				Beep(349 * 2, 100);
@@ -56,6 +58,38 @@ int run_menu(MenuData* data, bool disable_escape) {
 	}
 }
 
+void select_stone_position() 
+{
+	while (true)
+	{
+		int c = get_key_input();
+		if (c == 0xE0 || c == 0) 
+		{
+			c = get_key_input();
+		}
+		switch (c) {
+		case ESCAPE_KEY:
+
+			break;
+		case UP_KEY:
+
+			break;
+		case DOWN_KEY:
+
+			break;
+		case RIGHT_KEY:
+
+			break;
+		case LEFT_KEY:
+
+			break;
+		case SPACE_KEY:
+		case ENTER_KEY:
+
+			break;
+		}
+	}
+}
 /**
 * @brief 프롬프트를 실행한다.
 * @param data 프롬프트 데이터
