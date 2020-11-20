@@ -9,6 +9,18 @@
 #include <malloc.h>
 #include "inc/consoleutils.h"
 #include <wchar.h>
+#include <stdbool.h>
+
+wchar_t* sg2rg(char sg) {
+	switch (sg) {
+	case SG_BLACK:
+		return RG_BLACK;
+	case SG_WHITE:
+		return RG_WHITE;
+	default:
+		return NULL;
+	}
+}
 
 /**
 * @brief 돌이 있는 배열을 입력받아서 격자와 함께 string으로 반환해주는 함수
@@ -18,7 +30,7 @@
 */
 wchar_t* generate_grid_string(char** grid, int width, int height)
 {
-	wchar_t* grid_string = (wchar_t*) calloc(width * height * 2 * sizeof(wchar_t) + 1, sizeof(wchar_t));
+	wchar_t* grid_string = (wchar_t*)calloc(width * height * 2 * sizeof(wchar_t) + 1, sizeof(wchar_t));
 
 	const int last_w_index = width - 1;
 	const int last_h_index = height - 1;
@@ -28,20 +40,13 @@ wchar_t* generate_grid_string(char** grid, int width, int height)
 	{
 		for (int j = 0; j < width; j++)
 		{
-			if (grid[j][i] == SG_BLACK)
-			{
-				if ((grid[j - 1][i] == SG_WHITE || grid[j - 1][i] == SG_BLACK) || j == 0)
-					wcscat(grid_string, RG_BLACK);
-				else
-					wcscat(grid_string, L" " RG_BLACK);
-				continue;
-			}
-			else if (grid[j][i] == SG_WHITE)
-			{
-				if ((grid[j - 1][i] == SG_WHITE || grid[j - 1][i] == SG_BLACK) || j == 0)
-					wcscat(grid_string, RG_WHITE);
-				else
-					wcscat(grid_string, L" " RG_WHITE);
+			char glyph = grid[j][i];
+			if (glyph != SG_EMPTY) {
+				bool is_need_padding = !(grid[j - 1][i] != SG_EMPTY || j == 0);
+				if (is_need_padding) {
+					wcscat(grid_string, L" ");
+				}
+				wcscat(grid_string, RG_BLACK);
 				continue;
 			}
 			if (i == first_index && j == first_index)
@@ -62,7 +67,7 @@ wchar_t* generate_grid_string(char** grid, int width, int height)
 				wcscat(grid_string, RG_GRID_TYPE_2);//하단 격자
 			else
 				wcscat(grid_string, RG_GRID_TYPE_5); //모서리가 아닌 격자
-			if ((j == last_w_index) || ((grid[j + 1][i] == SG_WHITE || grid[j + 1][i] == SG_BLACK)))
+			if ((j == last_w_index) || (grid[j + 1][i] != SG_EMPTY))
 				continue;
 			wcscat(grid_string, RG_GRID_TYPE_H); //격자가 위아래로 길어져서 가로문자 하나를 넣어 정사각형으로 보이게 함
 		}
