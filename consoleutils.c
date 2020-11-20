@@ -255,27 +255,19 @@ void xyprintf(int x, int y, char* format, ...)
  */
 void xywprintf(int x, int y, wchar_t* format, ...)
 {
-	wchar_t buffer[BUFSIZ];
-	int buffer_size = sizeof(buffer) / sizeof(wchar_t);
-	wchar_t* buffer_ptr = buffer;
-
 	va_list arg_ptr;
+
 	va_start(arg_ptr, format);
-	int length = _vsnwprintf(buffer_ptr, buffer_size, format, arg_ptr) + 1;
+	int buffer_size = _vscwprintf(format, arg_ptr) + 1;
 	va_end(arg_ptr);
 
-	if (length > buffer_size)
-	{
-		buffer_ptr = malloc(sizeof(wchar_t) * length);
-		if (buffer_ptr == NULL) {
-			return;
-		}
-		buffer_size = length;
-
-		va_start(arg_ptr, format);
-		length = _vsnwprintf(buffer_ptr, buffer_size, format, arg_ptr) + 1;
-		va_end(arg_ptr);
+	wchar_t* buffer_ptr = malloc(sizeof(wchar_t) * buffer_size);
+	if (buffer_ptr == NULL) {
+		return;
 	}
+	va_start(arg_ptr, format);
+	_vsnwprintf(buffer_ptr, buffer_size, format, arg_ptr);
+	va_end(arg_ptr);
 
 	COORD position = get_cursor_position();
 	x = x < 0 ? position.X : x;
@@ -283,7 +275,7 @@ void xywprintf(int x, int y, wchar_t* format, ...)
 
 	int delta = 0;
 	wchar_t* target = buffer_ptr;
-	for (int i = 0; i < length; i++)
+	for (int i = 0; i < buffer_size; i++)
 	{
 		if (buffer_ptr[i] == '\n' || buffer_ptr[i] == '\0')
 		{
@@ -293,9 +285,5 @@ void xywprintf(int x, int y, wchar_t* format, ...)
 			target = buffer_ptr + i + 1;
 		}
 	}
-
-	if (buffer_ptr != buffer)
-	{
-		free(buffer_ptr);
-	}
+	free(buffer_ptr);
 }
