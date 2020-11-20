@@ -7,10 +7,7 @@
 #include <string.h>
 #include <malloc.h>
 #include "inc/consoleutils.h"
-
-void render_grid(char** grid, int width, int height);
-void play_put_stone_animation(char grid[][13], int stone_x, int stone_y);
-char *generate_grid_string(char** grid, int width, int height);
+#include <wchar.h>
 
 /**
 * @brief [Legacy] 돌이 있는 배열을 입력받아서 격자와 함께 출력해주는 함수
@@ -76,11 +73,9 @@ void render_grid(char** grid, int width, int height)
 * @param width 격자의 가로 크기
 * @param height 격자의 세로 크기
 */
-char *generate_grid_string(char** grid, int width, int height)
+wchar_t *generate_grid_string(char** grid, int width, int height)
 {
-	char* grid_string = (char *)calloc(width * height * 2 * 3 + 1, sizeof(char));
-
-	//char* grid_string[1000] = { 0 };
+	wchar_t* grid_string = (wchar_t *)calloc(width * height * 2 * sizeof(wchar_t) + 1, sizeof(wchar_t));
 
 	const int last_w_index = width - 1;
 	const int last_h_index = height - 1;
@@ -93,42 +88,42 @@ char *generate_grid_string(char** grid, int width, int height)
 			if (grid[i][j] == 'b')
 			{
 				if ((grid[i][j - 1] == 'w' || grid[i][j - 1] == 'b') || j == 0)
-					strcat(grid_string, RG_BLACK);
+					wcscat(grid_string, RG_BLACK);
 				else
-					strcat(grid_string, " " RG_BLACK);
+					wcscat(grid_string, L" " RG_BLACK);
 				continue;
 			}
 			else if (grid[i][j] == 'w')
 			{
 				if ((grid[i][j - 1] == 'w' || grid[i][j - 1] == 'b') || j == 0)
-					strcat(grid_string, RG_WHITE);
+					wcscat(grid_string, RG_WHITE);
 				else
-					strcat(grid_string, " " RG_WHITE);
+					wcscat(grid_string, L" " RG_WHITE);
 				continue;
 			}
 			if (i == first_index && j == first_index)
-				strcat(grid_string, RG_GRID_TYPE_7); //좌상단 격자
+				wcscat(grid_string, RG_GRID_TYPE_7); //좌상단 격자
 			else if (i == first_index && j == last_w_index)
-				strcat(grid_string, RG_GRID_TYPE_9); //우상단 격자
+				wcscat(grid_string, RG_GRID_TYPE_9); //우상단 격자
 			else if (i == first_index)
-				strcat(grid_string, RG_GRID_TYPE_8); //상단 격자
+				wcscat(grid_string, RG_GRID_TYPE_8); //상단 격자
 			else if (i != last_h_index && j == first_index)
-				strcat(grid_string, RG_GRID_TYPE_4); //좌측 격자
+				wcscat(grid_string, RG_GRID_TYPE_4); //좌측 격자
 			else if (i != last_h_index && j == last_w_index)
-				strcat(grid_string, RG_GRID_TYPE_6); //우측 격자
+				wcscat(grid_string, RG_GRID_TYPE_6); //우측 격자
 			else if (i == last_h_index && j == first_index)
-				strcat(grid_string, RG_GRID_TYPE_1); //좌하단 격자
+				wcscat(grid_string, RG_GRID_TYPE_1); //좌하단 격자
 			else if (i == last_h_index && j == last_w_index)
-				strcat(grid_string, RG_GRID_TYPE_3); //우하단 격자
+				wcscat(grid_string, RG_GRID_TYPE_3); //우하단 격자
 			else if (i == last_h_index)
-				strcat(grid_string, RG_GRID_TYPE_2);//하단 격자
+				wcscat(grid_string, RG_GRID_TYPE_2);//하단 격자
 			else
-				strcat(grid_string, RG_GRID_TYPE_5); //모서리가 아닌 격자
+				wcscat(grid_string, RG_GRID_TYPE_5); //모서리가 아닌 격자
 			if ((j == last_w_index) || ((grid[i][j+1] == 'w' || grid[i][j+1] == 'b')))
 				continue;
-			strcat(grid_string, RG_GRID_TYPE_H); //격자가 위아래로 길어져서 가로문자 하나를 넣어 정사각형으로 보이게 함
+			wcscat(grid_string, RG_GRID_TYPE_H); //격자가 위아래로 길어져서 가로문자 하나를 넣어 정사각형으로 보이게 함
 		}
-		strcat(grid_string, " \n");
+		wcscat(grid_string, L" \n");
 	}
 
 	return grid_string;
@@ -148,7 +143,10 @@ void draw_grid(int x, int y, char** grid, short** stone_colors, int width, int h
 {
 	short origin_color = get_print_color();
 	set_print_color(line_color);
-	xyprintf(x, y, "%s", generate_grid_string(grid, width, height));
+
+	set_cursor_position(0, 8);
+	wprintf(L"%s", generate_grid_string(grid, width, height));
+	//xywprintf(0, 8, L"%s", generate_grid_string(grid, width, height));
 
 	for (int i = 0; i < height; i++)
 	{
@@ -157,20 +155,20 @@ void draw_grid(int x, int y, char** grid, short** stone_colors, int width, int h
 			if (grid[i][j] == 'b')
 			{
 				set_print_color(stone_colors[i][j]);
-				xyprintf(j * 2 + x, i + y, RG_BLACK); //까만돌은 속이 차있어서 왼쪽 격자 튀어나오는 부분을 해결 안해도 됨.
+				xywprintf(j * 2 + x, i + y, RG_BLACK); //까만돌은 속이 차있어서 왼쪽 격자 튀어나오는 부분을 해결 안해도 됨.
 			}
 			else if (grid[i][j] == 'w')
 			{
 				if ((grid[i][j - 1] == 'w' || grid[i][j - 1] == 'b') || j == 0) //흰돌(비어있는 동그라미)에서 1. 바로 앞에 돌이 놓여있거나 2. 첫 열에 놓는 경우엔 격자버그 처리 안함
 				{
 					set_print_color(stone_colors[i][j]);
-					xyprintf(j * 2 + x, i + y, RG_WHITE);
+					xywprintf(j * 2 + x, i + y, RG_WHITE);
 				}
 				else
 				{
-					xyprintf(j * 2 - 1 + x, i + y, " " RG_WHITE); //나머지 경우엔, 한 칸 앞에서부터 [공백 + 돌]을 그린다.
+					xywprintf(j * 2 - 1 + x, i + y, L" " RG_WHITE); //나머지 경우엔, 한 칸 앞에서부터 [공백 + 돌]을 그린다.
 					set_print_color(stone_colors[i][j]);
-					xyprintf(j * 2 + x, i + y, RG_WHITE); //나머지 경우엔, 한 칸 앞에서부터 [공백 + 돌]을 그린다.
+					xywprintf(j * 2 + x, i + y, RG_WHITE); //나머지 경우엔, 한 칸 앞에서부터 [공백 + 돌]을 그린다.
 				}
 			}
 		}
@@ -194,7 +192,7 @@ void coloring_stone(int offset_x, int offset_y, int x, int y, char glyph, short 
 	short origin_color = get_print_color();
 
 	set_print_color(color);
-	xyprintf(x * 2 + offset_x, y + offset_y, glyph == 'b' ? RG_BLACK : (glyph == 'w' ? RG_WHITE : "X"));
+	xywprintf(x * 2 + offset_x, y + offset_y, glyph == 'b' ? RG_BLACK : (glyph == 'w' ? RG_WHITE : L"X"));
 
 	set_print_color(origin_color);
 	return;

@@ -163,7 +163,7 @@ void run_game(GameData* data)
 	grid[1][5] = SG_BLACK;
 	grid[1][3] = SG_WHITE;
 
-	short stone_color[19][19]; //stone_color 생성 함수 개발 시 교체 (동적으로)
+	short **stone_color = malloc_double_pointer(sizeof(short), 19, 19);
 	stone_color[1][5] = (short)12;
 	stone_color[1][3] = (short)12;
 	draw_grid(0, 8, grid, stone_color, 19, 19, 11);
@@ -171,6 +171,7 @@ void run_game(GameData* data)
 	coloring_stone(0, 8, 9, 10, 'b', 13);
 	get_key_input();
 	free_double_pointer(grid, 19);
+	free_double_pointer(stone_color, 19);
 	clear_console();
 }
 
