@@ -154,15 +154,21 @@ void run_main(GameData* data)
  */
 void run_game(GameData* data)
 {
-	if (!data->status_inited) 
+	if (!data->status_inited)
 	{
-		set_console_size(CONSOLE_COLS, CONSOLE_LINES * 2);
+		set_console_size(CONSOLE_COLS, (int)(CONSOLE_LINES * 1.5));
 		data->status_inited = true;
 	}
 	char** grid = generate_grid(19, 19);
-	grid[1][2] = SG_BLACK;
+	grid[1][5] = SG_BLACK;
 	grid[1][3] = SG_WHITE;
-	render_grid(grid, 19, 19);
+
+	short stone_color[19][19]; //stone_color 생성 함수 개발 시 교체 (동적으로)
+	stone_color[1][5] = (short)12;
+	stone_color[1][3] = (short)12;
+	draw_grid(0, 8, grid, stone_color, 19, 19, 11);
+	coloring_stone(0, 8, 11, 10, 'w', 13);
+	coloring_stone(0, 8, 9, 10, 'b', 13);
 	get_key_input();
 	free_double_pointer(grid, 19);
 	clear_console();
