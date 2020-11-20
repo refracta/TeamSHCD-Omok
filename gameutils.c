@@ -7,7 +7,10 @@
 #include "inc/consoleutils.h"
 #include "inc/systemutils.h"
 #include "inc/interfacerenderer.h"
+#include "inc/gamerenderer.h"
 #include "inc/keycode.h"
+#include "inc/gamecore.h"
+
 
 /**
 * @brief 메뉴를 실행한다.
@@ -58,34 +61,39 @@ int run_menu(MenuData* data, bool disable_escape) {
 	}
 }
 
-void select_stone_position() 
+void select_stone_position(int x, int y, char ** grid, short ** stone_colors, int width, int height, char player_glyph)
 {
+	int cursor_x = width / 2;
+	int cursor_y = height / 2;
 	while (true)
 	{
+		draw_grid(x, y, grid, stone_colors, width, height, TO_TBCOLOR(WHITE, BLACK));
+		coloring_stone(x, y, cursor_x, cursor_y, SG_BLACK, TO_TBCOLOR(LIGHT_GREEN, GREEN));
 		int c = get_key_input();
 		if (c == 0xE0 || c == 0) 
 		{
 			c = get_key_input();
 		}
 		switch (c) {
-		case ESCAPE_KEY:
-
-			break;
 		case UP_KEY:
-
+			cursor_y = cursor_y > 0 ? cursor_y - 1 : height - 1;
 			break;
 		case DOWN_KEY:
-
+			cursor_y = cursor_y + 1 < height ? cursor_y + 1 : 0;
 			break;
 		case RIGHT_KEY:
-
+			cursor_x = cursor_x + 1 < width ? cursor_x + 1 : 0;
 			break;
 		case LEFT_KEY:
-
+			cursor_x = cursor_x > 0 ? cursor_x - 1 : width - 1;
 			break;
 		case SPACE_KEY:
 		case ENTER_KEY:
-
+			grid[cursor_x][cursor_y] = player_glyph;
+			stone_colors[cursor_x][cursor_y] = (player_glyph == SG_BLACK ? TO_TBCOLOR(RED, BLACK) : TO_TBCOLOR(BLUE, BLACK));
+			draw_grid(x, y, grid, stone_colors, width, height, TO_TBCOLOR(WHITE, BLACK));
+			Beep(450, 20);
+			return;
 			break;
 		}
 	}

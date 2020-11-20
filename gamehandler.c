@@ -31,6 +31,10 @@ typedef enum
 typedef struct
 {
 	GameStatus status;
+	wchar_t player1_name[BUFSIZ];
+	wchar_t player2_name[BUFSIZ];
+	char** grid;
+	short** stone_colors;
 	bool status_inited;
 	int tick;
 } GameData;
@@ -118,6 +122,25 @@ int run_main_menu() {
 	return index;
 }
 
+void * run_player_name_prompt(GameData* data) {
+	PromptData prompt;
+	prompt.message = L"Player1의 이름을 입력하세요";
+	prompt.x = 39;
+	prompt.y = 20;
+	prompt.rlen = 30;
+	prompt.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
+	prompt.text_tbcolor = TO_TBCOLOR(RED, BLACK);
+	prompt.message_tbcolor = TO_TBCOLOR(RED, WHITE);
+	wchar_t* player1_name = run_prompt(&prompt);
+	wcscpy(data->player1_name, player1_name);
+	free(player1_name);
+	prompt.message = L"Player2의 이름을 입력하세요";
+	prompt.text_tbcolor = TO_TBCOLOR(BLUE, BLACK);
+	prompt.message_tbcolor = TO_TBCOLOR(BLUE, WHITE);
+	wchar_t* player2_name = run_prompt(&prompt);
+	wcscpy(data->player2_name, player2_name);
+}
+
 /**
  * @brief 메인 상태에서 실행되는 함수
  * @param data 게임 데이터 구조체의 포인터
@@ -158,22 +181,22 @@ void run_game(GameData* data)
 	if (!data->status_inited)
 	{
 		set_console_size(CONSOLE_COLS, (int)(CONSOLE_LINES * 1.5));
+		run_player_name_prompt(data);
+		clear_console();
+		data->grid = generate_grid(19, 19);
+		data->stone_colors = (short**) malloc_double_pointer(sizeof(short), 19, 19);
+		draw_grid(10, 10, data->grid, data->stone_colors, 19, 19, TO_TBCOLOR(WHITE, BLACK));
 		data->status_inited = true;
 	}
-	char** grid = generate_grid(25, 19);
-	grid[1][5] = SG_BLACK;
-	grid[1][3] = SG_WHITE;
+	xywprintf(0, 1, L"Player1: %s", data->player1_name);
+	xywprintf(0, 2, L"Player2: %s", data->player2_name);
+	select_stone_position(10, 10, data->grid, data->stone_colors, 19, 19, (data->tick++ % 2 == 0) ? SG_BLACK : SG_WHITE);
+	
 
-	short **stone_color = malloc_double_pointer(sizeof(short), 25, 19);
-	stone_color[1][5] = (short)12;
-	stone_color[1][3] = (short)12;
-	draw_grid(0, 8, grid, stone_color, 25, 19, 11);
-	coloring_stone(0, 8, 11, 10, 'w', 13);
-	coloring_stone(0, 8, 9, 10, 'b', 13);
-	get_key_input();
-	free_double_pointer(grid, 25);
-	free_double_pointer(stone_color, 25);
-	clear_console();
+
+	//free_double_pointer(grid, 25);
+	//free_double_pointer(stone_color, 25);
+	//clear_console();
 }
 
 /**
@@ -182,17 +205,6 @@ void run_game(GameData* data)
  */
 void run_help(GameData* data)
 {
-	PromptData p;
-	p.message = L"창 메시지";
-	p.x = 10;
-	p.y = 10;
-	p.rlen = 50;
-	p.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
-	p.text_tbcolor = TO_TBCOLOR(BLUE, RED);
-	p.message_tbcolor = TO_TBCOLOR(WHITE, GRAY);
-	wchar_t * text = run_prompt(&p);
-	xywprintf(5, 5, L"Input Result: %s", text);
-	wait(1000);
 
 }
 
