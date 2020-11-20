@@ -143,10 +143,7 @@ void draw_grid(int x, int y, char** grid, short** stone_colors, int width, int h
 {
 	short origin_color = get_print_color();
 	set_print_color(line_color);
-
-	set_cursor_position(0, 8);
-	wprintf(L"%s", generate_grid_string(grid, width, height));
-	//xywprintf(0, 8, L"%s", generate_grid_string(grid, width, height));
+	xywprintf(x, y, generate_grid_string(grid, width, height));
 
 	for (int i = 0; i < height; i++)
 	{
