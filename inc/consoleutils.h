@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include <wchar.h>
+#include <stdbool.h>
 
 #ifndef __CONSOLEUTILS_H__
 #define __CONSOLEUTILS_H__
@@ -13,6 +14,9 @@ typedef enum
 } ConsoleColor;
 #endif
 
+#define CURSOR_SIZE_SMALL 25
+#define CURSOR_SIZE_LARGE 100
+
 #define TO_TEXT_COLOR(tbcolor) (tbcolor / 16) 
 #define TO_BACKGROUND_COLOR(tbcolor) (tbcolor % 16) 
 #define TO_TBCOLOR(text_color, background_color) (16 * background_color + text_color)
@@ -23,8 +27,10 @@ void set_encoding_cp949();
 void set_encoding_utf8();
 void set_boost_mode();
 void set_default_mode();
+bool get_cursor_visibility();
 void set_cursor_visibility(bool);
 void set_cursor_position(int, int);
+void set_cursor_size(int);
 void set_print_color(int);
 short get_print_color();
 void set_console_size(int, int);

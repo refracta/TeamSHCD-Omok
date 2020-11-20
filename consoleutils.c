@@ -56,6 +56,20 @@ void set_default_mode() {
 }
 
 /**
+ * @brief 콘솔 커서의 가시 상태를 반환한다.
+ * @return 가시 상태 부울
+ */
+bool get_cursor_visibility()
+{
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	CONSOLE_CURSOR_INFO cursor_info;
+
+	GetConsoleCursorInfo(out, &cursor_info);
+	return cursor_info.bVisible;
+}
+
+/**
  * @brief 콘솔 커서의 가시 상태를 변경한다.
  * @param visibility 가시 상태
  */
@@ -79,6 +93,18 @@ void set_cursor_position(int x, int y)
 {
 	COORD position = { x, y };
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), position);
+}
+
+/**
+ * @brief 콘솔 커서의 크기를 설정한다.
+ * @param cursor_size 커서 크기 (0~100)
+ */
+void set_cursor_size(int cursor_size) {
+	CONSOLE_CURSOR_INFO cursor_info;
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetConsoleCursorInfo(handle, &cursor_info);
+	cursor_info.dwSize = cursor_size;
+	SetConsoleCursorInfo(handle, &cursor_info);
 }
 
 /**
@@ -150,14 +176,14 @@ void clear_console()
 
 /**
  * @brief 사용자가 누른 키를 가져온다.
- * @return getch() value
+ * @return _getch() value
  */
 int get_key_input() {
 	while (true)
 	{
-		if (kbhit())
+		if (_kbhit())
 		{
-			return getch();
+			return _getch();
 		}
 	}
 }

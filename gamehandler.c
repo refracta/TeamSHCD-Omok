@@ -74,7 +74,8 @@ int skip_intro(int c) {
 void run_intro(GameData* data)
 {
 	draw_intro(data->tick++);
-	if (wait_with_handler(20, skip_intro) > -1 || data->tick > INTRO_FULL_TICK) {
+	if (wait_with_handler(20, skip_intro) > -1 || data->tick > INTRO_FULL_TICK) 
+	{
 		change_status(data, GS_MAIN);
 	}
 }
@@ -181,7 +182,18 @@ void run_game(GameData* data)
  */
 void run_help(GameData* data)
 {
-	xywprintf(32, 12, L"도움말입니다.");
+	PromptData p;
+	p.message = L"창 메시지";
+	p.x = 10;
+	p.y = 10;
+	p.rlen = 50;
+	p.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
+	p.text_tbcolor = TO_TBCOLOR(BLUE, RED);
+	p.message_tbcolor = TO_TBCOLOR(WHITE, GRAY);
+	wchar_t * text = run_prompt(&p);
+	xywprintf(5, 5, L"Input Result: %s", text);
+	wait(1000);
+
 }
 
 /**
