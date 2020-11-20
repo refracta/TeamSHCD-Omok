@@ -11,6 +11,11 @@
 #include <wchar.h>
 #include <stdbool.h>
 
+/**
+* @brief SimpleGlyph To RenderGlyph, SimpleGlyph를 RenderGlyph로 변환합니다.
+* @param sg SimpleGlyph
+* @return RenderGlyph
+*/
 wchar_t* sg2rg(char sg) {
 	switch (sg) {
 	case SG_BLACK:
@@ -46,7 +51,7 @@ wchar_t* generate_grid_string(char** grid, int width, int height)
 				if (is_need_padding) {
 					wcscat(grid_string, L" ");
 				}
-				wcscat(grid_string, RG_BLACK);
+				wcscat(grid_string, sg2rg(glyph));
 				continue;
 			}
 			if (i == first_index && j == first_index)
