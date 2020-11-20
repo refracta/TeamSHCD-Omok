@@ -12,6 +12,6 @@ typedef enum
 } StoneGlyph;
 #endif
 
-char** malloc_grid(int width, int height);
-void free_grid(char** grid, int width);
-char** generate_grid(int width, int height);
+void** malloc_double_pointer(int, int , int);
+void free_double_pointer(void** , int);
+char** generate_grid(int , int );

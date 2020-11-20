@@ -1,0 +1,35 @@
+name: Upload Doxygen Document (main, develop)
+on: 
+  push:
+    branches:
+      - main
+      - develop
+      
+jobs:
+  build_doxygen:
+    name: Upload Doxygen Document
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+      
+      - name: Build doxygen document
+        uses: mattnotmitt/doxygen-action@v1
+
+      - name: Zipping Docs
+        uses: papeloto/action-zip@v1
+        with:
+          files: docs/
+          dest: ./u/docs.zip
+
+      - name: Generate checksum
+        run: shasum -a 512 ./u/docs.zip >> ./u/SHA512_CHECKSUM
+
+      - name: Upload doxygen document to server
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ftp.abstr.net
+          port: 3333
+          username: cp2t10
+          password: ${{ secrets.ftp_password }}
+          local-dir: './u/'

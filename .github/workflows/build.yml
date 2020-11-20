@@ -5,7 +5,8 @@ jobs:
     name: Build Artifacts
     runs-on: windows-2019
     steps:
-      - uses: actions/checkout@v2
+      - name: Get latest code
+        uses: actions/checkout@v2
       
       - name: CMake Win32
         shell: cmd
@@ -26,8 +27,9 @@ jobs:
       - name: Build x64
         shell: cmd
         run: call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe" /p:Configuration=Release /p:Platform=x64 /p:OutDir=.\x64\ .\BoardGame.vcxproj
-        
-      - uses: actions/upload-artifact@v2
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
         with:
           name: build
           path: |

@@ -1,3 +1,7 @@
+/**
+  @file interfacerenderer.c
+  @brief 인터페이스 렌더러
+*/
 #include "inc/environment.h"
 #include "inc/consoleutils.h"
 #include "inc/interfacerenderer.h"
@@ -13,7 +17,7 @@
 * @param s wchar_t 문자열
 * @return 전각 여부 bool
 */
-bool isFullWidth(wchar_t c) 
+bool is_full_width(wchar_t c) 
 {
 	if (c < 256 || (c >= 0xff61 && c <= 0xff9f)) {
 		return false;
@@ -33,8 +37,9 @@ int strrlen(wchar_t * s)
 {
 	int len = wcslen(s);
 	int rlen = len;
-	for (int i = 0; i < len; i++) {
-		rlen += isFullWidth(s[i]);
+	for (int i = 0; i < len; i++) 
+	{
+		rlen += is_full_width(s[i]);
 	}
 	return rlen;
 }
@@ -45,7 +50,8 @@ int strrlen(wchar_t * s)
 */
 void draw_intro(int tick) 
 {
-	if (tick == 0) {
+	if (tick == 0) 
+	{
 		clear_console();
 		set_cursor_position(0, 0);
 	}
@@ -55,7 +61,7 @@ void draw_intro(int tick)
 
 	set_print_color(TO_TBCOLOR(WHITE, BLACK));
 	int title_x = 36;
-	xyprintf(title_x, 1, "%s", ASCII_TITLE_SCHD);
+	xyprintf(title_x, 1, "%s", ASCII_TITLE_SHCD);
 	xyprintf(title_x, 9, "-----------SeungHapCha Developers----------");
 
 	set_print_color(TO_TBCOLOR(GREEN, BLACK));
@@ -87,7 +93,7 @@ void draw_intro(int tick)
 	else
 	{
 		xyprintf(20, 10, "%s", ASCII_SHC);
-		xyprintf(1, 19, "Java 두명 타세요 ...");
+		xyprintf(1, 19, u8"Java 두명 타세요 ...");
 
 		if (tick > 60 + 30)
 		{
