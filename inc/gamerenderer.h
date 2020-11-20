@@ -13,7 +13,9 @@
 #define RG_GRID_TYPE_H L"─"
 #define RG_GRID_TYPE_V L"│"
 
+#include <wchar.h>
+
 void render_grid(char** grid, int width, int height);
-char* generate_grid_string(char** grid, int width, int height);
+wchar_t* generate_grid_string(char** grid, int width, int height);
 void draw_grid(int x, int y, char** grid, short** stone_colors, int width, int height, short grid_color);
 void coloring_stone(int offset_x, int offset_y, int x, int y, char glyph, short color);

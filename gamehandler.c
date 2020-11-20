@@ -74,7 +74,8 @@ int skip_intro(int c) {
 void run_intro(GameData* data)
 {
 	draw_intro(data->tick++);
-	if (wait_with_handler(20, skip_intro) > -1 || data->tick > INTRO_FULL_TICK) {
+	if (wait_with_handler(20, skip_intro) > -1 || data->tick > INTRO_FULL_TICK) 
+	{
 		change_status(data, GS_MAIN);
 	}
 }
@@ -159,18 +160,19 @@ void run_game(GameData* data)
 		set_console_size(CONSOLE_COLS, (int)(CONSOLE_LINES * 1.5));
 		data->status_inited = true;
 	}
-	char** grid = generate_grid(19, 19);
+	char** grid = generate_grid(25, 19);
 	grid[1][5] = SG_BLACK;
 	grid[1][3] = SG_WHITE;
 
-	short stone_color[19][19]; //stone_color 생성 함수 개발 시 교체 (동적으로)
+	short **stone_color = malloc_double_pointer(sizeof(short), 25, 19);
 	stone_color[1][5] = (short)12;
 	stone_color[1][3] = (short)12;
-	draw_grid(0, 8, grid, stone_color, 19, 19, 11);
+	draw_grid(0, 8, grid, stone_color, 25, 19, 11);
 	coloring_stone(0, 8, 11, 10, 'w', 13);
 	coloring_stone(0, 8, 9, 10, 'b', 13);
 	get_key_input();
-	free_double_pointer(grid, 19);
+	free_double_pointer(grid, 25);
+	free_double_pointer(stone_color, 25);
 	clear_console();
 }
 
@@ -180,7 +182,18 @@ void run_game(GameData* data)
  */
 void run_help(GameData* data)
 {
-	xywprintf(32, 12, L"도움말입니다.");
+	PromptData p;
+	p.message = L"창 메시지";
+	p.x = 10;
+	p.y = 10;
+	p.rlen = 50;
+	p.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
+	p.text_tbcolor = TO_TBCOLOR(BLUE, RED);
+	p.message_tbcolor = TO_TBCOLOR(WHITE, GRAY);
+	wchar_t * text = run_prompt(&p);
+	xywprintf(5, 5, L"Input Result: %s", text);
+	wait(1000);
+
 }
 
 /**

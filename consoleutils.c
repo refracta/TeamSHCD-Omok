@@ -56,6 +56,20 @@ void set_default_mode() {
 }
 
 /**
+ * @brief 콘솔 커서의 가시 상태를 반환한다.
+ * @return 가시 상태 부울
+ */
+bool get_cursor_visibility()
+{
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	CONSOLE_CURSOR_INFO cursor_info;
+
+	GetConsoleCursorInfo(out, &cursor_info);
+	return cursor_info.bVisible;
+}
+
+/**
  * @brief 콘솔 커서의 가시 상태를 변경한다.
  * @param visibility 가시 상태
  */
@@ -79,6 +93,18 @@ void set_cursor_position(int x, int y)
 {
 	COORD position = { x, y };
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), position);
+}
+
+/**
+ * @brief 콘솔 커서의 크기를 설정한다.
+ * @param cursor_size 커서 크기 (0~100)
+ */
+void set_cursor_size(int cursor_size) {
+	CONSOLE_CURSOR_INFO cursor_info;
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetConsoleCursorInfo(handle, &cursor_info);
+	cursor_info.dwSize = cursor_size;
+	SetConsoleCursorInfo(handle, &cursor_info);
 }
 
 /**
@@ -150,14 +176,14 @@ void clear_console()
 
 /**
  * @brief 사용자가 누른 키를 가져온다.
- * @return getch() value
+ * @return _getch() value
  */
 int get_key_input() {
 	while (true)
 	{
-		if (kbhit())
+		if (_kbhit())
 		{
-			return getch();
+			return _getch();
 		}
 	}
 }
@@ -255,27 +281,19 @@ void xyprintf(int x, int y, char* format, ...)
  */
 void xywprintf(int x, int y, wchar_t* format, ...)
 {
-	wchar_t buffer[BUFSIZ];
-	int buffer_size = sizeof(buffer) / sizeof(wchar_t);
-	wchar_t* buffer_ptr = buffer;
-
 	va_list arg_ptr;
+
 	va_start(arg_ptr, format);
-	int length = _vsnwprintf(buffer_ptr, buffer_size, format, arg_ptr) + 1;
+	int buffer_size = _vscwprintf(format, arg_ptr) + 1;
 	va_end(arg_ptr);
 
-	if (length > buffer_size)
-	{
-		buffer_ptr = malloc(sizeof(wchar_t) * length);
-		if (buffer_ptr == NULL) {
-			return;
-		}
-		buffer_size = length;
-
-		va_start(arg_ptr, format);
-		length = _vsnwprintf(buffer_ptr, buffer_size, format, arg_ptr) + 1;
-		va_end(arg_ptr);
+	wchar_t* buffer_ptr = malloc(sizeof(wchar_t) * buffer_size);
+	if (buffer_ptr == NULL) {
+		return;
 	}
+	va_start(arg_ptr, format);
+	_vsnwprintf(buffer_ptr, buffer_size, format, arg_ptr);
+	va_end(arg_ptr);
 
 	COORD position = get_cursor_position();
 	x = x < 0 ? position.X : x;
@@ -283,7 +301,7 @@ void xywprintf(int x, int y, wchar_t* format, ...)
 
 	int delta = 0;
 	wchar_t* target = buffer_ptr;
-	for (int i = 0; i < length; i++)
+	for (int i = 0; i < buffer_size; i++)
 	{
 		if (buffer_ptr[i] == '\n' || buffer_ptr[i] == '\0')
 		{
@@ -293,9 +311,5 @@ void xywprintf(int x, int y, wchar_t* format, ...)
 			target = buffer_ptr + i + 1;
 		}
 	}
-
-	if (buffer_ptr != buffer)
-	{
-		free(buffer_ptr);
-	}
+	free(buffer_ptr);
 }
