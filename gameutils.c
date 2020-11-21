@@ -7,7 +7,10 @@
 #include "inc/consoleutils.h"
 #include "inc/systemutils.h"
 #include "inc/interfacerenderer.h"
+#include "inc/gamerenderer.h"
 #include "inc/keycode.h"
+#include "inc/gamecore.h"
+
 
 /**
 * @brief 메뉴를 실행한다.
@@ -21,10 +24,6 @@ int run_menu(MenuData* data, bool disable_escape) {
 	while (true)
 	{
 		int c = get_key_input();
-		if (c == 0xE0 || c == 0) 
-		{
-			c = get_key_input();
-		}
 		switch (c) {
 		case ESCAPE_KEY:
 			if (!disable_escape)
@@ -58,34 +57,38 @@ int run_menu(MenuData* data, bool disable_escape) {
 	}
 }
 
-void select_stone_position() 
+void select_stone_position(GridRenderData* grd, char player_glyph)
 {
 	while (true)
 	{
-		int c = get_key_input();
-		if (c == 0xE0 || c == 0) 
-		{
-			c = get_key_input();
+		draw_grid(grd);
+		if(grd->grid[grd->cursor_x][grd->cursor_y] != SG_EMPTY){
+            coloring_stone(grd->x, grd->y, grd->cursor_x, grd->cursor_y, SG_BANNED, grd->banned_color);
+		}else{
+            coloring_stone(grd->x, grd->y, grd->cursor_x, grd->cursor_y, SG_CURSOR, grd->cursor_color);
 		}
+
+		int c = get_key_input();
 		switch (c) {
-		case ESCAPE_KEY:
-
-			break;
 		case UP_KEY:
-
+			grd->cursor_y = grd->cursor_y > 0 ? grd->cursor_y - 1 : grd->height - 1;
 			break;
 		case DOWN_KEY:
-
+			grd->cursor_y = grd->cursor_y + 1 < grd->height ? grd->cursor_y + 1 : 0;
 			break;
 		case RIGHT_KEY:
-
+			grd->cursor_x = grd->cursor_x + 1 < grd->width ? grd->cursor_x + 1 : 0;
 			break;
 		case LEFT_KEY:
-
+			grd->cursor_x = grd->cursor_x > 0 ? grd->cursor_x - 1 : grd->width - 1;
 			break;
 		case SPACE_KEY:
 		case ENTER_KEY:
-
+			grd->grid[grd->cursor_x][grd->cursor_y] = player_glyph;
+			grd->stone_colors[grd->cursor_x][grd->cursor_y] = (player_glyph == SG_BLACK ? grd->black_color : grd->white_color);
+			draw_grid(grd);
+			Beep(450, 20);
+			return;
 			break;
 		}
 	}
@@ -112,11 +115,7 @@ wchar_t* run_prompt(PromptData* data) {
 	}
 	
 	while (true) {
-		if (_kbhit()) {
-			int c = _getwch();
-			if (c == 0xE0 || c == 0) {
-				c = _getwch();
-			}
+			int c = get_key_input();
 			int crl;
 			switch (c) {
 				default:
@@ -159,6 +158,5 @@ wchar_t* run_prompt(PromptData* data) {
 					set_cursor_visibility(visibility);
 					return text;
 			}
-		}
 	}
 }

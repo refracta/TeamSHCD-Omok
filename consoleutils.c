@@ -176,14 +176,17 @@ void clear_console()
 
 /**
  * @brief 사용자가 누른 키를 가져온다.
- * @return _getch() value
+ * @return _getwch() value
  */
 int get_key_input() {
 	while (true)
 	{
+
 		if (_kbhit())
 		{
-			return _getch();
+            int c = _getwch();
+            c = c == 0xE0 || c == 0 ? _getwch() : c;
+            return c;
 		}
 	}
 }

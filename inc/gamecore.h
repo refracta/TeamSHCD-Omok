@@ -8,7 +8,7 @@ typedef enum
 
 typedef enum
 {
-	SG_BLACK = 'b', SG_WHITE = 'w', SG_EMPTY = '.'
+	SG_BLACK = 'b', SG_WHITE = 'w', SG_EMPTY = '.', SG_CURSOR = 'c', SG_BANNED = 'n'
 } StoneGlyph;
 #endif
 

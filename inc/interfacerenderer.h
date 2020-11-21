@@ -1,12 +1,12 @@
 #ifndef __INTERFACERENDERER_H__
 #define __INTERFACERENDERER_H__
 typedef struct {
+	int x;
+	int y;
 	wchar_t* name;
 	wchar_t** list;
 	int length;
 	int current_index;
-	int x;
-	int y;
 	short outline_tbcolor;
 	short name_tbcolor;
 	short element_tbcolor;
@@ -14,15 +14,27 @@ typedef struct {
 } MenuData;
 
 typedef struct {
-	wchar_t* message;
-	int rlen;
 	int x;
 	int y;
+	wchar_t* message;
+	int rlen;
 	short outline_tbcolor;
 	short message_tbcolor;
 	short text_tbcolor;
 } PromptData;
+
+typedef struct {
+	int x;
+	int y;
+	int width;
+	short outline_tbcolor;
+	short bar_tbcolor;
+	int percent; // 0~100
+	int left_seconds;
+} TimerData;
 #endif
+
+
 
 #define ASCII_TITLE_SHCD (\
 " .d8888b.  888    888  .d8888b.  8888888b. \n" \
@@ -106,5 +118,6 @@ typedef struct {
 void draw_intro(int tick);
 void draw_menu(MenuData* data);
 void draw_prompt(PromptData*);
+void draw_timer(TimerData* data);
 bool is_full_width(wchar_t);
 int strrlen(wchar_t*);

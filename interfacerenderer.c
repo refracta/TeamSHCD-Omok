@@ -11,6 +11,7 @@
 #include <string.h>
 #include <wchar.h>
 #include <stdbool.h>
+#include <math.h>
 
 /**
 * @brief 문자열이 전각인지 검사한다.
@@ -166,7 +167,10 @@ void draw_menu(MenuData* data)
 	set_print_color(color);
 }
 
-
+/**
+* @brief 프롬프트를 그린다.
+* @param data 프롬프트 정보 데이터
+*/
 void draw_prompt(PromptData* data) {
 	short color = get_print_color();
 	int max_length = MAX(data->rlen, strrlen(data->message));
@@ -178,7 +182,7 @@ void draw_prompt(PromptData* data) {
 	set_print_color(data->outline_tbcolor);
 	wprintf(L"─┐ ");
 	set_print_color(data->outline_tbcolor);
-	xywprintf(data->x, data->y + 1,L"│   %*s   │ ", max_length, L"");
+	xywprintf(data->x, data->y + 1, L"│   %*s   │ ", max_length, L"");
 	xywprintf(data->x, data->y + 2, L"└───");
 	for (int i = 0; i < max_length; i++)
 	{
@@ -186,4 +190,38 @@ void draw_prompt(PromptData* data) {
 	}
 	wprintf(L"───┘ ");
 	set_print_color(color);
+}
+
+/**
+* @brief 타이머를 그린다.
+* @param data 타이머 정보 데이터
+*/
+void draw_timer(TimerData* data)
+{
+	short original_color = get_print_color();
+	
+	/* outline */
+	set_print_color(data->outline_tbcolor);
+	xywprintf(data->x, data->y, L"%s", L"┌");
+	for (int i = 0; i < ((data->width) - 2); i++)
+		wprintf(L" %s", L"─");
+
+	wprintf(L" %s", L"┐ ");
+	xywprintf(data->x, (data->y) + 1, L"%s", L"│ ");
+	xywprintf(data->x + data->width * 2 - 2, (data->y) + 1, L"%s", L"│ ");
+
+	xywprintf(data->x, (data->y) + 2, L"%s", L"└");
+	for (int i = 0; i < ((data->width) - 2); i++)
+		wprintf(L" %s", L"─");
+	wprintf(L" %s", L"┘ ");
+
+	xywprintf(data->x + data->width * 2 - 6, data->y + 1, L"%s", L"│ ");
+	xywprintf(data->x + data->width * 2 - 4, data->y + 1, L"%d", data->left_seconds);
+
+	/* bar */
+	set_print_color(data->bar_tbcolor);
+	set_cursor_position(data->x + 2, data->y + 1);
+	for (int i = 0; i < (int)(((data->width - 4) * (double)data->percent / 100.0)); i++)
+		wprintf(L"%s", L"　");
+	set_print_color(original_color);
 }
