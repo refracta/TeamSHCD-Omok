@@ -69,15 +69,17 @@ wchar_t* generate_grid_string(GridRenderData * grd)
 	{
 		for (int j = 0; j < grd->width; j++)
 		{
-			char glyph = grd->grid[j][i];
+			/* 돌은 렌더링 하지 말고 격자만 렌더링 후 Coloring stone한다.
+			char glyph = grid[j][i];
 			if (glyph != SG_EMPTY) {
-				bool is_need_padding = !(grd->grid[j - 1][i] != SG_EMPTY || j == 0);
+				bool is_need_padding = !(j == 0 || grid[j - 1][i] != SG_EMPTY);
 				if (is_need_padding) {
 					wcscat(grid_string, L" ");
 				}
 				wcscat(grid_string, sg2rg(glyph));
 				continue;
 			}
+			*/
 			if (i == first_index && j == first_index)
 				wcscat(grid_string, RG_GRID_TYPE_7); //좌상단 격자
 			else if (i == first_index && j == last_w_index)
@@ -96,7 +98,7 @@ wchar_t* generate_grid_string(GridRenderData * grd)
 				wcscat(grid_string, RG_GRID_TYPE_2);//하단 격자
 			else
 				wcscat(grid_string, RG_GRID_TYPE_5); //모서리가 아닌 격자
-			if ((j == last_w_index) || (grd->grid[j + 1][i] != SG_EMPTY))
+			if ((j == last_w_index))
 				continue;
 			wcscat(grid_string, RG_GRID_TYPE_H); //격자가 위아래로 길어져서 가로문자 하나를 넣어 정사각형으로 보이게 함
 		}

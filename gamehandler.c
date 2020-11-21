@@ -192,6 +192,7 @@ void run_game(GameData* data)
 
 		data->status_inited = true;
 	}
+
 	xywprintf(0, 1, L"Player1: %s", data->player1_name);
 	xywprintf(0, 2, L"Player2: %s", data->player2_name);
 	xywprintf(0, 3, L"Turn: %d", data->tick);
@@ -203,6 +204,23 @@ void run_game(GameData* data)
 	//free_double_pointer(grid, 25);
 	//free_double_pointer(stone_color, 25);
 	//clear_console();
+
+	/*
+	char** grid = generate_grid(25, 19);
+	grid[0][5] = SG_BLACK;
+	grid[1][3] = SG_WHITE;
+
+	short **stone_color = malloc_double_pointer(sizeof(short), 25, 19);
+	stone_color[0][5] = (short)12;
+	stone_color[1][3] = (short)12;
+	draw_grid(0, 8, grid, stone_color, 25, 19, 11);
+	coloring_stone(0, 8, 11, 10, 'w', 13);
+	coloring_stone(0, 8, 9, 10, 'b', 13);
+	get_key_input();
+	free_double_pointer(grid, 25);
+	free_double_pointer(stone_color, 25);
+	clear_console();
+	*/
 }
 
 /**
