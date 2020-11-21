@@ -88,9 +88,9 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 {
 
 	// 가로 
-	int countblack = 1; // 두는 곳은 흑색이므로 1 추가
+	int countglyph = 1; // 두는 곳은 흑색이므로 1 추가
 	int countempty = 0;
-	int countwhite = 0;
+	int countreverseglyph = 0;
 	int check__33 = 0;
 	int opencheck = 0;
 	// 가로 우측 방향 체크
@@ -101,14 +101,14 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 
 		if (grid[y][x + i] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y][x + i] != reverse_glyph(glyph))
 		{
 			if (grid[y][x + i] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -118,11 +118,11 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 		// 4번째 칸이 백돌일 경우 추가 진행
 		if (i == 3 && x + i + 1 < 19)
 			if (grid[y][x + i + 1] == reverse_glyph(glyph))
-				countwhite++;
+				countreverseglyph++;
 	}
 
 	// 한쪽이 열린 3인지 체킹
-	if (countempty > countwhite)
+	if (countempty > countreverseglyph)
 		opencheck = 1;
 
 	// 가로 좌측 방향 체크
@@ -133,14 +133,14 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 
 		if (grid[y][x - i] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y][x - i] != reverse_glyph(glyph))
 		{
 			if (grid[y][x - i] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -150,16 +150,16 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 		// 4번째 칸이 백돌일 경우 추가 진행
 		if (i == 3 && x - i - 1 > 0)
 			if (grid[y][x - i - 1] == reverse_glyph(glyph))
-				countwhite++;
+				countreverseglyph++;
 	}
 	// 열린 3인 경우
-	if (countempty - countwhite > 3 && opencheck == 1 && countblack == 3)
+	if (countempty - countreverseglyph > 3 && opencheck == 1 && countglyph == 3)
 		check__33 += 1;  // 가로 방향 33
 
 		// 세로 
-	countblack = 1;
+	countglyph = 1;
 	countempty = 0;
-	countwhite = 0;
+	countreverseglyph = 0;
 	opencheck = 0;
 
 	// 세로 아래 방향 체크
@@ -171,14 +171,14 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 
 		if (grid[y + i][x] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y + i][x] != reverse_glyph(glyph))
 		{
 			if (grid[y + i][x] == reverse_glyph(glyph))
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -188,11 +188,11 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 		// 4번째 칸이 백돌일 경우 추가 진행
 		if (i == 3 && y + i + 1 < 19)
 			if (grid[y + i + 1][x] == reverse_glyph(glyph))
-				countwhite++;
+				countreverseglyph++;
 	}
 
 	// 한쪽이 열린 3인지 체킹
-	if (countempty > countwhite)
+	if (countempty > countreverseglyph)
 		opencheck = 1;
 
 
@@ -206,14 +206,14 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 
 		if (grid[y - i][x] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y - i][x] != reverse_glyph(glyph))
 		{
 			if (grid[y - i][x] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -223,19 +223,19 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 		// 4번째 칸이 백돌일 경우 추가 진행
 		if (i == 3 && y - i - 1 < 0)
 			if (grid[y - i - 1][x] == reverse_glyph(glyph))
-				countwhite++;
+				countreverseglyph++;
 	}
 
 	// 열린 3인 경우
-	if (countempty - countwhite > 3 && opencheck == 1 && countblack == 3)
+	if (countempty - countreverseglyph > 3 && opencheck == 1 && countglyph == 3)
 		check__33 += 1;  // 세로 방향 33 
 
 
 		// 우측으로 떨어지는 대각선
 
-	countblack = 1;
+	countglyph = 1;
 	countempty = 0;
-	countwhite = 0;
+	countreverseglyph = 0;
 	opencheck = 0;
 
 	// 대각선 아래쪽 
@@ -247,14 +247,14 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 
 		if (grid[y + i][x + i] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y + i][x + i] != reverse_glyph(glyph))
 		{
 			if (grid[y + i][x + i] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -265,11 +265,11 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 		// 4번째 칸이 백돌일 경우 추가 진행
 		if (i == 3 && y + i + 1 < 19 && x + i + 1 < 19)
 			if (grid[y + i + 1][x + i + 1] == reverse_glyph(glyph))
-				countwhite++;
+				countreverseglyph++;
 	}
 
 	// 한쪽이 열린 3인지 체킹
-	if (countempty > countwhite)
+	if (countempty > countreverseglyph)
 		opencheck = 1;
 
 	// 대각선 위쪽
@@ -281,14 +281,14 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 
 		if (grid[y - i][x - i] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y - i][x - i] != reverse_glyph(glyph))
 		{
 			if (grid[y - i][x - i] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -299,17 +299,17 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 		// 4번째 칸이 백돌일 경우 추가 진행
 		if (i == 3 && y - i - 1 > 0 && x - i - 1 > 0)
 			if (grid[y - i - 1][x - i - 1] == reverse_glyph(glyph))
-				countwhite++;
+				countreverseglyph++;
 	}
 	// 열린 3인 경우
-	if (countempty - countwhite > 3 && opencheck == 1 && countblack == 3)
+	if (countempty - countreverseglyph > 3 && opencheck == 1 && countglyph == 3)
 		check__33 += 1;  // 우측으로 떨어지는 대각선 33 판정
 
 
 		// 좌측으로 떨어지는 대각선
-	countblack = 1;
+	countglyph = 1;
 	countempty = 0;
-	countwhite = 0;
+	countreverseglyph = 0;
 	opencheck = 0;
 
 	// 대각선 아래 방향
@@ -321,14 +321,14 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 
 		if (grid[y + i][x - i] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y + i][x - i] != reverse_glyph(glyph))
 		{
 			if (grid[y + i][x - i] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -339,10 +339,10 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 		// 4번째 칸이 백돌일 경우 추가 진행
 		if (i == 3 && y + i + 1 < 19 && x - i - 1 > 0)
 			if (grid[y + i + 1][x - i - 1] == reverse_glyph(glyph))
-				countwhite++;
+				countreverseglyph++;
 	}
 	// 한쪽이 열린 3인지 체킹
-	if (countempty > countwhite)
+	if (countempty > countreverseglyph)
 		opencheck = 1;
 
 	// 대각선 위 방향
@@ -354,14 +354,14 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 
 		if (grid[y - i][x + i] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y - i][x + i] != reverse_glyph(glyph))
 		{
 			if (grid[y - i][x + i] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -372,10 +372,10 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
 		// 4번째 칸이 백돌일 경우 추가 진행
 		if (i == 3 && y - i - 1 > 0 && x + i + 1 < 19)
 			if (grid[y - i - 1][x + i + 1] == reverse_glyph(glyph))
-				countwhite++;
+				countreverseglyph++;
 	}
 	// 열린 3인 경우
-	if (countempty - countwhite > 3 && opencheck == 1 && countblack == 3)
+	if (countempty - countreverseglyph > 3 && opencheck == 1 && countglyph == 3)
 		check__33 += 1;  // 좌측으로 떨어지는 대각선 33 판정
 
 
@@ -398,9 +398,9 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
  */
 bool check_double_four(char** grid, int x, int y, int width, int height, char glyph)
 {
-	int countblack = 1; // 두는 곳은 흑색이므로 1 추가
+	int countglyph = 1; // 두는 곳은 흑색이므로 1 추가
 	int countempty = 0;
-	int countwhite = 0;
+	int countreverseglyph = 0;
 	int check__44 = 0;
 	int opencheck = 0;
 
@@ -410,14 +410,14 @@ bool check_double_four(char** grid, int x, int y, int width, int height, char gl
 			break;
 		if (grid[y][x + i] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y][x + i] != reverse_glyph(glyph))
 		{
 			if (grid[y][x + i] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -433,14 +433,14 @@ bool check_double_four(char** grid, int x, int y, int width, int height, char gl
 
 		if (grid[y][x - i] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y][x - i] != reverse_glyph(glyph))
 		{
 			if (grid[y][x - i] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -450,13 +450,13 @@ bool check_double_four(char** grid, int x, int y, int width, int height, char gl
 	}
 
 	// 열린 4인 경우
-	if (countempty >= countwhite && countblack == 4)
+	if (countempty >= countreverseglyph && countglyph == 4)
 		check__44 += 1;  // 가로 방향 44 
 
 		// 세로
-	countblack = 1;
+	countglyph = 1;
 	countempty = 0;
-	countwhite = 0;
+	countreverseglyph = 0;
 
 	for (int i = 1; i < 5; i++)
 	{
@@ -465,14 +465,14 @@ bool check_double_four(char** grid, int x, int y, int width, int height, char gl
 
 		if (grid[y + i][x] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y + i][x] != reverse_glyph(glyph))
 		{
 			if (grid[y + i][x] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -488,14 +488,14 @@ bool check_double_four(char** grid, int x, int y, int width, int height, char gl
 
 		if (grid[y - i][x] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y - i][x] != reverse_glyph(glyph))
 		{
 			if (grid[y - i][x] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -505,13 +505,13 @@ bool check_double_four(char** grid, int x, int y, int width, int height, char gl
 	}
 
 	// 열린 4인 경우
-	if (countempty >= countwhite && countblack == 4)
+	if (countempty >= countreverseglyph && countglyph == 4)
 		check__44 += 1; // 세로 방향 44 
 
 		// 우측으로 떨어지는 대각선
-	countblack = 1;
+	countglyph = 1;
 	countempty = 0;
-	countwhite = 0;
+	countreverseglyph = 0;
 
 	// 대각선 아래
 
@@ -522,14 +522,14 @@ bool check_double_four(char** grid, int x, int y, int width, int height, char gl
 
 		if (grid[y + i][x + i] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y + i][x + i] != reverse_glyph(glyph))
 		{
 			if (grid[y + i][x + i] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -547,14 +547,14 @@ bool check_double_four(char** grid, int x, int y, int width, int height, char gl
 
 		if (grid[y - i][x - i] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y - i][x - i] != reverse_glyph(glyph))
 		{
 			if (grid[y - i][x - i] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -564,14 +564,14 @@ bool check_double_four(char** grid, int x, int y, int width, int height, char gl
 	}
 
 	// 열린 4인 경우
-	if (countempty >= countwhite && countblack == 4)
+	if (countempty >= countreverseglyph && countglyph == 4)
 		check__44 = 1;  // 우측으로 떨어지는 대각선 44 
 
 		// 좌측으로 떨어지는 대각선
 
-	countblack = 1;
+	countglyph = 1;
 	countempty = 0;
-	countwhite = 0;
+	countreverseglyph = 0;
 
 	// 대각선 아래
 
@@ -582,14 +582,14 @@ bool check_double_four(char** grid, int x, int y, int width, int height, char gl
 
 		if (grid[y + i][x - i] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y + i][x - i] != reverse_glyph(glyph))
 		{
 			if (grid[y + i][x - i] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -607,14 +607,14 @@ bool check_double_four(char** grid, int x, int y, int width, int height, char gl
 
 		if (grid[y - i][x + i] == reverse_glyph(glyph))
 		{
-			countwhite++;
+			countreverseglyph++;
 			break;
 		}
 		else if (grid[y - i][x + i] != reverse_glyph(glyph))
 		{
 			if (grid[y - i][x + i] == glyph)
 			{
-				countblack++;
+				countglyph++;
 			}
 			else
 			{
@@ -624,7 +624,7 @@ bool check_double_four(char** grid, int x, int y, int width, int height, char gl
 	}
 
 	// 열린 4인 경우
-	if (countempty >= countwhite && countblack == 4)
+	if (countempty >= countreverseglyph && countglyph == 4)
 		check__44 = 1;  // 좌측으로 떨어지는 대각선 방향 44 
 
 	// 4*4 판정에서 가로,세로,우측 대각선, 좌측 대각선에서 2개 이상이 판정 될 경우, 4*4으로 취급하여 금수가 됨.
