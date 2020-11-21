@@ -54,7 +54,7 @@ wchar_t* sg2rg(char sg) {
 }
 
 /**
-* @brief 돌이 있는 배열을 입력받아서 격자와 함께 string으로 반환해주는 함수
+* @brief 돌이 있는 배열을 입력받아서 격자만 string으로 반환해주는 함수
 * @param grd 격자 렌더 데이터
 */
 wchar_t* generate_grid_string(GridRenderData * grd)
@@ -116,22 +116,57 @@ wchar_t* generate_grid_string(GridRenderData * grd)
 */
 void draw_grid(GridRenderData* grd)
 {
+	//wchar_t* grid_string = (wchar_t*)calloc(grd->width * grd->height * 2 * sizeof(wchar_t) + 1, sizeof(wchar_t));
+
 	short origin_color = get_print_color();
-	set_print_color(grd->line_color);
-	wchar_t* grid_string = generate_grid_string(grd);
-	xywprintf(grd->x, grd->y, grid_string);
-	free(grid_string);
+
+	const int last_w_index = grd->width - 1;
+	const int last_h_index = grd->height - 1;
+	const int first_index = 0;
+
 
 	for (int i = 0; i < grd->height; i++)
 	{
 		for (int j = 0; j < grd->width; j++)
 		{
 			char glyph = grd->grid[j][i];
-			if (glyph != SG_EMPTY) {
-				coloring_stone(grd->x, grd->y, j, i, grd->grid[j][i], grd->stone_colors[j][i]);
+			if (glyph != SG_EMPTY)
+			{
+				bool is_need_padding = !(j == 0 || grd->grid[j - 1][i] != SG_EMPTY);
+				if (is_need_padding) {
+					xywprintf(grd->x + j * 2, grd->y + i, L" ", sg2rg(glyph));
+				}
+				set_print_color(grd->stone_colors[j][i]);
+				xywprintf(grd->x + j * 2, grd->y + i, L"%s", sg2rg(glyph));
+				continue;
 			}
+
+			set_print_color(grd->line_color);
+			if (i == first_index && j == first_index)
+				xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_7);
+			else if (i == first_index && j == last_w_index)
+				xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_9);
+			else if (i == first_index)
+				xywprintf(grd->x + j * 2 , grd->y + i, L"%s", RG_GRID_TYPE_8);
+			else if (i != last_h_index && j == first_index)
+				xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_4);
+			else if (i != last_h_index && j == last_w_index)
+				xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_6);
+			else if (i == last_h_index && j == first_index)
+				xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_1);
+			else if (i == last_h_index && j == last_w_index)
+				xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_3);
+			else if (i == last_h_index)
+				xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_2);
+			else
+				xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_5);
+			if ((j == last_w_index))
+				continue;
+			xywprintf(grd->x + j * 2 + 1, grd->y + i, L"%s", RG_GRID_TYPE_H);
 		}
+		wprintf(L" \n");
 	}
+
 	set_print_color(origin_color);
 }
 
@@ -146,7 +181,7 @@ void draw_grid(GridRenderData* grd)
 * @param color 돌 색상
 */
 void coloring_stone(int offset_x, int offset_y, int x, int y, char glyph, short color)
-{
+{	
 	short origin_color = get_print_color();
 
 	set_print_color(color);
