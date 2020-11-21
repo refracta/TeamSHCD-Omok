@@ -1,12 +1,12 @@
 #ifndef __INTERFACERENDERER_H__
 #define __INTERFACERENDERER_H__
 typedef struct {
+	int x;
+	int y;
 	wchar_t* name;
 	wchar_t** list;
 	int length;
 	int current_index;
-	int x;
-	int y;
 	short outline_tbcolor;
 	short name_tbcolor;
 	short element_tbcolor;
@@ -14,10 +14,10 @@ typedef struct {
 } MenuData;
 
 typedef struct {
-	wchar_t* message;
-	int rlen;
 	int x;
 	int y;
+	wchar_t* message;
+	int rlen;
 	short outline_tbcolor;
 	short message_tbcolor;
 	short text_tbcolor;

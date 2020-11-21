@@ -61,14 +61,14 @@ int run_menu(MenuData* data, bool disable_escape) {
 	}
 }
 
-void select_stone_position(int x, int y, char ** grid, short ** stone_colors, int width, int height, char player_glyph)
+void select_stone_position(GridRenderData* grd, char player_glyph)
 {
-	int cursor_x = width / 2;
-	int cursor_y = height / 2;
+	int cursor_x = grd->width / 2;
+	int cursor_y = grd->height / 2;
 	while (true)
 	{
-		draw_grid(x, y, grid, stone_colors, width, height, TO_TBCOLOR(WHITE, BLACK));
-		coloring_stone(x, y, cursor_x, cursor_y, SG_BLACK, TO_TBCOLOR(LIGHT_GREEN, GREEN));
+		draw_grid(grd);
+		coloring_stone(grd->x, grd->y, cursor_x, cursor_y, SG_BLACK, TO_TBCOLOR(LIGHT_GREEN, GREEN));
 		int c = get_key_input();
 		if (c == 0xE0 || c == 0) 
 		{
@@ -76,22 +76,22 @@ void select_stone_position(int x, int y, char ** grid, short ** stone_colors, in
 		}
 		switch (c) {
 		case UP_KEY:
-			cursor_y = cursor_y > 0 ? cursor_y - 1 : height - 1;
+			cursor_y = cursor_y > 0 ? cursor_y - 1 : grd->height - 1;
 			break;
 		case DOWN_KEY:
-			cursor_y = cursor_y + 1 < height ? cursor_y + 1 : 0;
+			cursor_y = cursor_y + 1 < grd->height ? cursor_y + 1 : 0;
 			break;
 		case RIGHT_KEY:
-			cursor_x = cursor_x + 1 < width ? cursor_x + 1 : 0;
+			cursor_x = cursor_x + 1 < grd->width ? cursor_x + 1 : 0;
 			break;
 		case LEFT_KEY:
-			cursor_x = cursor_x > 0 ? cursor_x - 1 : width - 1;
+			cursor_x = cursor_x > 0 ? cursor_x - 1 : grd->width - 1;
 			break;
 		case SPACE_KEY:
 		case ENTER_KEY:
-			grid[cursor_x][cursor_y] = player_glyph;
-			stone_colors[cursor_x][cursor_y] = (player_glyph == SG_BLACK ? TO_TBCOLOR(RED, BLACK) : TO_TBCOLOR(BLUE, BLACK));
-			draw_grid(x, y, grid, stone_colors, width, height, TO_TBCOLOR(WHITE, BLACK));
+			grd->grid[cursor_x][cursor_y] = player_glyph;
+			grd->stone_colors[cursor_x][cursor_y] = (player_glyph == SG_BLACK ? TO_TBCOLOR(RED, BLACK) : TO_TBCOLOR(BLUE, BLACK));
+			draw_grid(grd);
 			Beep(450, 20);
 			return;
 			break;

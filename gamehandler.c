@@ -33,8 +33,7 @@ typedef struct
 	GameStatus status;
 	wchar_t player1_name[BUFSIZ];
 	wchar_t player2_name[BUFSIZ];
-	char** grid;
-	short** stone_colors;
+	GridRenderData * grd;
 	bool status_inited;
 	int tick;
 } GameData;
@@ -172,6 +171,8 @@ void run_main(GameData* data)
 	}
 }
 
+
+
 /**
  * @brief 게임 상태에서 실행되는 함수
  * @param data 게임 데이터 구조체의 포인터
@@ -183,14 +184,19 @@ void run_game(GameData* data)
 		set_console_size(CONSOLE_COLS, (int)(CONSOLE_LINES * 1.5));
 		run_player_name_prompt(data);
 		clear_console();
-		data->grid = generate_grid(19, 19);
-		data->stone_colors = (short**) malloc_double_pointer(sizeof(short), 19, 19);
-		draw_grid(10, 10, data->grid, data->stone_colors, 19, 19, TO_TBCOLOR(WHITE, BLACK));
+
+		data->grd = malloc_grd(19, 19);
+		(data->grd)->line_color = TO_TBCOLOR(WHITE, BLACK);
+		(data->grd)->x = 10;
+		(data->grd)->y = 10;
+
 		data->status_inited = true;
 	}
 	xywprintf(0, 1, L"Player1: %s", data->player1_name);
 	xywprintf(0, 2, L"Player2: %s", data->player2_name);
-	select_stone_position(10, 10, data->grid, data->stone_colors, 19, 19, (data->tick++ % 2 == 0) ? SG_BLACK : SG_WHITE);
+	xywprintf(0, 3, L"Turn: %d", data->tick);
+	
+	select_stone_position(data->grd, (data->tick++ % 2 == 0) ? SG_BLACK : SG_WHITE);
 	
 
 

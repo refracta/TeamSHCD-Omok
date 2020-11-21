@@ -1,3 +1,17 @@
+#ifndef __GAMERENDERER_H__
+#define __GAMERENDERER_H__
+
+typedef struct {
+	int x;
+	int y;
+	char** grid;
+	short** stone_colors;
+	int width;
+	int height;
+	short line_color;
+} GridRenderData;
+#endif
+
 #define RG_BLACK L"●"
 #define RG_WHITE L"○"
 
@@ -15,7 +29,8 @@
 
 #include <wchar.h>
 
-void render_grid(char** grid, int width, int height);
-wchar_t* generate_grid_string(char** grid, int width, int height);
-void draw_grid(int x, int y, char** grid, short** stone_colors, int width, int height, short grid_color);
+GridRenderData* malloc_grd(int width, int height);
+void free_grd(GridRenderData* grd);
+wchar_t* generate_grid_string(GridRenderData *);
+void draw_grid(GridRenderData *);
 void coloring_stone(int offset_x, int offset_y, int x, int y, char glyph, short color);
