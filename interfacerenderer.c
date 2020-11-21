@@ -135,7 +135,7 @@ void draw_menu(MenuData* data)
 		max_length = MAX(max_length, strrlen(data->list[i]));
 	}
 	set_print_color(data->outline_tbcolor);
-	xywprintf(data->x, data->y, L"┌─ ");
+	xywprintf(data->x, data->y, L"┌──");
 	set_print_color(data->name_tbcolor);
 	wprintf(L"[ %s%*s ]", data->name, (int)(max_length - strrlen(data->name)), L"");
 	set_print_color(data->outline_tbcolor);
@@ -158,7 +158,7 @@ void draw_menu(MenuData* data)
 		wprintf(L"│ ");
 	}
 
-	xywprintf(data->x, data->y + data->length + 1, L"└─── ");
+	xywprintf(data->x, data->y + data->length + 1, L"└────");
 	for (int i = 0; i < max_length; i++) 
 	{
 		wprintf(L"─");
@@ -176,14 +176,14 @@ void draw_prompt(PromptData* data) {
 	int max_length = MAX(data->rlen, strrlen(data->message));
 
 	set_print_color(data->outline_tbcolor);
-	xywprintf(data->x, data->y, L"┌─ ");
+	xywprintf(data->x, data->y, L"┌──");
 	set_print_color(data->message_tbcolor);
 	wprintf(L"[ %s%*s ]", data->message, (int)(max_length - strrlen(data->message)), L"");
 	set_print_color(data->outline_tbcolor);
 	wprintf(L"─┐ ");
 	set_print_color(data->outline_tbcolor);
 	xywprintf(data->x, data->y + 1, L"│   %*s    │ ", max_length, L"");
-	xywprintf(data->x, data->y + 2, L"└─── ");
+	xywprintf(data->x, data->y + 2, L"└────");
 	for (int i = 0; i < max_length; i++)
 	{
 		wprintf(L"─");
