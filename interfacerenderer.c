@@ -216,12 +216,17 @@ void draw_timer(TimerData* data)
 	wprintf(L" %s", L"┘ ");
 
 	xywprintf(data->x + data->width * 2 - 6, data->y + 1, L"%s", L"│ ");
-	xywprintf(data->x + data->width * 2 - 4, data->y + 1, L"%d", data->left_seconds);
+	xywprintf(data->x + data->width * 2 - 4, data->y + 1, L"%02d", data->left_seconds);
 
 	/* bar */
-	set_print_color(data->bar_tbcolor);
-	set_cursor_position(data->x + 2, data->y + 1);
-	for (int i = 0; i < (int)(((data->width - 4) * (double)data->percent / 100.0)); i++)
+	set_print_color(TO_TBCOLOR(TO_BACKGROUND_COLOR(data->bar_tbcolor), TO_TEXT_COLOR(data->bar_tbcolor)));
+    set_cursor_position(data->x + 2, data->y + 1);
+    for (int i = 0; i < (data->width - 4); i++)
+        wprintf(L"%s", L"　");
+
+    set_print_color(data->bar_tbcolor);
+    set_cursor_position(data->x + 2, data->y + 1);
+    for (int i = 0; i < (int)(((data->width - 4) * (double)data->percent / 100.0)); i++)
 		wprintf(L"%s", L"　");
 	set_print_color(original_color);
 }

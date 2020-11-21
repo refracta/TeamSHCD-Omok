@@ -17,8 +17,8 @@ typedef enum
 #define CURSOR_SIZE_SMALL 25
 #define CURSOR_SIZE_LARGE 100
 
-#define TO_TEXT_COLOR(tbcolor) (tbcolor / 16) 
-#define TO_BACKGROUND_COLOR(tbcolor) (tbcolor % 16) 
+#define TO_TEXT_COLOR(tbcolor) (tbcolor % 16)
+#define TO_BACKGROUND_COLOR(tbcolor) (tbcolor / 16)
 #define TO_TBCOLOR(text_color, background_color) (16 * background_color + text_color)
 
 void set_locale_korean();
@@ -38,6 +38,6 @@ void set_console_title(const char*);
 COORD get_cursor_position();
 void clear_console();
 int get_key_input();
-int wait_with_handler(unsigned long, int (*)(int));
+int wait_with_handler(unsigned long, int (*)(int, void*), void*);
 void xyprintf(int, int, char*, ...);
 void xywprintf(int, int, wchar_t*, ...);

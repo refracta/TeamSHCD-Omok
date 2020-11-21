@@ -198,8 +198,9 @@ int get_key_input() {
  *	키 핸들링이 일어나지 않는 경우에는 항상 -1을 반환한다.
  * @param ms 대기할 시간 (밀리초)
  * @param handler 텍스트의 배경 색깔
+ * @param data 자유형 데이터
  */
-int wait_with_handler(unsigned long ms, int (*handler)(int))
+int wait_with_handler(unsigned long ms, int (*handler)(int, void*), void* data)
 {
 	struct timespec begin, end;
 	clock_gettime(CLOCK_MONOTONIC, &begin);
@@ -210,7 +211,7 @@ int wait_with_handler(unsigned long ms, int (*handler)(int))
         {
             int c = _getwch();
             c = c == 0xE0 || c == 0 ? _getwch() : c;
-			int result = handler(c);
+			int result = handler(c, data);
 			if (result > -1)
 			{
 				return result;
