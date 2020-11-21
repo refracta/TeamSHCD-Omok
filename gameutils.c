@@ -32,20 +32,14 @@ int run_menu(MenuData* data, bool disable_escape) {
 			}
 			break;
 		case DOWN_KEY:
-			if (data->current_index < data->length - 1) 
-			{
-				data->current_index++;
+				data->current_index = data->current_index + 1 < data->length ? data->current_index + 1 : 0;
 				draw_menu(data);
 				Beep(349 * 2, 100);
-			}
 			break;
 		case UP_KEY:
-			if (data->current_index > 0) 
-			{
-				data->current_index--;
+				data->current_index = data->current_index > 0 ? data->current_index - 1 : data->length - 1;
 				draw_menu(data);
 				Beep(349 * 2, 100);
-			}
 			break;
 		case SPACE_KEY:
 		case ENTER_KEY:
