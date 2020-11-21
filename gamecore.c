@@ -84,7 +84,7 @@ char reverse_glyph(char glyph)
  * @param height 격자의 세로 길이
  * @return 정상적인 수면 ture 3*3이면 false
  */
-bool check_double_three(char** grid, int x, int y, int width, int height, char glyph)
+bool check_double_three(char** grid, int width, int height, int x, int y, char glyph)
 {
 
 	// 가로 
@@ -396,7 +396,7 @@ bool check_double_three(char** grid, int x, int y, int width, int height, char g
  * @param height 격자의 세로 길이
  * @return 정상적인 수면 ture 4*4이면 false
  */
-bool check_double_four(char** grid, int x, int y, int width, int height, char glyph)
+bool check_double_four(char** grid, int width, int height, int x, int y, char glyph)
 {
 	int countglyph = 1; // 두는 곳은 흑색이므로 1 추가
 	int countempty = 0;
@@ -722,7 +722,7 @@ bool check_double_four(char** grid, int x, int y, int width, int height, char gl
  * @param height 격자의 세로 길이
  * @return 정상적인 수면 ture 장목이면 false
  */
-bool check_overline(char** grid, int x, int y, int width, int height, char glyph)
+bool check_overline(char** grid, int width, int height, int x, int y, char glyph)
 {
 	char copygrid[width][height] = { 0 };
 
@@ -779,11 +779,11 @@ bool check_overline(char** grid, int x, int y, int width, int height, char glyph
  * @param height 격자의 세로 길이
  * @return 정상적인 수면 ture 둘 수 없다면 false
  */
-bool check_confirm(char** grid, int x, int y, int width, int height, char glyph)
+bool check_confirm(char** grid, int width, int height, int x, int y, char glyph)
 {
 	if (glyph == SG_BLACK)
 	{
-		if (check_double_three(grid, x, y, width, height, glyph) && check_double_four(grid, x, y, width, height, glyph) && check_overline(grid, x, y, width, height, glyph))
+		if (check_double_three(grid, width, height, x, y, glyph) && check_double_four(grid, width, height, x, y, glyph) && check_overline(grid, width, height, x, y, glyph))
 			return true;
 		else
 			return false;
