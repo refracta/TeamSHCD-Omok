@@ -11,6 +11,7 @@ typedef struct {
 	short name_tbcolor;
 	short element_tbcolor;
 	short selected_tbcolor;
+	short non_selected_tbcolor;
 } MenuData;
 
 typedef struct {

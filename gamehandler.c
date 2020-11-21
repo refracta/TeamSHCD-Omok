@@ -101,7 +101,7 @@ int run_main_menu() {
 	menu.name = L" 메뉴";
 	wchar_t** list = malloc(sizeof(wchar_t*) * 4);
 	list[0] = L" 오목";
-	list[1] = L" n목";
+	list[1] = L" N목";
 	list[2] = L"도움말";
 	list[3] = L"나가기";
 	menu.list = list;
@@ -112,6 +112,7 @@ int run_main_menu() {
 	menu.name_tbcolor = TO_TBCOLOR(WHITE, GRAY);
 	menu.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
 	menu.selected_tbcolor = TO_TBCOLOR(JADE, LIGHT_RED);
+	menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, GRAY);
 
 	menu.x = 51;
 	menu.y = 19;
