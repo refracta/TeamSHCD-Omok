@@ -187,14 +187,17 @@ void run_game(GameData* data)
 
 		data->grd = malloc_grd(19, 19);
 		(data->grd)->line_color = TO_TBCOLOR(WHITE, BLACK);
+		(data->grd)->black_color = TO_TBCOLOR(RED, BLACK);
+		(data->grd)->white_color = TO_TBCOLOR(BLUE, BLACK);
+		(data->grd)->cursor_color = TO_TBCOLOR(LIGHT_GREEN, BLACK);
 		(data->grd)->x = 10;
 		(data->grd)->y = 10;
 
 		data->status_inited = true;
 	}
 
-	xywprintf(0, 1, L"Player1: %s", data->player1_name);
-	xywprintf(0, 2, L"Player2: %s", data->player2_name);
+	xywprintf(0, 1, L"Player1: %s (Black)", data->player1_name);
+	xywprintf(0, 2, L"Player2: %s (White)", data->player2_name);
 	xywprintf(0, 3, L"Turn: %d", data->tick);
 	
 	select_stone_position(data->grd, (data->tick++ % 2 == 0) ? SG_BLACK : SG_WHITE);

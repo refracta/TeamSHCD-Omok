@@ -48,6 +48,8 @@ wchar_t* sg2rg(char sg) {
 		return RG_BLACK;
 	case SG_WHITE:
 		return RG_WHITE;
+    case SG_CURSOR:
+        return RG_CURSOR;
 	default:
 		return NULL;
 	}
@@ -69,17 +71,15 @@ wchar_t* generate_grid_string(GridRenderData * grd)
 	{
 		for (int j = 0; j < grd->width; j++)
 		{
-			/* 돌은 렌더링 하지 말고 격자만 렌더링 후 Coloring stone한다.
-			char glyph = grid[j][i];
+			char glyph = grd->grid[j][i];
 			if (glyph != SG_EMPTY) {
-				bool is_need_padding = !(j == 0 || grid[j - 1][i] != SG_EMPTY);
+				bool is_need_padding = !(j == 0 || grd->grid[j - 1][i] != SG_EMPTY);
 				if (is_need_padding) {
 					wcscat(grid_string, L" ");
 				}
 				wcscat(grid_string, sg2rg(glyph));
 				continue;
 			}
-			*/
 			if (i == first_index && j == first_index)
 				wcscat(grid_string, RG_GRID_TYPE_7); //좌상단 격자
 			else if (i == first_index && j == last_w_index)
@@ -185,7 +185,7 @@ void coloring_stone(int offset_x, int offset_y, int x, int y, char glyph, short 
 	short origin_color = get_print_color();
 
 	set_print_color(color);
-	xywprintf(x * 2 + offset_x, y + offset_y, glyph == SG_BLACK ? RG_BLACK : (glyph == SG_WHITE ? RG_WHITE : L"X"));
+	xywprintf(x * 2 + offset_x, y + offset_y, sg2rg(glyph));
 
 	set_print_color(origin_color);
 }

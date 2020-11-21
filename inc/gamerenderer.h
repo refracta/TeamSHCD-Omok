@@ -2,18 +2,22 @@
 #define __GAMERENDERER_H__
 
 typedef struct {
-	int x;
-	int y;
-	char** grid;
-	short** stone_colors;
-	int width;
-	int height;
-	short line_color;
+    int x;
+    int y;
+    char** grid;
+    short** stone_colors;
+    int width;
+    int height;
+    short line_color;
+    short black_color;
+    short white_color;
+    short cursor_color;
 } GridRenderData;
 #endif
 
 #define RG_BLACK L"●"
 #define RG_WHITE L"○"
+#define RG_CURSOR L"◈"
 
 #define RG_GRID_TYPE_1 L"└"
 #define RG_GRID_TYPE_2 L"┴"

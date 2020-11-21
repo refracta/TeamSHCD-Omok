@@ -64,7 +64,7 @@ void select_stone_position(GridRenderData* grd, char player_glyph)
 	while (true)
 	{
 		draw_grid(grd);
-		coloring_stone(grd->x, grd->y, cursor_x, cursor_y, SG_BLACK, TO_TBCOLOR(LIGHT_GREEN, GREEN));
+		coloring_stone(grd->x, grd->y, cursor_x, cursor_y, SG_CURSOR, grd->cursor_color);
 		int c = get_key_input();
 		switch (c) {
 		case UP_KEY:
@@ -82,7 +82,7 @@ void select_stone_position(GridRenderData* grd, char player_glyph)
 		case SPACE_KEY:
 		case ENTER_KEY:
 			grd->grid[cursor_x][cursor_y] = player_glyph;
-			grd->stone_colors[cursor_x][cursor_y] = (player_glyph == SG_BLACK ? TO_TBCOLOR(RED, BLACK) : TO_TBCOLOR(BLUE, BLACK));
+			grd->stone_colors[cursor_x][cursor_y] = (player_glyph == SG_BLACK ? grd->black_color : grd->white_color);
 			draw_grid(grd);
 			Beep(450, 20);
 			return;
