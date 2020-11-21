@@ -118,13 +118,13 @@ void select_stone_position(GridRenderData* grd, char player_glyph, TimerData* ti
 			int status = wait_with_handler(1000, key_handler, param);
 			if(status > -1){
 				set_timer_disabled(&copy_timer, timer->left_seconds);
-				xywprintf(0, 4, L"%s이 수를 두었습니다.                  ", player_glyph == SG_BLACK ? L"흑": L"백");
+				xywprintf(0, 4, L"%s이 수를 두었습니다.", player_glyph == SG_BLACK ? L"흑": L"백");
 				return;
 			}
 			draw_timer(&copy_timer);
 		}
 	set_timer_disabled(&copy_timer, timer->left_seconds);
-	xywprintf(0, 4, L"시간 초과로 %s의 턴이 넘어갑니다.     ", player_glyph == SG_BLACK ? L"흑": L"백");
+	xywprintf(0, 5, L"시간 초과로 %s의 턴이 넘어갑니다.", player_glyph == SG_BLACK ? L"흑": L"백");
 	return;
 }
 /**
