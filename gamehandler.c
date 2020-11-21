@@ -186,10 +186,11 @@ void run_game(GameData* data)
 		clear_console();
 
 		data->grd = malloc_grd(19, 19);
-		(data->grd)->line_color = TO_TBCOLOR(WHITE, BLACK);
-		(data->grd)->black_color = TO_TBCOLOR(RED, BLACK);
-		(data->grd)->white_color = TO_TBCOLOR(BLUE, BLACK);
-		(data->grd)->cursor_color = TO_TBCOLOR(LIGHT_GREEN, BLACK);
+		(data->grd)->line_color = TO_TBCOLOR(BLACK, YELLOW);
+		(data->grd)->black_color = TO_TBCOLOR(BLACK, YELLOW);
+		(data->grd)->white_color = TO_TBCOLOR(WHITE, YELLOW);
+		(data->grd)->cursor_color = TO_TBCOLOR(LIGHT_GREEN, YELLOW);
+		(data->grd)->banned_color = TO_TBCOLOR(LIGHT_RED, YELLOW);
 		(data->grd)->x = 10;
 		(data->grd)->y = 10;
 
@@ -199,15 +200,17 @@ void run_game(GameData* data)
 	xywprintf(0, 1, L"Player1: %s (Black)", data->player1_name);
 	xywprintf(0, 2, L"Player2: %s (White)", data->player2_name);
 	xywprintf(0, 3, L"Turn: %d", data->tick);
-	
-	TimerData tData1;
-	TimerData tData2;
+
+	select_stone_position(data->grd, (data->tick++ % 2 == 0) ? SG_BLACK : SG_WHITE);
+
+    TimerData tData1;
+    TimerData tData2;
 
 	tData1.x = 10;
 	tData1.y = 7;
 	tData1.width = 19;
-	tData1.bar_tbcolor = TO_TBCOLOR(BLUE, BLACK);
-	tData1.outline_tbcolor = TO_TBCOLOR(LIGHT_BLUE, BLACK);
+	tData1.bar_tbcolor = TO_TBCOLOR(BLACK, GRAY);
+	tData1.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
 	tData1.left_seconds = 10;
 	tData1.percent = 100; // Max_Seconds
 	draw_timer(&tData1);
@@ -215,8 +218,8 @@ void run_game(GameData* data)
 	tData2.x = 10;
 	tData2.y = 7 +19 + 3;
 	tData2.width = 19;
-	tData2.bar_tbcolor = TO_TBCOLOR(RED, BLACK);
-	tData2.outline_tbcolor = TO_TBCOLOR(LIGHT_RED, BLACK);
+	tData2.bar_tbcolor = TO_TBCOLOR(BLACK, WHITE);
+	tData2.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
 	tData2.left_seconds = 10;
 	tData2.percent = 100; // Max_Seconds
 	draw_timer(&tData2);

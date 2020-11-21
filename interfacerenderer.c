@@ -222,6 +222,6 @@ void draw_timer(TimerData* data)
 	set_print_color(data->bar_tbcolor);
 	set_cursor_position(data->x + 2, data->y + 1);
 	for (int i = 0; i < (int)(((data->width - 4) * (double)data->percent / 100.0)); i++)
-		wprintf(L"%s", L"■");
+		wprintf(L"%s", L"　");
 	set_print_color(original_color);
 }

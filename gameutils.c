@@ -59,30 +59,33 @@ int run_menu(MenuData* data, bool disable_escape) {
 
 void select_stone_position(GridRenderData* grd, char player_glyph)
 {
-	int cursor_x = grd->width / 2;
-	int cursor_y = grd->height / 2;
 	while (true)
 	{
 		draw_grid(grd);
-		coloring_stone(grd->x, grd->y, cursor_x, cursor_y, SG_CURSOR, grd->cursor_color);
+		if(grd->grid[grd->cursor_x][grd->cursor_y] != SG_EMPTY){
+            coloring_stone(grd->x, grd->y, grd->cursor_x, grd->cursor_y, SG_BANNED, grd->banned_color);
+		}else{
+            coloring_stone(grd->x, grd->y, grd->cursor_x, grd->cursor_y, SG_CURSOR, grd->cursor_color);
+		}
+
 		int c = get_key_input();
 		switch (c) {
 		case UP_KEY:
-			cursor_y = cursor_y > 0 ? cursor_y - 1 : grd->height - 1;
+			grd->cursor_y = grd->cursor_y > 0 ? grd->cursor_y - 1 : grd->height - 1;
 			break;
 		case DOWN_KEY:
-			cursor_y = cursor_y + 1 < grd->height ? cursor_y + 1 : 0;
+			grd->cursor_y = grd->cursor_y + 1 < grd->height ? grd->cursor_y + 1 : 0;
 			break;
 		case RIGHT_KEY:
-			cursor_x = cursor_x + 1 < grd->width ? cursor_x + 1 : 0;
+			grd->cursor_x = grd->cursor_x + 1 < grd->width ? grd->cursor_x + 1 : 0;
 			break;
 		case LEFT_KEY:
-			cursor_x = cursor_x > 0 ? cursor_x - 1 : grd->width - 1;
+			grd->cursor_x = grd->cursor_x > 0 ? grd->cursor_x - 1 : grd->width - 1;
 			break;
 		case SPACE_KEY:
 		case ENTER_KEY:
-			grd->grid[cursor_x][cursor_y] = player_glyph;
-			grd->stone_colors[cursor_x][cursor_y] = (player_glyph == SG_BLACK ? grd->black_color : grd->white_color);
+			grd->grid[grd->cursor_x][grd->cursor_y] = player_glyph;
+			grd->stone_colors[grd->cursor_x][grd->cursor_y] = (player_glyph == SG_BLACK ? grd->black_color : grd->white_color);
 			draw_grid(grd);
 			Beep(450, 20);
 			return;

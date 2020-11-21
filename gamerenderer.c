@@ -20,6 +20,8 @@ GridRenderData * malloc_grd(int width, int height) {
 	GridRenderData* grd = (GridRenderData*)malloc(sizeof(GridRenderData));
 	grd->width = width;
 	grd->height = height;
+	grd->cursor_x = width / 2;
+	grd->cursor_y = height / 2;
 	char ** grid = generate_grid(width, height);
 	grd->grid = grid;
 	short ** stone_colors = (short**)malloc_double_pointer(sizeof(short), width, height);
@@ -50,6 +52,8 @@ wchar_t* sg2rg(char sg) {
 		return RG_WHITE;
     case SG_CURSOR:
         return RG_CURSOR;
+    case SG_BANNED:
+        return RG_BANNED;
 	default:
 		return NULL;
 	}

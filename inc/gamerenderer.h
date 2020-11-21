@@ -4,6 +4,8 @@
 typedef struct {
     int x;
     int y;
+    int cursor_x;
+    int cursor_y;
     char** grid;
     short** stone_colors;
     int width;
@@ -12,12 +14,14 @@ typedef struct {
     short black_color;
     short white_color;
     short cursor_color;
+    short banned_color;
 } GridRenderData;
 #endif
 
 #define RG_BLACK L"●"
-#define RG_WHITE L"○"
+#define RG_WHITE L"●"
 #define RG_CURSOR L"◈"
+#define RG_BANNED L"ⓧ"
 
 #define RG_GRID_TYPE_1 L"└"
 #define RG_GRID_TYPE_2 L"┴"
