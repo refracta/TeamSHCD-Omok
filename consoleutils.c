@@ -206,9 +206,11 @@ int wait_with_handler(unsigned long ms, int (*handler)(int))
 	while (true)
 	{
 		wait(UNIT_WAIT);
-		if (kbhit())
-		{
-			int result = handler(getch());
+        if (_kbhit())
+        {
+            int c = _getwch();
+            c = c == 0xE0 || c == 0 ? _getwch() : c;
+			int result = handler(c);
 			if (result > -1)
 			{
 				return result;
