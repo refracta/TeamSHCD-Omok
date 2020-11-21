@@ -24,10 +24,6 @@ int run_menu(MenuData* data, bool disable_escape) {
 	while (true)
 	{
 		int c = get_key_input();
-		if (c == 0xE0 || c == 0) 
-		{
-			c = get_key_input();
-		}
 		switch (c) {
 		case ESCAPE_KEY:
 			if (!disable_escape)
@@ -70,10 +66,6 @@ void select_stone_position(GridRenderData* grd, char player_glyph)
 		draw_grid(grd);
 		coloring_stone(grd->x, grd->y, cursor_x, cursor_y, SG_BLACK, TO_TBCOLOR(LIGHT_GREEN, GREEN));
 		int c = get_key_input();
-		if (c == 0xE0 || c == 0) 
-		{
-			c = get_key_input();
-		}
 		switch (c) {
 		case UP_KEY:
 			cursor_y = cursor_y > 0 ? cursor_y - 1 : grd->height - 1;
@@ -120,11 +112,7 @@ wchar_t* run_prompt(PromptData* data) {
 	}
 	
 	while (true) {
-		if (_kbhit()) {
-			int c = _getwch();
-			if (c == 0xE0 || c == 0) {
-				c = _getwch();
-			}
+			int c = get_key_input();
 			int crl;
 			switch (c) {
 				default:
@@ -167,6 +155,5 @@ wchar_t* run_prompt(PromptData* data) {
 					set_cursor_visibility(visibility);
 					return text;
 			}
-		}
 	}
 }
