@@ -109,7 +109,7 @@ int run_main_menu() {
 	menu.current_index = 0;
 
 	menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);
-	menu.name_tbcolor = TO_TBCOLOR(WHITE, GRAY);
+	menu.name_tbcolor = TO_TBCOLOR(WHITE, BLACK);
 	menu.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
 	menu.selected_tbcolor = TO_TBCOLOR(JADE, LIGHT_RED);
 	menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, GRAY);
