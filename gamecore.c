@@ -1,4 +1,4 @@
-  /**
+ /**
   @file gamecore.c
   @brief 게임 코어
 */
