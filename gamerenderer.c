@@ -162,7 +162,7 @@ void draw_grid(GridRenderData* grd)
 				xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_5);
 			if ((j == last_w_index))
 				continue;
-			xywprintf(grd->x + j * 2 + 1, grd->y + i, L"%s", RG_GRID_TYPE_H);
+			xywprintf(grd->x + j * 2 + 1, grd->y + i, L"%s", " ");
 		}
 		wprintf(L" \n");
 	}
