@@ -200,30 +200,28 @@ void run_game(GameData* data)
 	xywprintf(0, 2, L"Player2: %s (White)", data->player2_name);
 	xywprintf(0, 3, L"Turn: %d", data->tick);
 	
+	TimerData tData1;
+	TimerData tData2;
+
+	tData1.x = 10;
+	tData1.y = 7;
+	tData1.width = 19;
+	tData1.bar_tbcolor = TO_TBCOLOR(BLUE, BLACK);
+	tData1.outline_tbcolor = TO_TBCOLOR(LIGHT_BLUE, BLACK);
+	tData1.left_seconds = 10;
+	tData1.percent = 100; // Max_Seconds
+	draw_timer(&tData1);
+
+	tData2.x = 10;
+	tData2.y = 7 +19 + 3;
+	tData2.width = 19;
+	tData2.bar_tbcolor = TO_TBCOLOR(RED, BLACK);
+	tData2.outline_tbcolor = TO_TBCOLOR(LIGHT_RED, BLACK);
+	tData2.left_seconds = 10;
+	tData2.percent = 100; // Max_Seconds
+	draw_timer(&tData2);
+
 	select_stone_position(data->grd, (data->tick++ % 2 == 0) ? SG_BLACK : SG_WHITE);
-	
-
-
-	//free_double_pointer(grid, 25);
-	//free_double_pointer(stone_color, 25);
-	//clear_console();
-
-	/*
-	char** grid = generate_grid(25, 19);
-	grid[0][5] = SG_BLACK;
-	grid[1][3] = SG_WHITE;
-
-	short **stone_color = malloc_double_pointer(sizeof(short), 25, 19);
-	stone_color[0][5] = (short)12;
-	stone_color[1][3] = (short)12;
-	draw_grid(0, 8, grid, stone_color, 25, 19, 11);
-	coloring_stone(0, 8, 11, 10, 'w', 13);
-	coloring_stone(0, 8, 9, 10, 'b', 13);
-	get_key_input();
-	free_double_pointer(grid, 25);
-	free_double_pointer(stone_color, 25);
-	clear_console();
-	*/
 }
 
 /**

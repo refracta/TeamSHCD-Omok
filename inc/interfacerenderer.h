@@ -22,7 +22,19 @@ typedef struct {
 	short message_tbcolor;
 	short text_tbcolor;
 } PromptData;
+
+typedef struct {
+	int x;
+	int y;
+	int width;
+	short outline_tbcolor;
+	short bar_tbcolor;
+	int percent; // 0~100
+	int left_seconds;
+} TimerData;
 #endif
+
+
 
 #define ASCII_TITLE_SHCD (\
 " .d8888b.  888    888  .d8888b.  8888888b. \n" \
@@ -106,5 +118,6 @@ typedef struct {
 void draw_intro(int tick);
 void draw_menu(MenuData* data);
 void draw_prompt(PromptData*);
+void draw_timer(TimerData* data);
 bool is_full_width(wchar_t);
 int strrlen(wchar_t*);
