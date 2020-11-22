@@ -31,9 +31,11 @@ typedef enum
 typedef struct
 {
 	GameStatus status;
-	wchar_t player1_name[BUFSIZ];
-	wchar_t player2_name[BUFSIZ];
-	GridRenderData * grd;
+	PlayerData player1_data;
+	PlayerData player2_data;
+	TimerData player1_timer;
+	TimerData player2_timer;
+	GridRenderData* grd;
 	bool status_inited;
 	int tick;
 } GameData;
@@ -43,17 +45,17 @@ typedef struct
  * @param data 게임 데이터 구조체의 포인터
  * @param data 게임 상태 열거형
  */
-void change_status(GameData* data, GameStatus status) 
+void change_status(GameData* data, GameStatus status)
 {
-	if (data->status == GS_INTRO && status != GS_INTRO) 
+	if (data->status == GS_INTRO && status != GS_INTRO)
 	{
 		set_default_mode();
-	} 
+	}
 	else if (status == GS_INTRO)
 	{
 		set_boost_mode();
 	}
-	
+
 	data->status = status;
 	data->status_inited = false;
 	data->tick = 0;
@@ -77,7 +79,7 @@ int skip_intro(int c) {
 void run_intro(GameData* data)
 {
 	draw_intro(data->tick++);
-	if (wait_with_handler(20, skip_intro) > -1 || data->tick > INTRO_FULL_TICK) 
+	if (wait_with_handler(20, skip_intro) > -1 || data->tick > INTRO_FULL_TICK)
 	{
 		change_status(data, GS_MAIN);
 	}
@@ -122,7 +124,7 @@ int run_main_menu() {
 	return index;
 }
 
-void * run_player_name_prompt(GameData* data) {
+void* run_player_name_prompt(PlayerData* player1, PlayerData* player2) {
 	PromptData prompt;
 	prompt.message = L"Player1의 이름을 입력하세요";
 	prompt.x = 39;
@@ -132,13 +134,13 @@ void * run_player_name_prompt(GameData* data) {
 	prompt.text_tbcolor = TO_TBCOLOR(RED, BLACK);
 	prompt.message_tbcolor = TO_TBCOLOR(RED, WHITE);
 	wchar_t* player1_name = run_prompt(&prompt);
-	wcscpy(data->player1_name, player1_name);
+	wcscpy(player1->name, player1_name);
 	free(player1_name);
 	prompt.message = L"Player2의 이름을 입력하세요";
 	prompt.text_tbcolor = TO_TBCOLOR(BLUE, BLACK);
 	prompt.message_tbcolor = TO_TBCOLOR(BLUE, WHITE);
 	wchar_t* player2_name = run_prompt(&prompt);
-	wcscpy(data->player2_name, player2_name);
+	wcscpy(player2->name, player2_name);
 }
 
 /**
@@ -147,7 +149,7 @@ void * run_player_name_prompt(GameData* data) {
  */
 void run_main(GameData* data)
 {
-	if (!data->status_inited) 
+	if (!data->status_inited)
 	{
 		set_console_size(CONSOLE_COLS, CONSOLE_LINES);
 		data->status_inited = true;
@@ -183,7 +185,7 @@ void run_game(GameData* data)
 	if (!data->status_inited)
 	{
 		set_console_size(CONSOLE_COLS, (int)(CONSOLE_LINES * 1.5));
-		run_player_name_prompt(data);
+		run_player_name_prompt(&data->player1_data, &data->player2_data);
 		clear_console();
 
 		data->grd = malloc_grd(19, 19);
@@ -198,14 +200,14 @@ void run_game(GameData* data)
 		data->status_inited = true;
 	}
 
-	xywprintf(0, 1, L"Player1: %s (Black)", data->player1_name);
-	xywprintf(0, 2, L"Player2: %s (White)", data->player2_name);
+	xywprintf(0, 1, L"Player1: %s (Black)", data->player1_data.name);
+	xywprintf(0, 2, L"Player2: %s (White)", data->player2_data.name);
 	xywprintf(0, 3, L"Turn: %d", data->tick);
 
 	select_stone_position(data->grd, (data->tick++ % 2 == 0) ? SG_BLACK : SG_WHITE);
 
-    TimerData tData1;
-    TimerData tData2;
+	TimerData tData1;
+	TimerData tData2;
 
 	tData1.x = 10;
 	tData1.y = 7;
@@ -217,13 +219,42 @@ void run_game(GameData* data)
 	draw_timer(&tData1);
 
 	tData2.x = 10;
-	tData2.y = 7 +19 + 3;
+	tData2.y = 7 + 19 + 3;
 	tData2.width = 19;
 	tData2.bar_tbcolor = TO_TBCOLOR(BLACK, WHITE);
 	tData2.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
 	tData2.left_seconds = 10;
 	tData2.percent = 100; // Max_Seconds
 	draw_timer(&tData2);
+
+
+	
+	data->player1_data.player_num = 1;
+	data->player1_data.x = 10;
+	data->player1_data.y = 2;
+	data->player1_data.width = 19;
+	data->player1_data.win = 1;
+	data->player1_data.lose = 0;
+	data->player1_data.glyph = 'b';
+	data->player1_data.glyph_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+	data->player1_data.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+	data->player1_data.text_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+	data->player1_data.player_tbcolor = TO_TBCOLOR(LIGHT_JADE, BLACK);
+	draw_player(&data->player1_data);
+
+	data->player2_data.player_num = 2;
+	data->player2_data.x = 10;
+	data->player2_data.y = 2 + 7 + 19 + 4;
+	data->player2_data.width = 19;
+	data->player2_data.win = 0;
+	data->player2_data.lose = 1;
+	data->player2_data.glyph = 'b';
+	data->player2_data.glyph_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+	data->player2_data.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+	data->player2_data.text_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+	data->player2_data.player_tbcolor = TO_TBCOLOR(LIGHT_PURPLE, BLACK);
+	draw_player(&data->player2_data);
+
 
 	select_stone_position(data->grd, (data->tick++ % 2 == 0) ? SG_BLACK : SG_WHITE);
 }

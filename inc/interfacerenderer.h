@@ -1,5 +1,8 @@
 #ifndef __INTERFACERENDERER_H__
 #define __INTERFACERENDERER_H__
+
+#include <stdio.h>
+
 typedef struct {
 	int x;
 	int y;
@@ -33,6 +36,21 @@ typedef struct {
 	int percent; // 0~100
 	int left_seconds;
 } TimerData;
+
+typedef struct {
+	int player_num;
+	int x;
+	int y;
+	int width;
+	wchar_t name[BUFSIZ];
+	char glyph;
+	short glyph_tbcolor;
+	int win;
+	int lose;
+	short outline_tbcolor;
+	short text_tbcolor;
+	short player_tbcolor;
+}  PlayerData;
 #endif
 
 
@@ -120,5 +138,6 @@ void draw_intro(int tick);
 void draw_menu(MenuData* data);
 void draw_prompt(PromptData*);
 void draw_timer(TimerData* data);
+void draw_player(PlayerData* data);
 bool is_full_width(wchar_t);
 int strrlen(wchar_t*);
