@@ -195,7 +195,7 @@ int draw_game_rule() {
     menu.selected_tbcolor = TO_TBCOLOR(WHITE, BLACK);
     menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, BLACK);
 
-    menu.x = 39;
+    menu.x = 39 + 13;
     menu.y = 5 + 3;
     draw_menu(&menu);
 	
@@ -227,7 +227,7 @@ int draw_game_message() {
     menu.selected_tbcolor = TO_TBCOLOR(WHITE, BLACK);
     menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, BLACK);
 
-    menu.x = 39;
+    menu.x = 39 + 13;
     menu.y = 17;
 	
     draw_menu(&menu);
@@ -245,7 +245,7 @@ void run_game(GameData* data)
 {
 	if (!data->status_inited)
 	{
-        set_console_size(98, 35);
+        set_console_size(94, 35);
 		run_player_name_prompt(&(data->p1id.player), &(data->p2id.player));
 		clear_console();
         draw_game_rule();
@@ -258,10 +258,10 @@ void run_game(GameData* data)
 		(data->grd)->cursor_color = TO_TBCOLOR(LIGHT_GREEN, YELLOW);
 		(data->grd)->banned_color = TO_TBCOLOR(LIGHT_RED, YELLOW);
 
-		(data->grd)->x = 1;
+		(data->grd)->x = 1 + 13;
 		(data->grd)->y = 3 + 5;
 
-        data->p1id.x = 0;
+        data->p1id.x = 0 + 13;
         data->p1id.y = 0;
         data->p1id.width = (19 + 15) * 2;
         data->p1id.bar_tbcolor = TO_TBCOLOR(BLACK, WHITE);
@@ -271,7 +271,7 @@ void run_game(GameData* data)
 
 		data->p1id.player.player_number = 1;
 		data->p1id.direction = 0;
-		data->p1id.x = 0;
+		data->p1id.x = 0 + 13;
 		data->p1id.y = 0;
 		data->p1id.width = (19 + 15) * 2;
 		data->p1id.player.win = 1;
@@ -284,7 +284,7 @@ void run_game(GameData* data)
 
         draw_player_interface(&data->p1id);
         
-        data->p2id.x = 0;
+        data->p2id.x = 0 + 13;
         data->p2id.y = 7 + 19;
         data->p2id.width = (19 + 15) * 2;
         data->p2id.bar_tbcolor = TO_TBCOLOR(BLACK, GRAY);
@@ -294,7 +294,7 @@ void run_game(GameData* data)
 
 		data->p2id.player.player_number = 2;
 		data->p2id.direction = 1;
-		data->p2id.x = 0;
+		data->p2id.x = 0 + 13;
 		data->p2id.y = 7 + 17 + 4;
 		data->p2id.width = (19 + 15) * 2;
 		data->p2id.player.win = 0;
