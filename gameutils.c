@@ -144,7 +144,7 @@ wchar_t* run_prompt(PromptData* data) {
 
 	int index = 0;
 	int crlen = 0;
-	wchar_t* text = malloc(sizeof(wchar_t) * data->rlen);
+	wchar_t* text = malloc(sizeof(wchar_t) * data->rlen + 2);
 	if (text == NULL) {
 		return NULL;
 	}
