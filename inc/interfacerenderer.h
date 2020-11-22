@@ -145,3 +145,7 @@ void draw_player(PlayerData* data);
 void draw_player_interface(PlayerInterfaceData* data);
 bool is_full_width(wchar_t);
 int strrlen(wchar_t*);
+bool check_double_three(char** grid, int width, int height, int x, int y, char glyph);
+bool check_double_four(char** grid, int width, int height, int x, int y, char glyph);
+bool check_overline(char** grid, int width, int height, int x, int y, char glyph);
+bool check_winnmok(char** grid, int n, int width, int height, int x, int y, char glyph);
