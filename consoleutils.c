@@ -7,6 +7,7 @@
 #include <stdarg.h>
 #include <time.h>
 #include <locale.h>
+#include <conio.h>
 #include <Windows.h>
 #include "inc/systemutils.h"
 #include "inc/consoleutils.h"
