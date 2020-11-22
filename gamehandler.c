@@ -174,9 +174,10 @@ void run_main(GameData* data)
 }
 
 int draw_game_rule() {
+	
     MenuData menu;
     menu.name = L"       규칙";
-    wchar_t** list = malloc(sizeof(wchar_t*) * 4);
+    wchar_t** list = malloc(sizeof(wchar_t*) * 7);
     list[0] = L"승리 조건: 5개의 돌";
     list[1] = L"장목: 금지";
     list[2] = L"흑의 3x3: 금지";
@@ -197,15 +198,17 @@ int draw_game_rule() {
     menu.x = 39;
     menu.y = 5 + 3;
     draw_menu(&menu);
-/*    int index = run_menu(&menu, true);
+	
+    //int index = run_menu(&menu, true);
     free(list);
-    return index;*/
+    //return index;
 }
 
 int draw_game_message() {
+	
     MenuData menu;
     menu.name = L"       메시지";
-    wchar_t** list = malloc(sizeof(wchar_t*) * 7);
+    wchar_t** list = malloc(sizeof(wchar_t*) * 8);
     list[0] = L"뼈치킨을 알고있니";
     list[1] = L"순살치킨 보다 좋아~";
     list[2] = L"씹다가 뱉다가";
@@ -226,10 +229,12 @@ int draw_game_message() {
 
     menu.x = 39;
     menu.y = 17;
+	
     draw_menu(&menu);
-/*    int index = run_menu(&menu, true);
+	
+//    int index = run_menu(&menu, true);
     free(list);
-    return index;*/
+ //   return index;
 }
 
 /**
@@ -240,7 +245,7 @@ void run_game(GameData* data)
 {
 	if (!data->status_inited)
 	{
-        set_console_size(68, 35);
+        set_console_size(98, 35);
 		run_player_name_prompt(&(data->p1id.player), &(data->p2id.player));
 		clear_console();
         draw_game_rule();
@@ -279,7 +284,7 @@ void run_game(GameData* data)
         draw_player_interface(&data->p1id);
         
         data->p2id.x = 0;
-        data->p2id.y = 7 + 15 + 5;
+        data->p2id.y = 7 + 19;
         data->p2id.width = 19 + 15;
         data->p2id.bar_tbcolor = TO_TBCOLOR(BLACK, GRAY);
         data->p2id.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
@@ -288,7 +293,8 @@ void run_game(GameData* data)
 
 		data->p2id.player.player_number = 2;
 		data->p2id.x = 0;
-		data->p2id.y = 7 + 19 + 4;
+		data->p2id.direction = 0;
+		data->p2id.y = 7 + 17 + 4;
 		data->p2id.width = 19 + 15;
 		data->p2id.player.win = 0;
 		data->p2id.player.lose = 1;
@@ -298,7 +304,7 @@ void run_game(GameData* data)
 		data->p2id.text_tbcolor = TO_TBCOLOR(WHITE, BLACK);
 		data->p2id.player_tbcolor = TO_TBCOLOR(LIGHT_PURPLE, BLACK);
 
-        draw_player_interface(&data->p1id);
+        draw_player_interface(&data->p2id);
         
         data->p2id.bar_tbcolor = TO_TBCOLOR(BLACK, WHITE);
         data->p2id.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
@@ -310,6 +316,7 @@ void run_game(GameData* data)
 	// xywprintf(0, 2, L"Player2: %s (White)", data->player2_data.name);
 	// xywprintf(0, 3, L"Turn: %d", data->tick);
 
+	xywprintf(6,10, "%s", "SDdffdadf");
 	int player = (data->tick++ % 2 == 0);
 	select_stone_position(data->grd, player ? SG_BLACK : SG_WHITE, player ? &data->p1id : &data->p2id);
 	draw_player_interface(&data->p1id);

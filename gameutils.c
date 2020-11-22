@@ -112,19 +112,20 @@ void select_stone_position(GridRenderData* grd, char player_glyph, PlayerInterfa
 		draw_player_interface(id);
 		render_select_stone(grd);
 		void *param[] = {grd, &player_glyph, &copy_id};
-		for(int i = 0; i < copy_id.timer.left_seconds; i++,
+		int original_seconds = copy_id.timer.left_seconds;
+		for(int i = 0; i < original_seconds; i++,
                 copy_id.timer.left_seconds--,
                 copy_id.timer.percent=((double)copy_id.timer.left_seconds/id->timer.left_seconds)*100){
             draw_player_interface(&copy_id);
 			int status = wait_with_handler(1000, key_handler, param);
 			if(status > -1){
                 set_interface_disabled(&copy_id);
-				xywprintf(0, 4, L"%s이 수를 두었습니다.", player_glyph == SG_BLACK ? L"흑": L"백");
+				xywprintf(2, 4, L"%s이 수를 두었습니다.", player_glyph == SG_BLACK ? L"흑": L"백");
 				return;
 			}
 		}
     set_interface_disabled(&copy_id);
-	xywprintf(0, 5, L"시간 초과로 %s의 턴이 넘어갑니다.", player_glyph == SG_BLACK ? L"흑": L"백");
+	xywprintf(2, 5, L"시간 초과로 %s의 턴이 넘어갑니다.", player_glyph == SG_BLACK ? L"흑": L"백");
 	return;
 }
 /**

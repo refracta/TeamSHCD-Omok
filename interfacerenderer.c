@@ -282,73 +282,28 @@ void draw_player(PlayerData* data)
 */
 void draw_player_interface(PlayerInterfaceData* data)
 {
-    ////////////////////////////////////////////////////////////////////////
 	short original_color = get_print_color();
-
-	/* Outline */
-	set_print_color(data->outline_tbcolor);
-	xywprintf(data->x, data->y, L"%s", L"┌");
-	for (int i = 0; i < ((data->width) - 2); i++)
-		wprintf(L" %s", L"─");
-
-	wprintf(L" %s", L"┐ ");
-
-	for (int i = 1; i <= 3; i++)
+	
+	//outline
+	
+	xywprintf(data->x, data->y, L"%s", L"┌ ");
+	for (int i = 0; i < (data->width * 2 - 2); i++)
+		xywprintf(data->x + 1 + i, data->y, L"%s", L"─");
+	xywprintf(data->x + (data->width * 2 - 2), data->y, L"%s", L"┐");
+	for (int i = 1; i <= 6; i++)
 	{
-		xywprintf(data->x, (data->y) + i, L"%s", L"│ ");
-		xywprintf(data->x + data->width * 2 - 2, (data->y) + i, L"%s", L"│ ");
+		xywprintf(data->x, data->y + i, L"%s", L"│");
+		xywprintf(data->x + (data->width * 2 - 2), data->y + i, L"%s", L"│ ");
 	}
-
-	xywprintf(data->x, (data->y) + 4, L"%s", L"└");
-	for (int i = 0; i < ((data->width) - 2); i++)
-		wprintf(L" %s", L"─");
-	wprintf(L" %s", L"┘ ");
-
-	/* Player info */
-	set_print_color(data->text_tbcolor);
-	xywprintf(data->x + 2, data->y + 1, L"Player %d", data->player.player_number);
-	xywprintf(data->x + 2, data->y + 2, L"%s", data->player.name);
-	xywprintf(data->x + 2, data->y + 3, L"W/L %d/%d", data->player.win, data->player.lose);
-
-	set_print_color(data->glyph_tbcolor);
-	xywprintf((data->x + data->width * 2) - 8, data->y + 1, L"%s", data->player.glyph == SG_BLACK ? RG_BLACK : RG_WHITE);
+	xywprintf(data->x, data->y + 6, L"%s", L"└ ");
+	for (int i = 0; i < (data->width * 2 - 2); i++)
+		xywprintf(data->x + 1 + i, data->y + 6, L"%s", L"─");
+	xywprintf(data->x + (data->width * 2 - 2), data->y + 6, L"%s", L"┘");
 
 
-	set_print_color(data->player_tbcolor);
-	xywprintf((data->x + data->width * 2) - 5, data->y + 1, L"■");
+
+
+
 
 	set_print_color(original_color);
-    ////////////////////////////////////////////////////////////////////////
-    // short original_color = get_print_color();
-
-	/* outline */
-	set_print_color(data->outline_tbcolor);
-	xywprintf(data->x, data->y, L"%s", L"┌");
-	for (int i = 0; i < ((data->width) - 2); i++)
-		wprintf(L" %s", L"─");
-
-	wprintf(L" %s", L"┐ ");
-	xywprintf(data->x, (data->y) + 1, L"%s", L"│ ");
-	xywprintf(data->x + data->width * 2 - 2, (data->y) + 1, L"%s", L"│ ");
-
-	xywprintf(data->x, (data->y) + 2, L"%s", L"└");
-	for (int i = 0; i < ((data->width) - 2); i++)
-		wprintf(L" %s", L"─");
-	wprintf(L" %s", L"┘ ");
-
-	xywprintf(data->x + data->width * 2 - 6, data->y + 1, L"%s", L"│ ");
-	xywprintf(data->x + data->width * 2 - 4, data->y + 1, L"%02d", data->timer.left_seconds);
-
-	/* bar */
-	set_print_color(TO_TBCOLOR(TO_BACKGROUND_COLOR(data->bar_tbcolor), TO_TEXT_COLOR(data->bar_tbcolor)));
-    set_cursor_position(data->x + 2, data->y + 1);
-    for (int i = 0; i < (data->width - 4); i++)
-        wprintf(L"%s", L"　");
-
-    set_print_color(data->bar_tbcolor);
-    set_cursor_position(data->x + 2, data->y + 1);
-    for (int i = 0; i < (int)(((data->width - 4) * (double)data->timer.percent / 100.0)); i++)
-		wprintf(L"%s", L"　");
-	set_print_color(original_color);
-    ////////////////////////////////////////////////////////////////////////
 }

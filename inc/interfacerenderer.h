@@ -50,6 +50,7 @@ typedef struct {
     short text_tbcolor;
     short player_tbcolor;
     short bar_tbcolor;
+	int direction;
     PlayerData player;
     TimerData timer;
 }  PlayerInterfaceData;
