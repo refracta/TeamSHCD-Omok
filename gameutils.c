@@ -97,33 +97,33 @@ int key_handler(int c, void * param){
     return -1;
 }
 
-void set_timer_disabled(TimerData* copy_timer, int full_time){
-	copy_timer->outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
-	copy_timer->bar_tbcolor = TO_TBCOLOR(BLACK, GRAY);
+void set_interface_disabled(PlayerInterfaceData* copy_id){
+    copy_id->outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
+    copy_id->bar_tbcolor = TO_TBCOLOR(BLACK, GRAY);
 	//copy_timer->left_seconds = 10;
 	//copy_timer->percent = 100;
-	draw_timer(copy_timer);
+	draw_player_interface(copy_id);
 }
 
-void select_stone_position(GridRenderData* grd, char player_glyph, TimerData* timer)
+void select_stone_position(GridRenderData* grd, char player_glyph, PlayerInterfaceData* id)
 {
-		TimerData copy_timer;
-		memcpy(&copy_timer, timer, sizeof(TimerData));
-		draw_timer(timer);
+        PlayerInterfaceData copy_id;
+		memcpy(&copy_id, id, sizeof(PlayerInterfaceData));
+		draw_player_interface(id);
 		render_select_stone(grd);
-		void *param[] = {grd, &player_glyph, &copy_timer};
-		for(int i = 0; i < timer->left_seconds; i++,
-				copy_timer.left_seconds--,
-				copy_timer.percent=((double)copy_timer.left_seconds/timer->left_seconds)*100){
-            draw_timer(&copy_timer);
+		void *param[] = {grd, &player_glyph, &copy_id};
+		for(int i = 0; i < copy_id.timer.left_seconds; i++,
+                copy_id.timer.left_seconds--,
+                copy_id.timer.percent=((double)copy_id.timer.left_seconds/id->timer.left_seconds)*100){
+            draw_player_interface(&copy_id);
 			int status = wait_with_handler(1000, key_handler, param);
 			if(status > -1){
-				set_timer_disabled(&copy_timer, timer->left_seconds);
+                set_interface_disabled(&copy_id);
 				xywprintf(0, 4, L"%s이 수를 두었습니다.", player_glyph == SG_BLACK ? L"흑": L"백");
 				return;
 			}
 		}
-	set_timer_disabled(&copy_timer, timer->left_seconds);
+    set_interface_disabled(&copy_id);
 	xywprintf(0, 5, L"시간 초과로 %s의 턴이 넘어갑니다.", player_glyph == SG_BLACK ? L"흑": L"백");
 	return;
 }
