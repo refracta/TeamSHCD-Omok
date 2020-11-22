@@ -7,6 +7,7 @@
 #include <stdarg.h>
 #include <time.h>
 #include <locale.h>
+#include <conio.h>
 #include <Windows.h>
 #include "inc/systemutils.h"
 #include "inc/consoleutils.h"
@@ -185,7 +186,7 @@ int get_key_input() {
 		if (_kbhit())
 		{
             int c = _getwch();
-            c = c == 0xE0 || c == 0 ? _getwch() : c;
+            c = (c == 0xE0 || c == 0) ? _getwch() : c;
             return c;
 		}
 	}
@@ -210,7 +211,7 @@ int wait_with_handler(unsigned long ms, int (*handler)(int, void*), void* data)
         if (_kbhit())
         {
             int c = _getwch();
-            c = c == 0xE0 || c == 0 ? _getwch() : c;
+            c = (c == 0xE0 || c == 0) ? _getwch() : c;
 			int result = handler(c, data);
 			if (result > -1)
 			{

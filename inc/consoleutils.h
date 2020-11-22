@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include <wchar.h>
 #include <stdbool.h>
+#include <conio.h>
 
 #ifndef __CONSOLEUTILS_H__
 #define __CONSOLEUTILS_H__

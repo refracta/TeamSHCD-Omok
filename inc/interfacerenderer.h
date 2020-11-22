@@ -28,29 +28,32 @@ typedef struct {
 } PromptData;
 
 typedef struct {
-	int x;
-	int y;
-	int width;
-	short outline_tbcolor;
-	short bar_tbcolor;
-	int percent; // 0~100
-	int left_seconds;
+    int percent; // 0~100
+    int left_seconds;
 } TimerData;
 
 typedef struct {
-	int player_num;
-	int x;
-	int y;
-	int width;
-	wchar_t name[BUFSIZ];
-	char glyph;
-	short glyph_tbcolor;
-	int win;
-	int lose;
-	short outline_tbcolor;
-	short text_tbcolor;
-	short player_tbcolor;
+    int player_number;
+	short color;
+    wchar_t name[BUFSIZ];
+    int win;
+    int lose;
+    char glyph;
 }  PlayerData;
+
+typedef struct {
+    int x;
+    int y;
+    int width;
+
+    short glyph_tbcolor;
+    short outline_tbcolor;
+    short text_tbcolor;
+    short bar_tbcolor;
+	int direction;
+    PlayerData player;
+    TimerData timer;
+}  PlayerInterfaceData;
 #endif
 
 
@@ -139,5 +142,6 @@ void draw_menu(MenuData* data);
 void draw_prompt(PromptData*);
 void draw_timer(TimerData* data);
 void draw_player(PlayerData* data);
+void draw_player_interface(PlayerInterfaceData* data);
 bool is_full_width(wchar_t);
 int strrlen(wchar_t*);

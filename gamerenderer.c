@@ -166,10 +166,13 @@ void draw_grid(GridRenderData* grd)
 			else
 				xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_5);
 			if ((j == last_w_index))
+			{
+				wprintf(L" ");
 				continue;
-			xywprintf(grd->x + j * 2 + 1, grd->y + i, L"%s", " ");
+			}
+			xywprintf(grd->x + j * 2 + 1, grd->y + i, L"%s", L" ");
 		}
-		wprintf(L" \n");
+		wprintf(L"\n");
 	}
 
 	set_print_color(origin_color);
