@@ -64,7 +64,7 @@ int key_handler(int c, void * param){
 	void ** list = (void **) param;
 	GridRenderData * grd = (GridRenderData*) list[0];
 	char player_glyph = *((char*) list[1]);
-	TimerData* timer = (TimerData*) list[2];
+	PlayerInterfaceData* timer = (PlayerInterfaceData*) list[2];
 
     switch (c) {
         case UP_KEY:
