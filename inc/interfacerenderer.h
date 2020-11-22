@@ -34,6 +34,7 @@ typedef struct {
 
 typedef struct {
     int player_number;
+	short color;
     wchar_t name[BUFSIZ];
     int win;
     int lose;
@@ -48,7 +49,6 @@ typedef struct {
     short glyph_tbcolor;
     short outline_tbcolor;
     short text_tbcolor;
-    short player_tbcolor;
     short bar_tbcolor;
 	int direction;
     PlayerData player;

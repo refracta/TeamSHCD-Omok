@@ -263,46 +263,47 @@ void run_game(GameData* data)
 
         data->p1id.x = 0;
         data->p1id.y = 0;
-        data->p1id.width = 19 + 15;
+        data->p1id.width = (19 + 15) * 2;
         data->p1id.bar_tbcolor = TO_TBCOLOR(BLACK, WHITE);
         data->p1id.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
         data->p1id.timer.left_seconds = 10;
-        data->p1id.timer.percent = 100; // Max_Seconds
+        data->p1id.timer.percent = 100;
 
 		data->p1id.player.player_number = 1;
+		data->p1id.direction = 0;
 		data->p1id.x = 0;
 		data->p1id.y = 0;
-		data->p1id.width = 19 + 15;
+		data->p1id.width = (19 + 15) * 2;
 		data->p1id.player.win = 1;
 		data->p1id.player.lose = 0;
 		data->p1id.player.glyph = SG_BLACK;
 		data->p1id.glyph_tbcolor = TO_TBCOLOR(WHITE, BLACK);
 		data->p1id.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
 		data->p1id.text_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-		data->p1id.player_tbcolor = TO_TBCOLOR(LIGHT_JADE, BLACK);
+		data->p1id.player.color = TO_TBCOLOR(LIGHT_JADE, BLACK);
 
         draw_player_interface(&data->p1id);
         
         data->p2id.x = 0;
         data->p2id.y = 7 + 19;
-        data->p2id.width = 19 + 15;
+        data->p2id.width = (19 + 15) * 2;
         data->p2id.bar_tbcolor = TO_TBCOLOR(BLACK, GRAY);
         data->p2id.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
         data->p2id.timer.left_seconds = 10;
-        data->p2id.timer.percent = 100; // Max_Seconds
+		data->p2id.timer.percent = 100;
 
 		data->p2id.player.player_number = 2;
+		data->p2id.direction = 1;
 		data->p2id.x = 0;
-		data->p2id.direction = 0;
 		data->p2id.y = 7 + 17 + 4;
-		data->p2id.width = 19 + 15;
+		data->p2id.width = (19 + 15) * 2;
 		data->p2id.player.win = 0;
 		data->p2id.player.lose = 1;
 		data->p2id.player.glyph = SG_WHITE;
 		data->p2id.glyph_tbcolor = TO_TBCOLOR(WHITE, BLACK);
 		data->p2id.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
 		data->p2id.text_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-		data->p2id.player_tbcolor = TO_TBCOLOR(LIGHT_PURPLE, BLACK);
+		data->p2id.player.color = TO_TBCOLOR(LIGHT_PURPLE, BLACK);
 
         draw_player_interface(&data->p2id);
         
@@ -316,11 +317,10 @@ void run_game(GameData* data)
 	// xywprintf(0, 2, L"Player2: %s (White)", data->player2_data.name);
 	// xywprintf(0, 3, L"Turn: %d", data->tick);
 
-	xywprintf(6,10, "%s", "SDdffdadf");
 	int player = (data->tick++ % 2 == 0);
 	select_stone_position(data->grd, player ? SG_BLACK : SG_WHITE, player ? &data->p1id : &data->p2id);
-	draw_player_interface(&data->p1id);
-	draw_player_interface(&data->p2id);
+	//draw_player_interface(&data->p1id);
+	//draw_player_interface(&data->p2id);
 }
 
 /**
