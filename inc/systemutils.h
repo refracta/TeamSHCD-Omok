@@ -6,8 +6,8 @@
 #define UNIT_WAIT 10
 #define MILLISECOND_DIFF(begin, end) (((double) (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) * 1.0e-9) * 1000)
 
-void unix_time(struct timespec*);
+void unix_time(struct timespec *);
 
-int clock_gettime(int, struct timespec*);
+int clock_gettime(int, struct timespec *);
 
 void wait(unsigned long);

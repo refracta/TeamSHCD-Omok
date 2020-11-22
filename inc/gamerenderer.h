@@ -1,13 +1,14 @@
 #ifndef __GAMERENDERER_H__
 #define __GAMERENDERER_H__
 
-typedef struct {
+typedef struct
+{
     int x;
     int y;
     int cursor_x;
     int cursor_y;
-    char** grid;
-    short** stone_colors;
+    char **grid;
+    short **stone_colors;
     int width;
     int height;
     short line_color;
@@ -37,8 +38,12 @@ typedef struct {
 
 #include <wchar.h>
 
-GridRenderData* malloc_grd(int width, int height);
-void free_grd(GridRenderData* grd);
-wchar_t* generate_grid_string(GridRenderData *);
+GridRenderData *malloc_grd(int width, int height);
+
+void free_grd(GridRenderData *grd);
+
+wchar_t *generate_grid_string(GridRenderData *);
+
 void draw_grid(GridRenderData *);
+
 void coloring_stone(int offset_x, int offset_y, int x, int y, char glyph, short color);

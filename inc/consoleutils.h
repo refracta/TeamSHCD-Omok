@@ -10,8 +10,8 @@
  */
 typedef enum
 {
-	BLACK, BLUE, GREEN, JADE, RED, PURPLE, YELLOW, WHITE, GRAY,
-	LIGHT_BLUE, LIGHT_GREEN, LIGHT_JADE, LIGHT_RED, LIGHT_PURPLE, LIGHT_YELLOW, LIGHT_WHITE
+    BLACK, BLUE, GREEN, JADE, RED, PURPLE, YELLOW, WHITE, GRAY,
+    LIGHT_BLUE, LIGHT_GREEN, LIGHT_JADE, LIGHT_RED, LIGHT_PURPLE, LIGHT_YELLOW, LIGHT_WHITE
 } ConsoleColor;
 #endif
 
@@ -23,22 +23,41 @@ typedef enum
 #define TO_TBCOLOR(text_color, background_color) (16 * background_color + text_color)
 
 void set_locale_korean();
+
 void set_locale_default();
+
 void set_encoding_cp949();
+
 void set_encoding_utf8();
+
 void set_boost_mode();
+
 void set_default_mode();
+
 bool get_cursor_visibility();
+
 void set_cursor_visibility(bool);
+
 void set_cursor_position(int, int);
+
 void set_cursor_size(int);
+
 void set_print_color(int);
+
 short get_print_color();
+
 void set_console_size(int, int);
-void set_console_title(const char*);
+
+void set_console_title(const char *);
+
 COORD get_cursor_position();
+
 void clear_console();
+
 int get_key_input();
-int wait_with_handler(unsigned long, int (*)(int, void*), void*);
-void xyprintf(int, int, char*, ...);
-void xywprintf(int, int, wchar_t*, ...);
+
+int wait_with_handler(unsigned long, int (*)(int, void *), void *);
+
+void xyprintf(int, int, char *, ...);
+
+void xywprintf(int, int, wchar_t *, ...);
