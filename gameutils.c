@@ -51,19 +51,23 @@ int run_menu(MenuData* data, bool disable_escape) {
 	}
 }
 
-void select_stone_position(GridRenderData* grd, char player_glyph)
-{
-	while (true)
-	{
-		draw_grid(grd);
-		if(grd->grid[grd->cursor_x][grd->cursor_y] != SG_EMPTY){
-            coloring_stone(grd->x, grd->y, grd->cursor_x, grd->cursor_y, SG_BANNED, grd->banned_color);
-		}else{
-            coloring_stone(grd->x, grd->y, grd->cursor_x, grd->cursor_y, SG_CURSOR, grd->cursor_color);
-		}
-		int c = get_key_input();
-		switch (c) {
-		case UP_KEY:
+void render_select_stone(GridRenderData* grd){
+    draw_grid(grd);
+    if(grd->grid[grd->cursor_x][grd->cursor_y] != SG_EMPTY){
+        coloring_stone(grd->x, grd->y, grd->cursor_x, grd->cursor_y, SG_BANNED, grd->banned_color);
+    }else{
+        coloring_stone(grd->x, grd->y, grd->cursor_x, grd->cursor_y, SG_CURSOR, grd->cursor_color);
+    }
+}
+
+int key_handler(int c, void * param){
+	void ** list = (void **) param;
+	GridRenderData * grd = (GridRenderData*) list[0];
+	char player_glyph = *((char*) list[1]);
+	TimerData* timer = (TimerData*) list[2];
+
+    switch (c) {
+        case UP_KEY:
 			grd->cursor_y = grd->cursor_y > 0 ? grd->cursor_y - 1 : grd->height - 1;
 			break;
 		case DOWN_KEY:
@@ -77,19 +81,51 @@ void select_stone_position(GridRenderData* grd, char player_glyph)
 			break;
 		case SPACE_KEY:
 		case ENTER_KEY:
-            if(grd->grid[grd->cursor_x][grd->cursor_y] == SG_EMPTY){
-                grd->grid[grd->cursor_x][grd->cursor_y] = player_glyph;
-                grd->stone_colors[grd->cursor_x][grd->cursor_y] = (player_glyph == SG_BLACK ? grd->black_color : grd->white_color);
-                draw_grid(grd);
-                Beep(450, 20);
-                return;
-            }else{
+			if(grd->grid[grd->cursor_x][grd->cursor_y] == SG_EMPTY){
+				grd->grid[grd->cursor_x][grd->cursor_y] = player_glyph;
+				grd->stone_colors[grd->cursor_x][grd->cursor_y] = (player_glyph == SG_BLACK ? grd->black_color : grd->white_color);
+				draw_grid(grd);
+				Beep(450, 20);
+				return 0;
+			}else{
 				Beep(494 * 3, 20);
 				Beep(494 * 3, 20);
-            }
+			}
 			break;
-		}
 	}
+    render_select_stone(grd);
+    return -1;
+}
+
+void set_timer_disabled(TimerData* copy_timer, int full_time){
+	copy_timer->outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
+	copy_timer->bar_tbcolor = TO_TBCOLOR(BLACK, GRAY);
+	//copy_timer->left_seconds = 10;
+	//copy_timer->percent = 100;
+	draw_timer(copy_timer);
+}
+
+void select_stone_position(GridRenderData* grd, char player_glyph, TimerData* timer)
+{
+		TimerData copy_timer;
+		memcpy(&copy_timer, timer, sizeof(TimerData));
+		draw_timer(timer);
+		render_select_stone(grd);
+		void *param[] = {grd, &player_glyph, &copy_timer};
+		for(int i = 0; i < timer->left_seconds; i++,
+				copy_timer.left_seconds--,
+				copy_timer.percent=((double)copy_timer.left_seconds/timer->left_seconds)*100){
+            draw_timer(&copy_timer);
+			int status = wait_with_handler(1000, key_handler, param);
+			if(status > -1){
+				set_timer_disabled(&copy_timer, timer->left_seconds);
+				xywprintf(0, 4, L"%s이 수를 두었습니다.", player_glyph == SG_BLACK ? L"흑": L"백");
+				return;
+			}
+		}
+	set_timer_disabled(&copy_timer, timer->left_seconds);
+	xywprintf(0, 5, L"시간 초과로 %s의 턴이 넘어갑니다.", player_glyph == SG_BLACK ? L"흑": L"백");
+	return;
 }
 /**
 * @brief 프롬프트를 실행한다.
@@ -111,7 +147,7 @@ wchar_t* run_prompt(PromptData* data) {
 	if (text == NULL) {
 		return NULL;
 	}
-	
+
 	while (true) {
 			int c = get_key_input();
 			int crl;
@@ -136,7 +172,7 @@ wchar_t* run_prompt(PromptData* data) {
 						wprintf(L"  ");
 						wprintf(L"%c%c", BACKSPACE_KEY, BACKSPACE_KEY);
 					}
-					else 
+					else
 					{
 						crlen--;
 						wprintf(L"%c", BACKSPACE_KEY);
@@ -147,7 +183,7 @@ wchar_t* run_prompt(PromptData* data) {
 					index--;
 					break;
 				case ENTER_KEY:
-					if (index <= 0) 
+					if (index <= 0)
 					{
 						continue;
 					}
