@@ -154,29 +154,30 @@ void *run_player_name_prompt(PlayerData *player1, PlayerData *player2)
  */
 void run_main(GameData *data)
 {
-	if (!data->status_inited)
-	{
-		set_console_size(CONSOLE_COLS, CONSOLE_LINES);
-		data->status_inited = true;
-	}
-	xyprintf(30, 1, ASCII_OMOK);
-	int selection = run_main_menu();
-	switch (selection) {
-	case MM_OMOK:
-		change_status(data, GS_GAME);
-		break;
-	case MM_NMOK:
-		xywprintf(49, 18, L"추후지원 예정입니다.");
-		wait(1000);
-		xywprintf(49, 18, L"                    ");
-		break;
-	case MM_HELP:
-		change_status(data, GS_HELP);
-		break;
-	case MM_EXIT:
-		exit(0);
-		break;
-	}
+    if (!data->status_inited)
+    {
+        set_console_size(CONSOLE_COLS, CONSOLE_LINES);
+        data->status_inited = true;
+    }
+    xyprintf(30, 1, ASCII_OMOK);
+    int selection = run_main_menu();
+    switch (selection)
+    {
+        case MM_OMOK:
+            change_status(data, GS_GAME);
+            break;
+        case MM_NMOK:
+            xywprintf(49, 18, L"추후지원 예정입니다.");
+            wait(1000);
+            xywprintf(49, 18, L"                    ");
+            break;
+        case MM_HELP:
+            change_status(data, GS_HELP);
+            break;
+        case MM_EXIT:
+            exit(0);
+            break;
+    }
 }
 
 int draw_game_rule()
@@ -215,7 +216,7 @@ int draw_game_message(wchar_t list[8][BUFSIZ])
 {
     MenuData menu;
     menu.name = L"       메시지      ";
-    wchar_t **copy_list = (wchar_t**) malloc_double_pointer(sizeof(wchar_t), 8, BUFSIZ);
+    wchar_t **copy_list = (wchar_t **) malloc_double_pointer(sizeof(wchar_t), 8, BUFSIZ);
     for (int i = 0; i < 8; i++)
     {
         wcscpy(copy_list[i], list[i]);
@@ -246,7 +247,7 @@ int add_game_message_with_draw(wchar_t list[8][BUFSIZ], wchar_t *data)
     {
         for (int i = 0; i < 8 - 1; i++)
         {
-            wcscpy(list[i], list[i+1]);
+            wcscpy(list[i], list[i + 1]);
         }
         wcscpy(list[7], data);
     }
@@ -303,22 +304,32 @@ int key_handler(int c, void *param)
 
             if (grd->grid[grd->cursor_x][grd->cursor_y] == SG_EMPTY)
             {
-                bool is_double_three = !check_double_three(grd->grid, grd->width, grd->height, grd->cursor_x, grd->cursor_y, pid->player.glyph);
-                bool is_double_four = !check_double_four(grd->grid, grd->width, grd->height, grd->cursor_x, grd->cursor_y, pid->player.glyph);
-                bool is_overline = !check_overline(grd->grid, grd->width, grd->height, grd->cursor_x, grd->cursor_y, pid->player.glyph);
-                if(is_double_three){
+                bool is_double_three = !check_double_three(grd->grid, grd->width, grd->height, grd->cursor_x,
+                                                           grd->cursor_y, pid->player.glyph);
+                bool is_double_four = !check_double_four(grd->grid, grd->width, grd->height, grd->cursor_x,
+                                                         grd->cursor_y, pid->player.glyph);
+                bool is_overline = !check_overline(grd->grid, grd->width, grd->height, grd->cursor_x, grd->cursor_y,
+                                                   pid->player.glyph);
+                if (is_double_three)
+                {
                     add_game_message_with_draw(data->msg, L"쌍삼인 자리입니다.");
                     Beep(494 * 3, 20);
                     Beep(494 * 3, 20);
-                }else if(is_double_four){
+                }
+                else if (is_double_four)
+                {
                     add_game_message_with_draw(data->msg, L"쌍사인 자리입니다.");
                     Beep(494 * 3, 20);
                     Beep(494 * 3, 20);
-                }else if(is_overline){
+                }
+                else if (is_overline)
+                {
                     add_game_message_with_draw(data->msg, L"장목인 자리입니다.");
                     Beep(494 * 3, 20);
                     Beep(494 * 3, 20);
-                }else{
+                }
+                else
+                {
                     grd->grid[grd->cursor_x][grd->cursor_y] = pid->player.glyph;
                     grd->stone_colors[grd->cursor_x][grd->cursor_y] = (pid->player.glyph == SG_BLACK ? grd->black_color
                                                                                                      : grd->white_color);
@@ -434,18 +445,18 @@ void run_game(GameData *data)
         data->grd->stone_colors[12][10] = data->grd->black_color;
         data->grd->grid[12][10] = SG_BLACK;
 
-        data->grd->stone_colors[10+5][11] = data->grd->black_color;
-        data->grd->grid[10+5][11] = SG_BLACK;
-        data->grd->stone_colors[10+5][12] = data->grd->black_color;
-        data->grd->grid[10+5][12] = SG_BLACK;
-        data->grd->stone_colors[10+5][13] = data->grd->black_color;
-        data->grd->grid[10+5][13] = SG_BLACK;
-        data->grd->stone_colors[11+5][10] = data->grd->black_color;
-        data->grd->grid[11+5][10] = SG_BLACK;
-        data->grd->stone_colors[12+5][10] = data->grd->black_color;
-        data->grd->grid[12+5][10] = SG_BLACK;
-        data->grd->stone_colors[13+5][10] = data->grd->black_color;
-        data->grd->grid[13+5][10] = SG_BLACK;
+        data->grd->stone_colors[10 + 5][11] = data->grd->black_color;
+        data->grd->grid[10 + 5][11] = SG_BLACK;
+        data->grd->stone_colors[10 + 5][12] = data->grd->black_color;
+        data->grd->grid[10 + 5][12] = SG_BLACK;
+        data->grd->stone_colors[10 + 5][13] = data->grd->black_color;
+        data->grd->grid[10 + 5][13] = SG_BLACK;
+        data->grd->stone_colors[11 + 5][10] = data->grd->black_color;
+        data->grd->grid[11 + 5][10] = SG_BLACK;
+        data->grd->stone_colors[12 + 5][10] = data->grd->black_color;
+        data->grd->grid[12 + 5][10] = SG_BLACK;
+        data->grd->stone_colors[13 + 5][10] = data->grd->black_color;
+        data->grd->grid[13 + 5][10] = SG_BLACK;
 
         data->grd->stone_colors[5][10] = data->grd->black_color;
         data->grd->grid[5][10] = SG_BLACK;
@@ -522,7 +533,9 @@ void run_game(GameData *data)
     select_stone_position(data, player_number);
 
     char player_glyph = (player_number == 1 ? data->p1id : data->p2id).player.glyph;
-    if(check_winnmok(data->grd->grid, 5, data->grd->width, data->grd->height, data->grd->cursor_x, data->grd->cursor_y, player_glyph)){
+    if (check_winnmok(data->grd->grid, 5, data->grd->width, data->grd->height, data->grd->cursor_x, data->grd->cursor_y,
+                      player_glyph))
+    {
         add_game_message_with_draw(data->msg, player_glyph == SG_BLACK ? L"흑의 승리입니다." : L"백의 승리입니다.");
         add_game_message_with_draw(data->msg, L"<대국이 끝났습니다>");
         //get_key_input();

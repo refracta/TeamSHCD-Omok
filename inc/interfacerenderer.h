@@ -3,45 +3,50 @@
 
 #include <stdio.h>
 
-typedef struct {
-	int x;
-	int y;
-	wchar_t* name;
-	wchar_t** list;
-	int length;
-	int current_index;
-	short outline_tbcolor;
-	short name_tbcolor;
-	short element_tbcolor;
-	short selected_tbcolor;
-	short non_selected_tbcolor;
+typedef struct
+{
+    int x;
+    int y;
+    wchar_t *name;
+    wchar_t **list;
+    int length;
+    int current_index;
+    short outline_tbcolor;
+    short name_tbcolor;
+    short element_tbcolor;
+    short selected_tbcolor;
+    short non_selected_tbcolor;
 } MenuData;
 
-typedef struct {
-	int x;
-	int y;
-	wchar_t* message;
-	int rlen;
-	short outline_tbcolor;
-	short message_tbcolor;
-	short text_tbcolor;
+typedef struct
+{
+    int x;
+    int y;
+    wchar_t *message;
+    int rlen;
+    short outline_tbcolor;
+    short message_tbcolor;
+    short text_tbcolor;
 } PromptData;
 
-typedef struct {
+typedef struct
+{
     int percent; // 0~100
     int left_seconds;
 } TimerData;
 
-typedef struct {
+typedef struct
+{
     int player_number;
-	short color;
+    short color;
     wchar_t name[BUFSIZ];
     int win;
     int lose;
     char glyph;
-}  PlayerData;
+} PlayerData;
 
-typedef struct {
+typedef struct
+{
     int x;
     int y;
     int width;
@@ -50,12 +55,11 @@ typedef struct {
     short outline_tbcolor;
     short text_tbcolor;
     short bar_tbcolor;
-	int direction;
+    int direction;
     PlayerData player;
     TimerData timer;
-}  PlayerInterfaceData;
+} PlayerInterfaceData;
 #endif
-
 
 
 #define ASCII_TITLE_SHCD (\
@@ -137,15 +141,27 @@ typedef struct {
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 
 #include <stdbool.h>
+
 void draw_intro(int tick);
-void draw_menu(MenuData* data);
-void draw_prompt(PromptData*);
-void draw_timer(TimerData* data);
-void draw_player(PlayerData* data);
-void draw_player_interface(PlayerInterfaceData* data);
+
+void draw_menu(MenuData *data);
+
+void draw_prompt(PromptData *);
+
+void draw_timer(TimerData *data);
+
+void draw_player(PlayerData *data);
+
+void draw_player_interface(PlayerInterfaceData *data);
+
 bool is_full_width(wchar_t);
-int strrlen(wchar_t*);
-bool check_double_three(char** grid, int width, int height, int x, int y, char glyph);
-bool check_double_four(char** grid, int width, int height, int x, int y, char glyph);
-bool check_overline(char** grid, int width, int height, int x, int y, char glyph);
-bool check_winnmok(char** grid, int n, int width, int height, int x, int y, char glyph);
+
+int strrlen(wchar_t *);
+
+bool check_double_three(char **grid, int width, int height, int x, int y, char glyph);
+
+bool check_double_four(char **grid, int width, int height, int x, int y, char glyph);
+
+bool check_overline(char **grid, int width, int height, int x, int y, char glyph);
+
+bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char glyph);
