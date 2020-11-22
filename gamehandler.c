@@ -139,6 +139,7 @@ void* run_player_name_prompt(PlayerData* player1, PlayerData* player2) {
 	prompt.message_tbcolor = TO_TBCOLOR(BLUE, WHITE);
 	wchar_t* player2_name = run_prompt(&prompt);
 	wcscpy(player2->name, player2_name);
+	free(player2_name);
 }
 
 /**
@@ -240,7 +241,7 @@ void run_game(GameData* data)
 	if (!data->status_inited)
 	{
         set_console_size(68, 35);
-		run_player_name_prompt(&data->p1id.player, &data->p2id.player);
+		run_player_name_prompt(&(data->p1id.player), &(data->p2id.player));
 		clear_console();
         draw_game_rule();
         draw_game_message();
@@ -263,6 +264,17 @@ void run_game(GameData* data)
         data->p1id.timer.left_seconds = 10;
         data->p1id.timer.percent = 100; // Max_Seconds
 
+		data->p1id.player.player_number = 1;
+		data->p1id.x = 0;
+		data->p1id.y = 0;
+		data->p1id.width = 19 + 15;
+		data->p1id.player.win = 1;
+		data->p1id.player.lose = 0;
+		data->p1id.player.glyph = SG_BLACK;
+		data->p1id.glyph_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+		data->p1id.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+		data->p1id.text_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+		data->p1id.player_tbcolor = TO_TBCOLOR(LIGHT_JADE, BLACK);
 
         draw_player_interface(&data->p1id);
         
@@ -273,6 +285,19 @@ void run_game(GameData* data)
         data->p2id.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
         data->p2id.timer.left_seconds = 10;
         data->p2id.timer.percent = 100; // Max_Seconds
+
+		data->p2id.player.player_number = 2;
+		data->p2id.x = 0;
+		data->p2id.y = 7 + 19 + 4;
+		data->p2id.width = 19 + 15;
+		data->p2id.player.win = 0;
+		data->p2id.player.lose = 1;
+		data->p2id.player.glyph = SG_WHITE;
+		data->p2id.glyph_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+		data->p2id.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+		data->p2id.text_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+		data->p2id.player_tbcolor = TO_TBCOLOR(LIGHT_PURPLE, BLACK);
+
         draw_player_interface(&data->p1id);
         
         data->p2id.bar_tbcolor = TO_TBCOLOR(BLACK, WHITE);
@@ -285,34 +310,10 @@ void run_game(GameData* data)
 	// xywprintf(0, 2, L"Player2: %s (White)", data->player2_data.name);
 	// xywprintf(0, 3, L"Turn: %d", data->tick);
 
-	data->p1id.player.player_number = 1;
-	data->p1id.x = 0;
-	data->p1id.y = 0;
-	data->p1id.width = 19 + 15;
-	data->p1id.player.win = 1;
-	data->p1id.player.lose = 0;
-	data->p1id.player.glyph = SG_BLACK;
-	data->p1id.glyph_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-	data->p1id.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-	data->p1id.text_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-	data->p1id.player_tbcolor = TO_TBCOLOR(LIGHT_JADE, BLACK);
-	draw_player(&data->p1id);
-
-	data->p2id.player.player_number = 2;
-	data->p2id.x = 0;
-	data->p2id.y = 7 + 19 + 4;
-	data->p2id.width = 19 + 15;
-	data->p2id.player.win = 0;
-	data->p2id.player.lose = 1;
-	data->p2id.player.glyph = SG_WHITE;
-	data->p2id.glyph_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-	data->p2id.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-	data->p2id.text_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-	data->p2id.player_tbcolor = TO_TBCOLOR(LIGHT_PURPLE, BLACK);
-	draw_player(&data->p2id);
-
 	int player = (data->tick++ % 2 == 0);
 	select_stone_position(data->grd, player ? SG_BLACK : SG_WHITE, player ? &data->p1id : &data->p2id);
+	draw_player_interface(&data->p1id);
+	draw_player_interface(&data->p2id);
 }
 
 /**
