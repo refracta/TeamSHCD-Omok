@@ -703,11 +703,11 @@ bool check_double_four(char** grid, int width, int height, int x, int y, char gl
 
         }
     }
-    for (int j = 7; j < width; j++) // 좌측으로 떨어지는 대각선
+    for (int j = 0; j < width-7; j++) // 좌측으로 떨어지는 대각선
     {
-        for (int i = 0; i < height - 7; i++)
+        for (int i = 7; i < height; i++)
         {
-            if (copygrid[j][i + 7] == glyph && copygrid[j - 1][i + 6] == glyph && copygrid[j - 2][i + 5] == SG_EMPTY && copygrid[j - 3][i + 4] == glyph && copygrid[j - 4][i + 3] == glyph && copygrid[j - 5][i + 2] == SG_EMPTY && copygrid[j - 6][i + 1] == glyph && copygrid[j - 7][i] == glyph)
+            if (copygrid[j][i] == glyph && copygrid[j + 1][i - 1] == glyph && copygrid[j + 2][i - 2] == SG_EMPTY && copygrid[j + 3][i - 3] == glyph && copygrid[j + 4][i - 4] == glyph && copygrid[j + 5][i - 5] == SG_EMPTY && copygrid[j + 6][i - 6] == glyph && copygrid[j + 7][i - 7] == glyph)
             {
                 free_double_pointer(copygrid, width);
                 return false;
@@ -751,16 +751,16 @@ bool check_double_four(char** grid, int width, int height, int x, int y, char gl
 
         }
     }
-    for (int j = 6; j < width; j++) // 좌측으로 떨어지는 대각선
+    for (int j = 0; j < width-6; j++) // 좌측으로 떨어지는 대각선
     {
-        for (int i = 0; i < height - 6; i++)
+        for (int i = 6; i < height; i++)
         {
-            if (copygrid[j][i + 6] == glyph && copygrid[j - 1][i + 5] == SG_EMPTY && copygrid[j - 2][i + 4] == glyph && copygrid[j - 3][i + 3] == glyph && copygrid[j - 4][i + 2] == glyph && copygrid[j - 5][i + 1] == SG_EMPTY && copygrid[j - 6][i] == glyph)
+            if (copygrid[j][i] == glyph && copygrid[j + 1][i - 1] == SG_EMPTY && copygrid[j + 2][i - 2] == glyph && copygrid[j + 3][i - 3] == glyph && copygrid[j + 4][i - 4] == glyph && copygrid[j + 5][i - 5] == SG_EMPTY && copygrid[j + 6][i - 6] == glyph)
             {
                 free_double_pointer(copygrid, width);
                 return false;
             }
-        }
+        } 
     }
 
     free_double_pointer(copygrid, width);
@@ -824,11 +824,11 @@ bool check_overline(char** grid, int width, int height, int x, int y, char glyph
             }
         }
     }
-    for (int j = 5; j < width; j++) // 좌측으로 떨어지는 대각선
+    for (int j = 0; j < width-5; j++) // 좌측으로 떨어지는 대각선
     {
-        for (int i = 0; i < height - 5; i++)
+        for (int i = 5; i < height ; i++)
         {
-            if (copygrid[j][i + 5] == glyph && copygrid[j - 1][i + 4] == glyph && copygrid[j - 2][i + 3] == glyph && copygrid[j - 3][i + 2] == glyph && copygrid[j - 4][i + 1] == glyph && copygrid[j - 5][i] == glyph)
+            if (copygrid[j][i] == glyph && copygrid[j + 1][i - 1] == glyph && copygrid[j + 2][i - 2] == glyph && copygrid[j + 3][i - 3] == glyph && copygrid[j + 4][i - 4] == glyph && copygrid[j + 5][i - 5] == glyph)
             {
                 free_double_pointer(copygrid, width);
                 return false;
@@ -858,4 +858,82 @@ bool check_confirm(char** grid, int width, int height, int x, int y, char glyph)
     }
     else if (glyph == SG_WHITE)
         return true;
+}
+
+/**
+ * @brief N개의 돌이 연속적으로 놓아져 승리했는지 확인한다.
+ * @param N목에서 N의 수
+ * @param x 놓는 돌의 x좌표
+ * @param y 놓는 돌의 y좌표
+ * @param width 격자의 가로 길이
+ * @param height 격자의 세로 길이
+ * @glyph 현재 돌의 색깔
+ * @return 승리했으면 true, 패배했으면 false
+ */
+bool Win_nmok(char** grid, int n, int width, int height, int x, int y, char glyph)
+{
+    int checkglyph = 0;
+    for (int i = 0; i < width - (n - 1); i++)
+    {
+        for (int a = 0; a < n; a++)
+        {
+            if (grid[i + a][y] == glyph)
+                checkglyph++;
+            else
+                break;
+        }
+        if (checkglyph == n)
+            return true;
+    }
+
+    checkglyph = 0;
+    for (int i = 0; i < height - (n - 1); i++)
+    {
+        for (int a = 0; a < n; a++)
+        {
+            if (grid[x][i + a] == glyph)
+                checkglyph++;
+            else
+                break;
+        }
+        if (checkglyph == n)
+            return true;
+
+    }
+
+    checkglyph = 0;
+    for (int i = 0; i < width - (n - 1); i++)
+    {
+        for (int j = 0; j < height - (n - 1); j++)
+        {
+            for (int a = 0; a < n; a++)
+            {
+                if (grid[i + a][j + a] == glyph)
+                    checkglyph++;
+                else
+                    break;
+            }
+            if (checkglyph == n)
+                return true;
+        }
+    }
+
+    checkglyph = 0;
+    for (int i = 0; i < width - (n - 1); i++)
+    {
+        for (int j = (n - 1); j < height; j++)
+        {
+            for (int a = 0; a < n; a++)
+            {
+                if (grid[i + a][j - a] == glyph)
+                    checkglyph++;
+                else
+                    break;
+            }
+            if (checkglyph == n)
+                return true;
+        }
+    }
+
+    return false;
 }
