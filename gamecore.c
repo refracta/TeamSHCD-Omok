@@ -870,7 +870,7 @@ bool check_confirm(char** grid, int width, int height, int x, int y, char glyph)
  * @glyph 현재 돌의 색깔
  * @return 승리했으면 true, 패배했으면 false
  */
-bool Win_nmok(char** grid, int n, int width, int height, int x, int y, char glyph)
+bool check_Winnmok(char** grid, int n, int width, int height, int x, int y, char glyph)
 {
     int checkglyph = 0;
     for (int i = 0; i < width - (n - 1); i++)
