@@ -248,7 +248,7 @@ bool check_double_three(char** grid, int width, int height, int x, int y, char g
 
     // 열린 3인 경우
     if (countempty - countreverseglyph > 3 && opencheck == 1 && countglyph == 3)
-        check__33 += 1;  // 세로 방향 33 
+        check__33 += 1;  // 세로 방향 33
 
 
     // 우측으로 떨어지는 대각선
@@ -471,7 +471,7 @@ bool check_double_four(char** grid, int width, int height, int x, int y, char gl
 
     // 열린 4인 경우
     if (countempty >= countreverseglyph && countglyph == 4)
-        check__44 += 1;  // 가로 방향 44 
+        check__44 += 1;  // 가로 방향 44
 
     // 세로
     countglyph = 1;
@@ -526,7 +526,7 @@ bool check_double_four(char** grid, int width, int height, int x, int y, char gl
 
     // 열린 4인 경우
     if (countempty >= countreverseglyph && countglyph == 4)
-        check__44 += 1; // 세로 방향 44 
+        check__44 += 1; // 세로 방향 44
 
     // 우측으로 떨어지는 대각선
     countglyph = 1;
@@ -585,7 +585,7 @@ bool check_double_four(char** grid, int width, int height, int x, int y, char gl
 
     // 열린 4인 경우
     if (countempty >= countreverseglyph && countglyph == 4)
-        check__44 = 1;  // 우측으로 떨어지는 대각선 44 
+        check__44 = 1;  // 우측으로 떨어지는 대각선 44
 
     // 좌측으로 떨어지는 대각선
 
@@ -645,7 +645,7 @@ bool check_double_four(char** grid, int width, int height, int x, int y, char gl
 
     // 열린 4인 경우
     if (countempty >= countreverseglyph && countglyph == 4)
-        check__44 = 1;  // 좌측으로 떨어지는 대각선 방향 44 
+        check__44 = 1;  // 좌측으로 떨어지는 대각선 방향 44
 
         // 4*4 판정에서 가로,세로,우측 대각선, 좌측 대각선에서 2개 이상이 판정 될 경우, 4*4으로 취급하여 금수가 됨.
     else if (check__44 >= 2)
@@ -760,7 +760,7 @@ bool check_double_four(char** grid, int width, int height, int x, int y, char gl
                 free_double_pointer(copygrid, width);
                 return false;
             }
-        } 
+        }
     }
 
     free_double_pointer(copygrid, width);
@@ -870,7 +870,7 @@ bool check_confirm(char** grid, int width, int height, int x, int y, char glyph)
  * @glyph 현재 돌의 색깔
  * @return 승리했으면 true, 패배했으면 false
  */
-bool check_Winnmok(char** grid, int n, int width, int height, int x, int y, char glyph)
+bool check_winnmok(char** grid, int n, int width, int height, int x, int y, char glyph)
 {
     int checkglyph = 0;
     for (int i = 0; i < width - (n - 1); i++)
