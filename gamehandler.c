@@ -154,30 +154,29 @@ void *run_player_name_prompt(PlayerData *player1, PlayerData *player2)
  */
 void run_main(GameData *data)
 {
-    if (!data->status_inited)
-    {
-        set_console_size(CONSOLE_COLS, CONSOLE_LINES);
-        data->status_inited = true;
-    }
-    xyprintf(30, 1, ASCII_OMOK);
-    int selection = run_main_menu();
-    switch (selection)
-    {
-        case MM_OMOK:
-            change_status(data, GS_GAME);
-            break;
-        case MM_NMOK:
-            xywprintf(32, 12, L"추후지원 예정입니다.");
-            wait(1000);
-            xywprintf(32, 12, L"                    ");
-            break;
-        case MM_HELP:
-            change_status(data, GS_HELP);
-            break;
-        case MM_EXIT:
-            exit(0);
-            break;
-    }
+	if (!data->status_inited)
+	{
+		set_console_size(CONSOLE_COLS, CONSOLE_LINES);
+		data->status_inited = true;
+	}
+	xyprintf(30, 1, ASCII_OMOK);
+	int selection = run_main_menu();
+	switch (selection) {
+	case MM_OMOK:
+		change_status(data, GS_GAME);
+		break;
+	case MM_NMOK:
+		xywprintf(49, 18, L"추후지원 예정입니다.");
+		wait(1000);
+		xywprintf(49, 18, L"                    ");
+		break;
+	case MM_HELP:
+		change_status(data, GS_HELP);
+		break;
+	case MM_EXIT:
+		exit(0);
+		break;
+	}
 }
 
 int draw_game_rule()
@@ -539,7 +538,12 @@ void run_game(GameData *data)
  */
 void run_help(GameData *data)
 {
-
+    xywprintf(38, 10, L"간단한 오목을 즐길 수 있는 프로그램입니다.");
+    xywprintf(63, 12, L"SHCD, VERSION 1.0.0");
+    xyprintf(46, 17, ASCII_PEOPLE1);
+    xyprintf(64, 15, ASCII_PEOPLE2);
+    get_key_input();
+    change_status(data, GS_MAIN);
 }
 
 /**
