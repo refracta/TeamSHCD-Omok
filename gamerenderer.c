@@ -142,6 +142,7 @@ void draw_grid(GridRenderData* grd)
 				}
 				set_print_color(grd->stone_colors[j][i]);
 				xywprintf(grd->x + j * 2, grd->y + i, L"%s", sg2rg(glyph));
+				set_print_color(origin_color);
 				continue;
 			}
 

@@ -31,11 +31,11 @@ typedef enum
 typedef struct
 {
 	GameStatus status;
-	wchar_t player1_name[BUFSIZ];
-	wchar_t player2_name[BUFSIZ];
+	PlayerData player1_data;
+	PlayerData player2_data;
 	TimerData player1_timer;
 	TimerData player2_timer;
-	GridRenderData * grd;
+	GridRenderData* grd;
 	bool status_inited;
 	int tick;
 } GameData;
@@ -45,17 +45,17 @@ typedef struct
  * @param data 게임 데이터 구조체의 포인터
  * @param data 게임 상태 열거형
  */
-void change_status(GameData* data, GameStatus status) 
+void change_status(GameData* data, GameStatus status)
 {
-	if (data->status == GS_INTRO && status != GS_INTRO) 
+	if (data->status == GS_INTRO && status != GS_INTRO)
 	{
 		set_default_mode();
-	} 
+	}
 	else if (status == GS_INTRO)
 	{
 		set_boost_mode();
 	}
-	
+
 	data->status = status;
 	data->status_inited = false;
 	data->tick = 0;
@@ -124,7 +124,7 @@ int run_main_menu() {
 	return index;
 }
 
-void * run_player_name_prompt(GameData* data) {
+void* run_player_name_prompt(PlayerData* player1, PlayerData* player2) {
 	PromptData prompt;
 	prompt.message = L"Player1의 이름을 입력하세요";
 	prompt.x = 39;
@@ -134,13 +134,13 @@ void * run_player_name_prompt(GameData* data) {
 	prompt.text_tbcolor = TO_TBCOLOR(RED, BLACK);
 	prompt.message_tbcolor = TO_TBCOLOR(RED, WHITE);
 	wchar_t* player1_name = run_prompt(&prompt);
-	wcscpy(data->player1_name, player1_name);
+	wcscpy(player1->name, player1_name);
 	free(player1_name);
 	prompt.message = L"Player2의 이름을 입력하세요";
 	prompt.text_tbcolor = TO_TBCOLOR(BLUE, BLACK);
 	prompt.message_tbcolor = TO_TBCOLOR(BLUE, WHITE);
 	wchar_t* player2_name = run_prompt(&prompt);
-	wcscpy(data->player2_name, player2_name);
+	wcscpy(player2->name, player2_name);
 }
 
 /**
@@ -149,7 +149,7 @@ void * run_player_name_prompt(GameData* data) {
  */
 void run_main(GameData* data)
 {
-	if (!data->status_inited) 
+	if (!data->status_inited)
 	{
 		set_console_size(CONSOLE_COLS, CONSOLE_LINES);
 		data->status_inited = true;
@@ -185,7 +185,7 @@ void run_game(GameData* data)
 	if (!data->status_inited)
 	{
 		set_console_size(CONSOLE_COLS, (int)(CONSOLE_LINES * 1.5));
-		run_player_name_prompt(data);
+		run_player_name_prompt(&data->player1_data, &data->player2_data);
 		clear_console();
 
 		data->grd = malloc_grd(19, 19);
@@ -196,38 +196,61 @@ void run_game(GameData* data)
 		(data->grd)->banned_color = TO_TBCOLOR(LIGHT_RED, YELLOW);
 		(data->grd)->x = 10;
 		(data->grd)->y = 10;
-		
+    
+    data->player1_timer.x = 10;
+    data->player1_timer.y = 7;
+    data->player1_timer.width = 19;
+    data->player1_timer.bar_tbcolor = TO_TBCOLOR(BLACK, WHITE);
+    data->player1_timer.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+    data->player1_timer.left_seconds = 10;
+    data->player1_timer.percent = 100; // Max_Seconds
+    draw_timer(&data->player1_timer);
+    data->player1_timer = data->player1_timer;
 
-        data->player1_timer.x = 10;
-        data->player1_timer.y = 7;
-        data->player1_timer.width = 19;
-        data->player1_timer.bar_tbcolor = TO_TBCOLOR(BLACK, WHITE);
-        data->player1_timer.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-        data->player1_timer.left_seconds = 10;
-        data->player1_timer.percent = 100; // Max_Seconds
-        draw_timer(&data->player1_timer);
-        data->player1_timer = data->player1_timer;
-
-        data->player2_timer.x = 10;
-        data->player2_timer.y = 7 + 19 + 3;
-        data->player2_timer.width = 19;
-        data->player2_timer.bar_tbcolor = TO_TBCOLOR(BLACK, GRAY);
-        data->player2_timer.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
-        data->player2_timer.left_seconds = 10;
-        data->player2_timer.percent = 100; // Max_Seconds
-        draw_timer(&data->player2_timer);
-        data->player2_timer.bar_tbcolor = TO_TBCOLOR(BLACK, WHITE);
-        data->player2_timer.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-        data->player2_timer = data->player2_timer;
-        
+    data->player2_timer.x = 10;
+    data->player2_timer.y = 7 + 19 + 3;
+    data->player2_timer.width = 19;
+    data->player2_timer.bar_tbcolor = TO_TBCOLOR(BLACK, GRAY);
+    data->player2_timer.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
+    data->player2_timer.left_seconds = 10;
+    data->player2_timer.percent = 100; // Max_Seconds
+    draw_timer(&data->player2_timer);
+    data->player2_timer.bar_tbcolor = TO_TBCOLOR(BLACK, WHITE);
+    data->player2_timer.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+    data->player2_timer = data->player2_timer;
+    
 		data->status_inited = true;
 	}
 
-	xywprintf(0, 1, L"Player1: %s (Black)", data->player1_name);
-	xywprintf(0, 2, L"Player2: %s (White)", data->player2_name);
-	xywprintf(0, 3, L"Turn: %d", data->tick);
+	// xywprintf(0, 1, L"Player1: %s (Black)", data->player1_data.name);
+	// xywprintf(0, 2, L"Player2: %s (White)", data->player2_data.name);
+	// xywprintf(0, 3, L"Turn: %d", data->tick);
 
+	data->player1_data.player_num = 1;
+	data->player1_data.x = 10;
+	data->player1_data.y = 2;
+	data->player1_data.width = 19;
+	data->player1_data.win = 1;
+	data->player1_data.lose = 0;
+	data->player1_data.glyph = 'b';
+	data->player1_data.glyph_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+	data->player1_data.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+	data->player1_data.text_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+	data->player1_data.player_tbcolor = TO_TBCOLOR(LIGHT_JADE, BLACK);
+	draw_player(&data->player1_data);
 
+	data->player2_data.player_num = 2;
+	data->player2_data.x = 10;
+	data->player2_data.y = 2 + 7 + 19 + 4;
+	data->player2_data.width = 19;
+	data->player2_data.win = 0;
+	data->player2_data.lose = 1;
+	data->player2_data.glyph = 'b';
+	data->player2_data.glyph_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+	data->player2_data.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+	data->player2_data.text_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+	data->player2_data.player_tbcolor = TO_TBCOLOR(LIGHT_PURPLE, BLACK);
+	draw_player(&data->player2_data);
 
 	int player = (data->tick++ % 2 == 0);
 	select_stone_position(data->grd, player ? SG_BLACK : SG_WHITE, player ? &data->player1_timer : &data->player2_timer);
