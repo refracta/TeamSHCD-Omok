@@ -9,6 +9,7 @@
 #include "gridrenderer.h"
 #include "keycode.h"
 #include "gamecore.h"
+#include "beeputils.h"
 
 int run_menu(MenuData *, bool);
 

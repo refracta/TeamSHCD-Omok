@@ -15,20 +15,30 @@
 #define OCTAVE_8 4186
 
 #define VALUE_DO 0
+#define VALUE_DO_S 1
 #define VALUE_RE 2
+#define VALUE_RE_S 3
 #define VALUE_MI 4
 #define VALUE_FA 5
+#define VALUE_FA_S 6
 #define VALUE_SOL 7
+#define VALUE_SOL_S 8
 #define VALUE_RA 9
+#define VALUE_RA_S 10
 #define VALUE_SI 11
 
-#define PLAY_BEEP(o, v, t) BEEP((int)((o) * pow(1.06f, v)), t)
+#define PLAY_BEEP(o, v, t) Beep((int)((o) * pow(1.06f, v)), t)
 
-#define DO(o, t) PLAYER_BEEP(o, VALUE_DO, t)
-#define RE(o, t) PLAYER_BEEP(o, VALUE_RE, t)
-#define MI(o, t) PLAYER_BEEP(o, VALUE_MI, t)
-#define FA(o, t) PLAYER_BEEP(o, VALUE_FA, t)
-#define SOL(o, t) PLAYER_BEEP(o, VALUE_SOL, t)
-#define RA(o, t) PLAYER_BEEP(o, VALUE_RA, t)
-#define SI(o, t) PLAYER_BEEP(o, VALUE_SI, t)
+#define DO(o, t) PLAY_BEEP(o, VALUE_DO, t)
+#define DO_S(o, t) PLAY_BEEP(o, VALUE_DO_S, t)
+#define RE(o, t) PLAY_BEEP(o, VALUE_RE, t)
+#define RE_S(o, t) PLAY_BEEP(o, VALUE_RE_S, t)
+#define MI(o, t) PLAY_BEEP(o, VALUE_MI, t)
+#define FA(o, t) PLAY_BEEP(o, VALUE_FA, t)
+#define FA_S(o, t) PLAY_BEEP(o, VALUE_FA_S, t)
+#define SOL(o, t) PLAY_BEEP(o, VALUE_SOL, t)
+#define SOL_S(o, t) PLAY_BEEP(o, VALUE_SOL_S, t)
+#define RA(o, t) PLAY_BEEP(o, VALUE_RA, t)
+#define RA_S(o, t) PLAY_BEEP(o, VALUE_RA_S, t)
+#define SI(o, t) PLAY_BEEP(o, VALUE_SI, t)
 #endif
