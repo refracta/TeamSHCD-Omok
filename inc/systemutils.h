@@ -1,3 +1,9 @@
+#ifndef SYSTEMUTILS_H
+#define SYSTEMUTILS_H
+
+#include <Windows.h>
+#include <time.h>
+
 #define CLOCK_MONOTONIC 1
 #define exp7           10000000i64     //1E+7     //C-file part
 #define exp9         1000000000i64     //1E+9
@@ -11,3 +17,5 @@ void unix_time(struct timespec *);
 int clock_gettime(int, struct timespec *);
 
 void wait(unsigned long);
+
+#endif

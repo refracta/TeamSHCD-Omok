@@ -1,2 +1,5 @@
+#ifndef ENVIRONMENT_H
+#define ENVIRONMENT_H
 #define CONSOLE_COLS 120
 #define CONSOLE_LINES 30
+#endif

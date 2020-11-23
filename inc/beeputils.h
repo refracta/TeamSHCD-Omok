@@ -1,3 +1,6 @@
+#ifndef BEEPUTILS_H
+#define BEEPUTILS_H
+
 #include <Windows.h>
 #include <math.h>
 
@@ -28,3 +31,4 @@
 #define SOL(o, t) PLAYER_BEEP(o, VALUE_SOL, t)
 #define RA(o, t) PLAYER_BEEP(o, VALUE_RA, t)
 #define SI(o, t) PLAYER_BEEP(o, VALUE_SI, t)
+#endif

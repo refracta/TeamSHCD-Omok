@@ -1,16 +1,8 @@
 /**
-  @file gameutils.c
-  @brief 게임 유틸
+  @file interfacerunner.c
+  @brief 인터페이스 실행
 */
-#include <stdbool.h>
-#include <locale.h>
-#include "inc/consoleutils.h"
-#include "inc/systemutils.h"
-#include "inc/interfacerenderer.h"
-#include "inc/gamerenderer.h"
-#include "inc/keycode.h"
-#include "inc/gamecore.h"
-
+#include "interfacerunner.h"
 
 /**
 * @brief 메뉴를 실행한다.
@@ -18,14 +10,18 @@
 * @param disable_escape ESC 메뉴 종료 비활성화 여부
 * @return 메뉴 항목 색인
 */
-int run_menu(MenuData *data, bool disable_escape) {
+int run_menu(MenuData *data, bool disable_escape)
+{
     int return_value = -1;
     draw_menu(data);
-    while (true) {
+    while (true)
+    {
         int c = get_key_input();
-        switch (c) {
+        switch (c)
+        {
             case ESCAPE_KEY:
-                if (!disable_escape) {
+                if (!disable_escape)
+                {
                     return -1;
                 }
                 break;
@@ -54,7 +50,8 @@ int run_menu(MenuData *data, bool disable_escape) {
 * @param data 프롬프트 데이터
 * @return 프롬프트 입력 텍스트
 */
-wchar_t *run_prompt(PromptData *data) {
+wchar_t *run_prompt(PromptData *data)
+{
     bool visibility = get_cursor_visibility();
     short color = get_print_color();
     set_cursor_visibility(true);
@@ -66,17 +63,21 @@ wchar_t *run_prompt(PromptData *data) {
     int index = 0;
     int crlen = 0;
     wchar_t *text = malloc(sizeof(wchar_t) * data->rlen + 2);
-    if (text == NULL) {
+    if (text == NULL)
+    {
         return NULL;
     }
 
-    while (true) {
+    while (true)
+    {
         int c = get_key_input();
         int crl;
-        switch (c) {
+        switch (c)
+        {
             default:
                 crl = is_full_width(c) ? 2 : 1;
-                if (crlen + crl > data->rlen) {
+                if (crlen + crl > data->rlen)
+                {
                     continue;
                 }
                 text[index++] = c;
@@ -84,16 +85,20 @@ wchar_t *run_prompt(PromptData *data) {
                 wprintf(L"%c", c);
                 break;
             case BACKSPACE_KEY:
-                if (index <= 0) {
+                if (index <= 0)
+                {
                     continue;
                 }
                 set_print_color(data->outline_tbcolor);
-                if (is_full_width(text[index - 1])) {
+                if (is_full_width(text[index - 1]))
+                {
                     crlen -= 2;
                     wprintf(L"%c%c", BACKSPACE_KEY, BACKSPACE_KEY);
                     wprintf(L"  ");
                     wprintf(L"%c%c", BACKSPACE_KEY, BACKSPACE_KEY);
-                } else {
+                }
+                else
+                {
                     crlen--;
                     wprintf(L"%c", BACKSPACE_KEY);
                     wprintf(L" ");
@@ -103,7 +108,8 @@ wchar_t *run_prompt(PromptData *data) {
                 index--;
                 break;
             case ENTER_KEY:
-                if (index <= 0) {
+                if (index <= 0)
+                {
                     continue;
                 }
                 text[index] = '\0';
