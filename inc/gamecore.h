@@ -5,17 +5,13 @@
 #include <stdbool.h>
 #include "memoryutils.h"
 
+#define SG_BLACK 'b'
+#define SG_WHITE 'w'
+#define SG_EMPTY '.'
+#define SG_CURSOR 'c'
+#define SG_BANNED 'n'
+
 #define TO_REVERSE_SG(sg) (sg == SG_BLACK ? SG_WHITE : SG_BLACK)
-
-typedef enum
-{
-    BLACK_WIN, WHITE_WIN, DRAW, UNKNOWN
-} GameResult;
-
-typedef enum
-{
-    SG_BLACK = 'b', SG_WHITE = 'w', SG_EMPTY = '.', SG_CURSOR = 'c', SG_BANNED = 'n'
-} StoneGlyph;
 
 char **generate_grid(int width, int height);
 
