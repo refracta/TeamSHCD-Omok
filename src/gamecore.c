@@ -62,21 +62,22 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
     int check__33 = 0;
     int opencheck = 0;
     // 가로 우측 방향 체크
+
     for (int i = 1; i < 4; i++)
     {
-        if (x + i > 18)
+        if (x + i > width - 1)
         {
             break;
         }
 
-        if (grid[y][x + i] == TO_REVERSE_SG(glyph))
+        if (grid[x + i][y] == TO_REVERSE_SG(glyph))
         {
             countreverseglyph++;
             break;
         }
-        else if (grid[y][x + i] != TO_REVERSE_SG(glyph))
+        else if (grid[x + i][y] != TO_REVERSE_SG(glyph))
         {
-            if (grid[y][x + i] == glyph)
+            if (grid[x + i][y] == glyph)
             {
                 countglyph++;
             }
@@ -86,9 +87,9 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             }
         }
         // 4번째 칸이 백돌일 경우 추가 진행
-        if (i == 3 && x + i + 1 < 19)
+        if (i == 3 && x + i + 1 < width)
         {
-            if (grid[y][x + i + 1] == TO_REVERSE_SG(glyph))
+            if (grid[x + i + 1][y] == TO_REVERSE_SG(glyph))
             {
                 countreverseglyph++;
             }
@@ -98,7 +99,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
     // 한쪽이 열린 3인지 체킹
     if (countempty > countreverseglyph)
     {
-        opencheck = 1;
+        opencheck += 1;
     }
 
     // 가로 좌측 방향 체크
@@ -109,14 +110,14 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             break;
         }
 
-        if (grid[y][x - i] == TO_REVERSE_SG(glyph))
+        if (grid[x - i][y] == TO_REVERSE_SG(glyph))
         {
             countreverseglyph++;
             break;
         }
-        else if (grid[y][x - i] != TO_REVERSE_SG(glyph))
+        else if (grid[x - i][y] != TO_REVERSE_SG(glyph))
         {
-            if (grid[y][x - i] == glyph)
+            if (grid[x - i][y] == glyph)
             {
                 countglyph++;
             }
@@ -128,7 +129,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
         // 4번째 칸이 백돌일 경우 추가 진행
         if (i == 3 && x - i - 1 > 0)
         {
-            if (grid[y][x - i - 1] == TO_REVERSE_SG(glyph))
+            if (grid[x - i - 1][y] == TO_REVERSE_SG(glyph))
             {
                 countreverseglyph++;
             }
@@ -150,19 +151,19 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
     for (int i = 1; i < 4; i++)
     {
 
-        if (y + i > 18)
+        if (y + i > height - 1)
         {
             break;
         }
 
-        if (grid[y + i][x] == TO_REVERSE_SG(glyph))
+        if (grid[x][y + i] == TO_REVERSE_SG(glyph))
         {
             countreverseglyph++;
             break;
         }
-        else if (grid[y + i][x] != TO_REVERSE_SG(glyph))
+        else if (grid[x][y + i] != TO_REVERSE_SG(glyph))
         {
-            if (grid[y + i][x] == TO_REVERSE_SG(glyph))
+            if (grid[x][y + i] == glyph)
             {
                 countglyph++;
             }
@@ -171,10 +172,11 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
                 countempty++;
             }
         }
+
         // 4번째 칸이 백돌일 경우 추가 진행
-        if (i == 3 && y + i + 1 < 19)
+        if (i == 3 && y + i + 1 < height)
         {
-            if (grid[y + i + 1][x] == TO_REVERSE_SG(glyph))
+            if (grid[x][y + i + 1] == TO_REVERSE_SG(glyph))
             {
                 countreverseglyph++;
             }
@@ -184,9 +186,8 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
     // 한쪽이 열린 3인지 체킹
     if (countempty > countreverseglyph)
     {
-        opencheck = 1;
+        opencheck += 1;
     }
-
 
 
     // 세로 위 방향
@@ -198,14 +199,14 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             break;
         }
 
-        if (grid[y - i][x] == TO_REVERSE_SG(glyph))
+        if (grid[x][y - i] == TO_REVERSE_SG(glyph))
         {
             countreverseglyph++;
             break;
         }
-        else if (grid[y - i][x] != TO_REVERSE_SG(glyph))
+        else if (grid[x][y - i] != TO_REVERSE_SG(glyph))
         {
-            if (grid[y - i][x] == glyph)
+            if (grid[x][y - i] == glyph)
             {
                 countglyph++;
             }
@@ -215,21 +216,19 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             }
         }
         // 4번째 칸이 백돌일 경우 추가 진행
-        if (i == 3 && y - i - 1 < 0)
+        if (i == 3 && y - i - 1 < height)
         {
-            if (grid[y - i - 1][x] == TO_REVERSE_SG(glyph))
+            if (grid[x][y - i - 1] == TO_REVERSE_SG(glyph))
             {
                 countreverseglyph++;
             }
         }
     }
-
     // 열린 3인 경우
     if (countempty - countreverseglyph > 3 && opencheck == 1 && countglyph == 3)
     {
         check__33 += 1;
     }  // 세로 방향 33
-
 
     // 우측으로 떨어지는 대각선
 
@@ -242,19 +241,19 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
     for (int i = 1; i < 4; i++)
     {
 
-        if (y + i > 18 || x + i > 18)
+        if (x + i > width - 1 || y + i > height - 1)
         {
             break;
         }
 
-        if (grid[y + i][x + i] == TO_REVERSE_SG(glyph))
+        if (grid[x + i][y + i] == TO_REVERSE_SG(glyph))
         {
             countreverseglyph++;
             break;
         }
-        else if (grid[y + i][x + i] != TO_REVERSE_SG(glyph))
+        else if (grid[x + i][y + i] != TO_REVERSE_SG(glyph))
         {
-            if (grid[y + i][x + i] == glyph)
+            if (grid[x + i][y + i] == glyph)
             {
                 countglyph++;
             }
@@ -265,9 +264,9 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
         }
 
         // 4번째 칸이 백돌일 경우 추가 진행
-        if (i == 3 && y + i + 1 < 19 && x + i + 1 < 19)
+        if (i == 3 && x + i + 1 < width && y + i + 1 < height)
         {
-            if (grid[y + i + 1][x + i + 1] == TO_REVERSE_SG(glyph))
+            if (grid[x + i + 1][y + i + 1] == TO_REVERSE_SG(glyph))
             {
                 countreverseglyph++;
             }
@@ -277,26 +276,26 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
     // 한쪽이 열린 3인지 체킹
     if (countempty > countreverseglyph)
     {
-        opencheck = 1;
+        opencheck += 1;
     }
 
     // 대각선 위쪽
     for (int i = 1; i < 4; i++)
     {
 
-        if (y - i < 0 || x - i < 0)
+        if (x - i < 0 || y - i < 0)
         {
             break;
         }
 
-        if (grid[y - i][x - i] == TO_REVERSE_SG(glyph))
+        if (grid[x - i][y - i] == TO_REVERSE_SG(glyph))
         {
             countreverseglyph++;
             break;
         }
-        else if (grid[y - i][x - i] != TO_REVERSE_SG(glyph))
+        else if (grid[x - i][y - i] != TO_REVERSE_SG(glyph))
         {
-            if (grid[y - i][x - i] == glyph)
+            if (grid[x - i][y - i] == glyph)
             {
                 countglyph++;
             }
@@ -307,9 +306,9 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
         }
 
         // 4번째 칸이 백돌일 경우 추가 진행
-        if (i == 3 && y - i - 1 > 0 && x - i - 1 > 0)
+        if (i == 3 && x - i - 1 > 0 && y - i - 1 > 0)
         {
-            if (grid[y - i - 1][x - i - 1] == TO_REVERSE_SG(glyph))
+            if (grid[x - i - 1][y - i - 1] == TO_REVERSE_SG(glyph))
             {
                 countreverseglyph++;
             }
@@ -332,19 +331,19 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
     for (int i = 1; i < 4; i++)
     {
 
-        if (y + i > 18 || x - i < 0)
+        if (x - i < 0 || y + i > height - 1)
         {
             break;
         }
 
-        if (grid[y + i][x - i] == TO_REVERSE_SG(glyph))
+        if (grid[x - i][y + i] == TO_REVERSE_SG(glyph))
         {
             countreverseglyph++;
             break;
         }
-        else if (grid[y + i][x - i] != TO_REVERSE_SG(glyph))
+        else if (grid[x - i][y + i] != TO_REVERSE_SG(glyph))
         {
-            if (grid[y + i][x - i] == glyph)
+            if (grid[x - i][y + i] == glyph)
             {
                 countglyph++;
             }
@@ -355,9 +354,9 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
         }
 
         // 4번째 칸이 백돌일 경우 추가 진행
-        if (i == 3 && y + i + 1 < 19 && x - i - 1 > 0)
+        if (i == 3 && x - i - 1 > 0 && y + i + 1 < height)
         {
-            if (grid[y + i + 1][x - i - 1] == TO_REVERSE_SG(glyph))
+            if (grid[x - i - 1][y + i + 1] == TO_REVERSE_SG(glyph))
             {
                 countreverseglyph++;
             }
@@ -366,26 +365,26 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
     // 한쪽이 열린 3인지 체킹
     if (countempty > countreverseglyph)
     {
-        opencheck = 1;
+        opencheck += 1;
     }
 
     // 대각선 위 방향
     for (int i = 1; i < 4; i++)
     {
 
-        if (y - i < 0 || x + i > 18)
+        if (x + i > width - 1 || y - i < 0)
         {
             break;
         }
 
-        if (grid[y - i][x + i] == TO_REVERSE_SG(glyph))
+        if (grid[x + i][y - i] == TO_REVERSE_SG(glyph))
         {
             countreverseglyph++;
             break;
         }
-        else if (grid[y - i][x + i] != TO_REVERSE_SG(glyph))
+        else if (grid[x + i][y - i] != TO_REVERSE_SG(glyph))
         {
-            if (grid[y - i][x + i] == glyph)
+            if (grid[x + i][y - i] == glyph)
             {
                 countglyph++;
             }
@@ -396,9 +395,9 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
         }
 
         // 4번째 칸이 백돌일 경우 추가 진행
-        if (i == 3 && y - i - 1 > 0 && x + i + 1 < 19)
+        if (i == 3 && x + i + 1 < width && y - i - 1 > 0)
         {
-            if (grid[y - i - 1][x + i + 1] == TO_REVERSE_SG(glyph))
+            if (grid[x + i + 1][y - i - 1] == TO_REVERSE_SG(glyph))
             {
                 countreverseglyph++;
             }
@@ -439,7 +438,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
     //가로
     for (int i = 1; i < 5; i++)
     {
-        if (x + i > 18)
+        if (x + i > width - 1)
         {
             break;
         }
@@ -499,7 +498,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
 
     for (int i = 1; i < 5; i++)
     {
-        if (y + i > 18)
+        if (y + i > height - 1)
         {
             break;
         }
@@ -562,7 +561,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
 
     for (int i = 1; i < 5; i++)
     {
-        if (y + i > 18 || x + i > 18)
+        if (y + i > height - 1 || x + i > width - 1)
         {
             break;
         }
@@ -628,7 +627,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
 
     for (int i = 1; i < 5; i++)
     {
-        if (y + i > 18 || x - i < 0)
+        if (x - i > width - 1 || y + i < 0)
         {
             break;
         }
@@ -655,7 +654,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
 
     for (int i = 1; i < 5; i++)
     {
-        if (y - i < 0 || x + i > 18)
+        if (x + i > width - 1 || y - i < 0)
         {
             break;
         }
@@ -690,9 +689,9 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
         return false;  // 금수 처리
     }
 
-    char **copygrid = generate_grid(width, height);
+    char** copygrid = generate_grid(width, height);
 
-    copy_grid(grid, copygrid, width, height);
+    copy_grid(grid, copygrid, width, height, glyph);
 
     for (int i = 0; i < width; i++)
     {
@@ -949,7 +948,7 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
         {
             if (grid[i + a][y] == glyph)
             {
-                checkglyph++;
+               checkglyph++;
             }
             else
             {
@@ -960,9 +959,9 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
         {
             return true;
         }
+        checkglyph = 0;
     }
 
-    checkglyph = 0;
     for (int i = 0; i < height - (n - 1); i++)
     {
         for (int a = 0; a < n; a++)
@@ -980,10 +979,9 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
         {
             return true;
         }
-
+        checkglyph = 0;
     }
 
-    checkglyph = 0;
     for (int i = 0; i < width - (n - 1); i++)
     {
         for (int j = 0; j < height - (n - 1); j++)
@@ -992,7 +990,7 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
             {
                 if (grid[i + a][j + a] == glyph)
                 {
-                    checkglyph++;
+                   checkglyph++;
                 }
                 else
                 {
@@ -1003,10 +1001,10 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
             {
                 return true;
             }
+            checkglyph = 0;
         }
     }
 
-    checkglyph = 0;
     for (int i = 0; i < width - (n - 1); i++)
     {
         for (int j = (n - 1); j < height; j++)
@@ -1026,6 +1024,7 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
             {
                 return true;
             }
+            checkglyph = 0;
         }
     }
 
