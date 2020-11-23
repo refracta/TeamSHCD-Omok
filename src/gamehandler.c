@@ -100,8 +100,7 @@ void run_game(GameData *data)
         }
         draw_game_message(data->msg);
 
-        data->grd = malloc_grd(19, 19);
-
+        data->grd = malloc_grd(GRID_SIZE, GRID_SIZE);
 
         data->grd->line_color = GRD_LINE_TBCOLOR;
         data->grd->black_color = GRD_BLACK_TBCOLOR;
@@ -208,8 +207,8 @@ void run_game(GameData *data)
         add_message_to_list(data->msg, player_glyph == SG_BLACK ? L"흑의 승리입니다." : L"백의 승리입니다.");
         add_message_to_list(data->msg, L"<대국이 끝났습니다>");
         draw_game_message(data->msg);
-        //get_key_input();
-        //change_status(data, GS_MAIN);
+        get_key_input();
+        change_status(data, GS_MAIN);
     }
 }
 
