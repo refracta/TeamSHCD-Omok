@@ -94,6 +94,6 @@ CMakeLists.txt에서 볼 수 있듯 소스 파일은 UTF-8로 저장되어야 �
 
 ------
 
-TeamSHCD
+#### TeamSHCD
 
 [![refracta_link](https://img.shields.io/badge/Collaborator-refracta-blue)](https://github.com/refracta) [![nns503_link](https://img.shields.io/badge/Collaborator-nns503-blue)](https://github.com/nns503) [![korYUSA_link](https://img.shields.io/badge/Collaborator-korYUSA-blue)](https://github.com/korYUSA) 
