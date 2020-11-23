@@ -23,7 +23,7 @@ void change_status(GameData *data, GameStatus status)
     data->status = status;
     data->status_inited = false;
     data->tick = 0;
-    set_print_color(TO_TBCOLOR(WHITE, BLACK));
+    set_print_color(DEFAULT_TBCOLOR);
     clear_console();
 }
 
@@ -103,11 +103,11 @@ void run_game(GameData *data)
         data->grd = malloc_grd(19, 19);
 
 
-        data->grd->line_color = TO_TBCOLOR(BLACK, YELLOW);
-        data->grd->black_color = TO_TBCOLOR(BLACK, YELLOW);
-        data->grd->white_color = TO_TBCOLOR(WHITE, YELLOW);
-        data->grd->cursor_color = TO_TBCOLOR(LIGHT_GREEN, YELLOW);
-        data->grd->banned_color = TO_TBCOLOR(LIGHT_RED, YELLOW);
+        data->grd->line_color = GRD_LINE_TBCOLOR;
+        data->grd->black_color = GRD_BLACK_TBCOLOR;
+        data->grd->white_color = GRD_WHITE_TBCOLOR;
+        data->grd->cursor_color = GRD_CURSOR_TBCOLOR;
+        data->grd->banned_color = GRD_BANNED_TBCOLOR;
 
         //data->grd->grid[10][10] = SG_BLACK;
         data->grd->stone_colors[10][11] = data->grd->black_color;
@@ -119,18 +119,18 @@ void run_game(GameData *data)
         data->grd->stone_colors[12][10] = data->grd->black_color;
         data->grd->grid[12][10] = SG_BLACK;
 
-        data->grd->stone_colors[10 + 5][11] = data->grd->black_color;
-        data->grd->grid[10 + 5][11] = SG_BLACK;
-        data->grd->stone_colors[10 + 5][12] = data->grd->black_color;
-        data->grd->grid[10 + 5][12] = SG_BLACK;
-        data->grd->stone_colors[10 + 5][13] = data->grd->black_color;
-        data->grd->grid[10 + 5][13] = SG_BLACK;
-        data->grd->stone_colors[11 + 5][10] = data->grd->black_color;
-        data->grd->grid[11 + 5][10] = SG_BLACK;
-        data->grd->stone_colors[12 + 5][10] = data->grd->black_color;
-        data->grd->grid[12 + 5][10] = SG_BLACK;
-        data->grd->stone_colors[13 + 5][10] = data->grd->black_color;
-        data->grd->grid[13 + 5][10] = SG_BLACK;
+        data->grd->stone_colors[10 + 4][11] = data->grd->black_color;
+        data->grd->grid[10 + 4][11] = SG_BLACK;
+        data->grd->stone_colors[10 + 4][12] = data->grd->black_color;
+        data->grd->grid[10 + 4][12] = SG_BLACK;
+        data->grd->stone_colors[10 + 4][13] = data->grd->black_color;
+        data->grd->grid[10 + 4][13] = SG_BLACK;
+        data->grd->stone_colors[11 + 4][10] = data->grd->black_color;
+        data->grd->grid[11 + 4][10] = SG_BLACK;
+        data->grd->stone_colors[12 + 4][10] = data->grd->black_color;
+        data->grd->grid[12 + 4][10] = SG_BLACK;
+        data->grd->stone_colors[13 + 4][10] = data->grd->black_color;
+        data->grd->grid[13 + 4][10] = SG_BLACK;
 
         data->grd->stone_colors[5][10] = data->grd->black_color;
         data->grd->grid[5][10] = SG_BLACK;
@@ -149,8 +149,7 @@ void run_game(GameData *data)
         data->p1id.x = 0 + 14;
         data->p1id.y = 0;
         data->p1id.width = (19 + 15) * 2;
-        data->p1id.bar_tbcolor = TO_TBCOLOR(BLACK, WHITE);
-        data->p1id.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+        data->p1id.bar_tbcolor = PI_BAR_TBCOLOR;
         data->p1id.timer.left_seconds = 10;
         data->p1id.timer.percent = 100;
 
@@ -162,18 +161,18 @@ void run_game(GameData *data)
         data->p1id.player.win = 1;
         data->p1id.player.lose = 0;
         data->p1id.player.glyph = SG_BLACK;
-        data->p1id.glyph_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-        data->p1id.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-        data->p1id.text_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-        data->p1id.player.color = TO_TBCOLOR(LIGHT_JADE, BLACK);
+        data->p1id.glyph_tbcolor = P1_GLYPH_TBCOLOR;
+        data->p1id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
+        data->p1id.text_tbcolor = PI_TEXT_TBCOLOR;
+        data->p1id.player.color = P1_DEFAULT_TBCOLOR;
 
         draw_player_interface(&data->p1id);
 
         data->p2id.x = 0 + 14;
         data->p2id.y = 7 + 19;
         data->p2id.width = (19 + 15) * 2;
-        data->p2id.bar_tbcolor = TO_TBCOLOR(BLACK, GRAY);
-        data->p2id.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
+        data->p2id.bar_tbcolor = PI_DISABLED_BAR_TBCOLOR;
+        data->p2id.outline_tbcolor = PI_DISABLED_OUTLINE_TBCOLOR;
         data->p2id.timer.left_seconds = 10;
         data->p2id.timer.percent = 100;
 
@@ -185,15 +184,15 @@ void run_game(GameData *data)
         data->p2id.player.win = 0;
         data->p2id.player.lose = 1;
         data->p2id.player.glyph = SG_WHITE;
-        data->p2id.glyph_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-        data->p2id.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-        data->p2id.text_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-        data->p2id.player.color = TO_TBCOLOR(LIGHT_PURPLE, BLACK);
+        data->p2id.glyph_tbcolor = P2_GLYPH_TBCOLOR;
+        data->p2id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
+        data->p2id.text_tbcolor = PI_TEXT_TBCOLOR;
+        data->p2id.player.color = P2_DEFAULT_TBCOLOR;
 
         draw_player_interface(&data->p2id);
 
-        data->p2id.bar_tbcolor = TO_TBCOLOR(BLACK, WHITE);
-        data->p2id.outline_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+        data->p2id.bar_tbcolor = PI_BAR_TBCOLOR;
+        data->p2id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
 
         data->status_inited = true;
     }
