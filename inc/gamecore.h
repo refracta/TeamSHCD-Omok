@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include "memoryutils.h"
 
-#define TO_REVERSE_SG(sg) (sg == SG_BLACK ? SG_BLACK : SG_WHITE)
+#define TO_REVERSE_SG(sg) (sg == SG_BLACK ? SG_WHITE : SG_BLACK)
 
 typedef enum
 {
