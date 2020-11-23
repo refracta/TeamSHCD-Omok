@@ -2,51 +2,8 @@
   @file interfacerenderer.c
   @brief 인터페이스 렌더러
 */
-#include "inc/environment.h"
-#include "inc/consoleutils.h"
-#include "inc/interfacerenderer.h"
-#include "inc/gamerenderer.h"
-#include "inc/gamecore.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <wchar.h>
-#include <stdbool.h>
-#include <math.h>
-
-/**
-* @brief 문자열이 전각인지 검사한다.
-* @param s wchar_t 문자열
-* @return 전각 여부 bool
-*/
-bool is_full_width(wchar_t c)
-{
-    if (c < 256 || (c >= 0xff61 && c <= 0xff9f))
-    {
-        return false;
-    }
-    else
-    {
-        return true;
-    }
-}
-
-/**
-* @brief 전각은 2글자로, 반각은 1글자로 계산한 문자의 길이를 계산한다.
-* @param s wchar_t 문자열
-* @return 문자열의 길이 
-*/
-int strrlen(wchar_t *s)
-{
-    int len = wcslen(s);
-    int rlen = len;
-    for (int i = 0; i < len; i++)
-    {
-        rlen += is_full_width(s[i]);
-    }
-    return rlen;
-}
+#include "interfacerenderer.h"
 
 /**
 * @brief 지정한 틱의 인트로 애니메이션 장면을 그린다.
@@ -200,88 +157,6 @@ void draw_prompt(PromptData *data)
     }
     wprintf(L"───┘ ");
     set_print_color(color);
-}
-
-/**
-* @brief 타이머를 그린다.
-* @param data 타이머 정보 데이터
-*/
-void draw_timer(TimerData *data)
-{
-/*	short original_color = get_print_color();
-
-	*//* outline *//*
-	set_print_color(data->outline_tbcolor);
-	xywprintf(data->x, data->y, L"%s", L"┌");
-	for (int i = 0; i < ((data->width) - 2); i++)
-		wprintf(L" %s", L"─");
-
-	wprintf(L" %s", L"┐ ");
-	xywprintf(data->x, (data->y) + 1, L"%s", L"│ ");
-	xywprintf(data->x + data->width * 2 - 2, (data->y) + 1, L"%s", L"│ ");
-
-	xywprintf(data->x, (data->y) + 2, L"%s", L"└");
-	for (int i = 0; i < ((data->width) - 2); i++)
-		wprintf(L" %s", L"─");
-	wprintf(L" %s", L"┘ ");
-
-	xywprintf(data->x + data->width * 2 - 6, data->y + 1, L"%s", L"│ ");
-	xywprintf(data->x + data->width * 2 - 4, data->y + 1, L"%02d", data->left_seconds);
-
-	*//* bar *//*
-	set_print_color(TO_TBCOLOR(TO_BACKGROUND_COLOR(data->bar_tbcolor), TO_TEXT_COLOR(data->bar_tbcolor)));
-    set_cursor_position(data->x + 2, data->y + 1);
-    for (int i = 0; i < (data->width - 4); i++)
-        wprintf(L"%s", L"　");
-
-    set_print_color(data->bar_tbcolor);
-    set_cursor_position(data->x + 2, data->y + 1);
-    for (int i = 0; i < (int)(((data->width - 4) * (double)data->percent / 100.0)); i++)
-		wprintf(L"%s", L"　");
-	set_print_color(original_color);*/
-}
-
-/**
-* @brief 타이머를 그린다.
-* @param data 타이머 정보 데이터
-*/
-void draw_player(PlayerData *data)
-{
-/*	short original_color = get_print_color();
-
-	*//* Outline *//*
-	set_print_color(data->outline_tbcolor);
-	xywprintf(data->x, data->y, L"%s", L"┌");
-	for (int i = 0; i < ((data->width) - 2); i++)
-		wprintf(L" %s", L"─");
-
-	wprintf(L" %s", L"┐ ");
-	
-	for (int i = 1; i <= 3; i++)
-	{
-		xywprintf(data->x, (data->y) + i, L"%s", L"│ ");
-		xywprintf(data->x + data->width * 2 - 2, (data->y) + i, L"%s", L"│ ");
-	}
-
-	xywprintf(data->x, (data->y) + 4, L"%s", L"└");
-	for (int i = 0; i < ((data->width) - 2); i++)
-		wprintf(L" %s", L"─");
-	wprintf(L" %s", L"┘ ");
-
-	*//* Player info *//*
-	set_print_color(data->text_tbcolor);
-	xywprintf(data->x + 2, data->y + 1, L"Player %d", data->player_num);
-	xywprintf(data->x + 2, data->y + 2, L"%s", data->name);
-	xywprintf(data->x + 2, data->y + 3, L"W/L %d/%d", data->win, data->lose);
-
-	set_print_color(data->glyph_tbcolor);
-	xywprintf((data->x + data->width * 2) - 8, data->y + 1, L"%s", data->glyph == 'b' ? RG_BLACK : RG_WHITE);
-
-	
-	set_print_color(data->player_tbcolor);
-	xywprintf((data->x + data->width * 2) - 5, data->y + 1, L"■");
-	
-	set_print_color(original_color);*/
 }
 
 /**

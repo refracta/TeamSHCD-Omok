@@ -2,9 +2,7 @@
   @file systemutils.c
   @brief 시스템 유틸
 */
-#include <Windows.h>
-#include <time.h>
-#include "inc/systemutils.h"
+#include "systemutils.h"
 
 /**
  * @brief 주어진 timespec 매개변수에 시간을 계산하여 저장한다.
@@ -51,7 +49,6 @@ int clock_gettime(int id, struct timespec *spec)
     }
     return 0;
 }
-
 
 /**
  * @brief 지정한 시간동안 대기한다.
