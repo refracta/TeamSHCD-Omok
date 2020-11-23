@@ -627,7 +627,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
 
     for (int i = 1; i < 5; i++)
     {
-        if (x - i > width - 1 || y + i < 0)
+        if (x - i < 0 || y + i > height - 1)
         {
             break;
         }
