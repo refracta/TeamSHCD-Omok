@@ -30,13 +30,11 @@ void draw_game_rule()
     menu.selected_tbcolor = TO_TBCOLOR(WHITE, BLACK);
     menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, BLACK);
 
-    menu.x = 39 + 14;
-    menu.y = 5 + 3;
+    menu.x = 53;
+    menu.y = 8;
     draw_menu(&menu);
 
-    //int index = run_menu(&menu, true);
     free(list);
-    //return index;
 }
 
 /**
@@ -56,20 +54,18 @@ void draw_game_message(wchar_t list[8][BUFSIZ])
     menu.length = 8;
     menu.current_index = 0;
 
-    menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);
+    menu.element_tbcolor = TO_TBCOLOR(BLACK, YELLOW);
     menu.name_tbcolor = TO_TBCOLOR(WHITE, BLACK);
     menu.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
     menu.selected_tbcolor = TO_TBCOLOR(WHITE, BLACK);
     menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, BLACK);
 
-    menu.x = 39 + 14;
+    menu.x = 53;
     menu.y = 17;
 
     draw_menu(&menu);
 
-//    int index = run_menu(&menu, true);
     free_double_pointer(copy_list, 8);
-    //   return index;
 }
 
 /**
