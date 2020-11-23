@@ -26,11 +26,4 @@ typedef struct
     int tick;
 } GameData;
 
-/**
- * @brief 메인 화면 메뉴 열거형
- */
-typedef enum
-{
-    MM_OMOK, MM_NMOK, MM_HELP, MM_EXIT
-} MainMenu;
 #endif

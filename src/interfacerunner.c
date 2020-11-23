@@ -28,17 +28,17 @@ int run_menu(MenuData *data, bool disable_escape)
             case DOWN_KEY:
                 data->current_index = data->current_index + 1 < data->length ? data->current_index + 1 : 0;
                 draw_menu(data);
-                Beep(349 * 2, 100);
+                FA(OCTAVE_5, 100);
                 break;
             case UP_KEY:
                 data->current_index = data->current_index > 0 ? data->current_index - 1 : data->length - 1;
                 draw_menu(data);
-                Beep(349 * 2, 100);
+                FA(OCTAVE_5, 100);
                 break;
             case SPACE_KEY:
             case ENTER_KEY:
-                Beep(494 * 2, 100);
-                Beep(392 * 2, 100);
+                SI(OCTAVE_5, 100);
+                SOL(OCTAVE_5, 100);
                 return data->current_index;
                 break;
         }
