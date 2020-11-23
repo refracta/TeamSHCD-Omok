@@ -51,37 +51,6 @@ void run_intro(GameData *data)
 }
 
 /**
- * @brief 메인 화면 메뉴를 실행한다.
- * @param 선택한 메뉴 색인
- */
-int run_main_menu()
-{
-    MenuData menu;
-    menu.name = L" 메뉴";
-    wchar_t **list = malloc(sizeof(wchar_t *) * 4);
-    list[0] = L" 오목";
-    list[1] = L" N목";
-    list[2] = L"도움말";
-    list[3] = L"나가기";
-    menu.list = list;
-    menu.length = 4;
-    menu.current_index = 0;
-
-    menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);
-    menu.name_tbcolor = TO_TBCOLOR(WHITE, BLACK);
-    menu.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
-    menu.selected_tbcolor = TO_TBCOLOR(JADE, LIGHT_RED);
-    menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, GRAY);
-
-    menu.x = 51;
-    menu.y = 19;
-
-    int index = run_menu(&menu, true);
-    free(list);
-    return index;
-}
-
-/**
  * @brief 메인 상태에서 실행되는 함수
  * @param data 게임 데이터 구조체의 포인터
  */
