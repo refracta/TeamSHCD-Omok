@@ -3,6 +3,7 @@
   @brief 게임 핸들러
 */
 #include "gamehandler.h"
+#include "beeputils.h"
 
 /**
  * @brief 현재 게임의 상태를 변경합니다. 게임 데이터의 상태 변수를 변경하고, 상태 변경시의 초기화 작업을 수행한다.
@@ -207,6 +208,18 @@ void run_game(GameData *data)
         add_message_to_list(data->msg, player_glyph == SG_BLACK ? L"흑의 승리입니다." : L"백의 승리입니다.");
         add_message_to_list(data->msg, L"<대국이 끝났습니다>");
         draw_game_message(data->msg);
+
+        RA(OCTAVE_6, 200);
+        RA(OCTAVE_6, 100);
+        RA(OCTAVE_6, 300);
+        
+        SI(OCTAVE_6, 200);
+        RA(OCTAVE_6, 200);
+        SI(OCTAVE_6, 200);
+
+        DO(OCTAVE_7, 200);
+        DO(OCTAVE_7, 100);
+        DO(OCTAVE_7, 700);
         get_key_input();
         change_status(data, GS_MAIN);
     }
