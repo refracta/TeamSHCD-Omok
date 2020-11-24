@@ -13,7 +13,6 @@ void init_grd(GameData * data){
     data->grd->cursor_color = GRD_CURSOR_TBCOLOR;
     data->grd->banned_color = GRD_BANNED_TBCOLOR;
 
-    //data->grd->grid[10][10] = SG_BLACK;
     data->grd->stone_colors[10][11] = data->grd->black_color;
     data->grd->grid[10][11] = SG_BLACK;
     data->grd->stone_colors[10][12] = data->grd->black_color;
@@ -23,18 +22,18 @@ void init_grd(GameData * data){
     data->grd->stone_colors[12][10] = data->grd->black_color;
     data->grd->grid[12][10] = SG_BLACK;
 
-    data->grd->stone_colors[10 + 4][11] = data->grd->black_color;
-    data->grd->grid[10 + 4][11] = SG_BLACK;
-    data->grd->stone_colors[10 + 4][12] = data->grd->black_color;
-    data->grd->grid[10 + 4][12] = SG_BLACK;
-    data->grd->stone_colors[10 + 4][13] = data->grd->black_color;
-    data->grd->grid[10 + 4][13] = SG_BLACK;
-    data->grd->stone_colors[11 + 4][10] = data->grd->black_color;
-    data->grd->grid[11 + 4][10] = SG_BLACK;
-    data->grd->stone_colors[12 + 4][10] = data->grd->black_color;
-    data->grd->grid[12 + 4][10] = SG_BLACK;
-    data->grd->stone_colors[13 + 4][10] = data->grd->black_color;
-    data->grd->grid[13 + 4][10] = SG_BLACK;
+    data->grd->stone_colors[10 + 4][11] = data->grd->white_color;
+    data->grd->grid[10 + 4][11] = SG_WHITE;
+    data->grd->stone_colors[10 + 4][12] = data->grd->white_color;
+    data->grd->grid[10 + 4][12] = SG_WHITE;
+    data->grd->stone_colors[10 + 4][13] = data->grd->white_color;
+    data->grd->grid[10 + 4][13] = SG_WHITE;
+    data->grd->stone_colors[11 + 4][10] = data->grd->white_color;
+    data->grd->grid[11 + 4][10] = SG_WHITE;
+    data->grd->stone_colors[12 + 4][10] = data->grd->white_color;
+    data->grd->grid[12 + 4][10] = SG_WHITE;
+    data->grd->stone_colors[13 + 4][10] = data->grd->white_color;
+    data->grd->grid[13 + 4][10] = SG_WHITE;
 
     data->grd->stone_colors[5][10] = data->grd->black_color;
     data->grd->grid[5][10] = SG_BLACK;
@@ -46,6 +45,16 @@ void init_grd(GameData * data){
     data->grd->grid[5][13] = SG_BLACK;
     data->grd->stone_colors[5][15] = data->grd->black_color;
     data->grd->grid[5][15] = SG_BLACK;
+
+    for(int i = 0; i < data->victory_condition - 1; i++){
+        data->grd->stone_colors[10][i] = data->grd->black_color;
+        data->grd->grid[10][i] = SG_BLACK;
+    }
+
+    for(int i = 0; i < data->victory_condition - 1; i++){
+        data->grd->stone_colors[11][i] = data->grd->white_color;
+        data->grd->grid[11][i] = SG_WHITE;
+    }
 
     data->grd->x = 1 + 14;
     data->grd->y = 3 + 5;

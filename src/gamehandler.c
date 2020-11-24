@@ -92,8 +92,10 @@ void run_game(GameData *data)
 {
     if (!data->status_inited)
     {
-        if(!data->regame){
+        if (!data->regame)
+        {
             set_console_size(98, 35);
+            data->victory_condition = 5;
             run_player_name_prompt(&(data->p1id.player), &(data->p2id.player));
             clear_console();
             TimerValue timer_value = run_select_timer_time_menu();
@@ -108,7 +110,6 @@ void run_game(GameData *data)
         data->p2id.bar_tbcolor = PI_BAR_TBCOLOR;
         data->p2id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
 
-        data->victory_condition = 5;
         draw_game_rule(data->victory_condition, TO_TIME_STRING(data->timer_value));
 
         for (int i = 0; i < 8; i++)
@@ -120,7 +121,7 @@ void run_game(GameData *data)
         data->status_inited = true;
     }
 
-    int player_number = (data->turn++ % 2)? 1 : 2;
+    int player_number = (data->turn++ % 2) ? 1 : 2;
     /*
      * 1 -> P1 , mod(1, 2) = 1
      * 2 -> P2 , mod(2, 2) = 0
@@ -131,19 +132,26 @@ void run_game(GameData *data)
     run_select_stone_position(data, player_number);
 
     char player_glyph = (player_number == 1 ? data->p1id : data->p2id).player.glyph;
-    if (check_winnmok(data->grd->grid, data->victory_condition, data->grd->width, data->grd->height, data->grd->cursor_x, data->grd->cursor_y,
+    char player_color = (player_number == 1 ? data->p1id : data->p2id).player.color;
+    player_color = TO_TBCOLOR(TO_TEXT_COLOR(player_color), YELLOW);
+    if (check_winnmok(data->grd->grid, data->victory_condition, data->grd->width, data->grd->height,
+                      data->grd->cursor_x, data->grd->cursor_y,
                       player_glyph))
     {
 
         add_message_to_list(data->msg, player_glyph == SG_BLACK ? L"흑의 승리입니다." : L"백의 승리입니다.");
         add_message_to_list(data->msg, L"<대국이 끝났습니다>");
         add_message_to_list(data->msg, L"(r)egame");
-        add_message_to_list(data->msg, L"(m)ain screen");
+        add_message_to_list(data->msg, L"(b)ack to main");
         add_message_to_list(data->msg, L"(s)ave game dump");
         draw_game_message(data->msg);
+
+        run_win_line_blink(data->grd, data->victory_condition, player_glyph, player_color, 5, 100);
+
         VICTORY_FANFARE();
 
-        while(true){
+        while (true)
+        {
             char c = get_key_input();
             switch (c)
             {
@@ -153,8 +161,8 @@ void run_game(GameData *data)
                     data->regame = true;
                     change_status(data, GS_GAME);
                     return;
-                case 'm':
-                case 'M':
+                case 'b':
+                case 'B':
                     free_grd(data->grd);
                     data->regame = false;
                     change_status(data, GS_MAIN);
@@ -219,7 +227,8 @@ void init_game()
 /**
  * @brief 게임 시작시 데이터 초기화 작업을 진행한다.
  */
-void init_game_data(GameData * data){
+void init_game_data(GameData *data)
+{
     data->regame = false;
 }
 

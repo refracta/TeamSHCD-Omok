@@ -4,6 +4,11 @@
 */
 #include "gameviewrunner.h"
 
+/**
+ * @brief select_stone_position 내부에서 호출되는 키 핸들러
+ * @param c key value
+ * @param param 자유형 매개변수 포인터
+ */
 int handle_ssp_key_input(int c, void *param)
 {
     void **list = (void **) param;
@@ -80,6 +85,11 @@ int handle_ssp_key_input(int c, void *param)
     return -1;
 }
 
+/**
+ * @brief 돌 선택 인터페이스를 실행한다.
+ * @param data 게임 데이터
+ * @param player_number 플레이어 번호
+ */
 void run_select_stone_position(GameData *data, int player_number)
 {
     PlayerInterfaceData *id;
@@ -134,6 +144,9 @@ void run_select_stone_position(GameData *data, int player_number)
     return;
 }
 
+/**
+ * @brief 플레이어 이름을 묻는 프로프트를 실행하고 이름 값을 초기화합니다.
+ */
 void run_player_name_prompt(PlayerData *player1, PlayerData *player2)
 {
     PromptData prompt;
@@ -158,7 +171,7 @@ void run_player_name_prompt(PlayerData *player1, PlayerData *player2)
 
 /**
  * @brief 타이머 설정 메뉴를 실행한다.
- * @param 타이머 시간
+ * @return 타이머 열거형 값
  */
 TimerValue run_select_timer_time_menu()
 {
@@ -189,7 +202,7 @@ TimerValue run_select_timer_time_menu()
 
 /**
  * @brief 메인 화면 메뉴를 실행한다.
- * @param 선택한 메뉴 색인
+ * @return 선택한 메뉴 색인
  */
 int run_main_menu()
 {
@@ -216,4 +229,32 @@ int run_main_menu()
     int index = run_menu(&menu, true);
     free(list);
     return index;
+}
+
+/**
+ * @brief 이긴 줄을 점멸합니다.
+ * @param grid 격자 렌더 데이터
+ * @param player_glyph 플레이어 SimpleGlyph
+ * @param blink_color 점멸할 색
+ * @param number 점멸 횟수
+ * @param wait_time 점멸간 대기 시간 (MS)
+ */
+void run_win_line_blink(GridRenderData * grd, int victory_condition, char player_glyph, short blink_color, int number, int wait_time){
+    int **win_line = get_win_line(grd->grid, victory_condition, grd->width, grd->height,
+                                  player_glyph);
+    for (int j = 0; j < number; j++)
+    {
+        for (int i = 0; i < victory_condition; i++)
+        {
+            coloring_stone(grd->x, grd->y, win_line[i][0], win_line[i][1], player_glyph, blink_color);
+        }
+        wait(wait_time);
+        for (int i = 0; i < victory_condition; i++)
+        {
+            coloring_stone(grd->x, grd->y, win_line[i][0], win_line[i][1], player_glyph,
+                           player_glyph == SG_BLACK ? grd->black_color : grd->white_color);
+        }
+        wait(wait_time);
+    }
+    free(win_line);
 }
