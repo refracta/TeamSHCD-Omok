@@ -47,8 +47,10 @@ typedef struct
     PlayerInterfaceData p2id;
     wchar_t msg[8][BUFSIZ];
     GridRenderData *grd;
+    bool regame;
     bool status_inited;
     int tick;
+    int turn;
 } GameData;
 
 #endif
