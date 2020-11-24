@@ -209,17 +209,18 @@ void run_game(GameData *data)
         add_message_to_list(data->msg, L"<대국이 끝났습니다>");
         draw_game_message(data->msg);
 
-        RA(OCTAVE_6, 200);
-        RA(OCTAVE_6, 100);
-        RA(OCTAVE_6, 300);
+        RA(OCTAVE_5, 200);
+        RA(OCTAVE_5, 100);
+        RA(OCTAVE_5, 300);
         
-        SI(OCTAVE_6, 200);
-        RA(OCTAVE_6, 200);
-        SI(OCTAVE_6, 200);
+        SI(OCTAVE_5, 200);
+        RA(OCTAVE_5, 200);
+        SI(OCTAVE_5, 200);
 
-        DO(OCTAVE_7, 200);
-        DO(OCTAVE_7, 100);
-        DO(OCTAVE_7, 700);
+        DO(OCTAVE_6, 200);
+        DO(OCTAVE_6, 100);
+        DO(OCTAVE_6, 700);
+
         get_key_input();
         change_status(data, GS_MAIN);
     }
