@@ -56,7 +56,6 @@ void init_pid(GameData * data){
     data->p1id.y = 0;
     data->p1id.width = (19 + 15) * 2;
     data->p1id.bar_tbcolor = PI_BAR_TBCOLOR;
-    data->p1id.timer.left_seconds = 10;
     data->p1id.timer.percent = 100;
 
     data->p1id.player.player_number = 1;
@@ -71,13 +70,13 @@ void init_pid(GameData * data){
     data->p1id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
     data->p1id.text_tbcolor = PI_TEXT_TBCOLOR;
     data->p1id.player.color = P1_DEFAULT_TBCOLOR;
+    data->p1id.timer.left_seconds = TO_SECOND(data->timer_value);
 
     data->p2id.x = 0 + 14;
     data->p2id.y = 7 + 19;
     data->p2id.width = (19 + 15) * 2;
     data->p2id.bar_tbcolor = PI_DISABLED_BAR_TBCOLOR;
     data->p2id.outline_tbcolor = PI_DISABLED_OUTLINE_TBCOLOR;
-    data->p2id.timer.left_seconds = 10;
     data->p2id.timer.percent = 100;
 
     data->p2id.player.player_number = 2;
@@ -92,6 +91,7 @@ void init_pid(GameData * data){
     data->p2id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
     data->p2id.text_tbcolor = PI_TEXT_TBCOLOR;
     data->p2id.player.color = P2_DEFAULT_TBCOLOR;
+    data->p2id.timer.left_seconds = TO_SECOND(data->timer_value);
 }
 
 int add_message_to_list(wchar_t list[8][BUFSIZ], wchar_t *data)

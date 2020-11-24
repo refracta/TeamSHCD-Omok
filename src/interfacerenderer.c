@@ -201,7 +201,8 @@ void draw_player_interface(PlayerInterfaceData *data)
 
     //timer shape
     xywprintf(data->x + data->width - 6, data->y + timebar_y, L"%s", L"│ ");
-    xywprintf(data->x + data->width - 4, data->y + timebar_y, L"%02d", data->timer.left_seconds);
+    int render_seconds = data->timer.left_seconds < 0 ? 0 : data->timer.left_seconds;
+    xywprintf(data->x + data->width - 4, data->y + timebar_y, L"%02d", render_seconds);
 
     set_print_color(TO_TBCOLOR(TO_BACKGROUND_COLOR(data->bar_tbcolor), TO_TEXT_COLOR(data->bar_tbcolor)));
     set_cursor_position(data->x + 2, data->y + timebar_y);
@@ -212,7 +213,8 @@ void draw_player_interface(PlayerInterfaceData *data)
 
     set_print_color(data->bar_tbcolor);
     set_cursor_position(data->x + 2, data->y + timebar_y);
-    for (int i = 0; i < (int) (((data->width / 2 - 4) * (double) data->timer.percent / 100.0)); i++)
+    int percent = data->timer.left_seconds < 0 ? 100 : data->timer.percent;
+    for (int i = 0; i < (int) (((data->width / 2 - 4) * (double) percent / 100.0)); i++)
     {
         wprintf(L"%s", L"　");
     }
@@ -226,7 +228,7 @@ void draw_player_interface(PlayerInterfaceData *data)
 
     set_print_color(data->glyph_tbcolor);
     xywprintf((data->x + data->width) - 8, data->y + 1 + info_y, L"%s",
-              data->player.glyph == 'b' ? RG_BLACK : RG_WHITE);
+              data->player.glyph == SG_BLACK ? RG_BLACK : RG_WHITE);
 
     set_print_color(data->player.color);
     xywprintf((data->x + data->width) - 5, data->y + 1 + info_y, L"■");
