@@ -92,11 +92,14 @@ void run_game(GameData *data)
 {
     if (!data->status_inited)
     {
-        set_console_size(98, 35);
         if(!data->regame){
+            set_console_size(98, 35);
             run_player_name_prompt(&(data->p1id.player), &(data->p2id.player));
+            clear_console();
+            TimerValue timer_value = run_select_timer_time_menu();
+            clear_console();
+            data->timer_value = timer_value;
         }
-        clear_console();
 
         init_grd(data);
         init_pid(data);
@@ -106,7 +109,7 @@ void run_game(GameData *data)
         data->p2id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
 
         data->victory_condition = 5;
-        draw_game_rule(data->victory_condition, L"10초");
+        draw_game_rule(data->victory_condition, TO_TIME_STRING(data->timer_value));
 
         for (int i = 0; i < 8; i++)
         {

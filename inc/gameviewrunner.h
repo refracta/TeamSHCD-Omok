@@ -25,5 +25,7 @@ void run_select_stone_position(GameData *data, int player_number);
 
 void run_player_name_prompt(PlayerData *player1, PlayerData *player2);
 
+TimerValue run_select_timer_time_menu();
+
 int run_main_menu();
 #endif

@@ -102,8 +102,8 @@ void run_select_stone_position(GameData *data, int player_number)
     draw_player_interface(id);
     draw_select_stone(data->grd);
     void *param[] = {data, id};
-    int original_seconds = copy_id.timer.left_seconds;
-    for (int i = 0; i < original_seconds; i++,
+    int original_seconds = id->timer.left_seconds;
+    for (int i = 0; i < original_seconds || id->timer.left_seconds == -1; i++,
             copy_id.timer.left_seconds--,
             copy_id.timer.percent = ((double) copy_id.timer.left_seconds / id->timer.left_seconds) * 100)
     {
@@ -137,8 +137,8 @@ void run_select_stone_position(GameData *data, int player_number)
 void run_player_name_prompt(PlayerData *player1, PlayerData *player2)
 {
     PromptData prompt;
-    prompt.message = L"Player1의 이름을 입력하세요";
-    prompt.x = 27;
+    prompt.message = L"Player 1의 이름을 입력하세요";
+    prompt.x = 26;
     prompt.y = 16;
     prompt.rlen = 30;
     prompt.outline_tbcolor = TO_TBCOLOR(LIGHT_JADE, BLACK);
@@ -147,13 +147,44 @@ void run_player_name_prompt(PlayerData *player1, PlayerData *player2)
     wchar_t *player1_name = run_prompt(&prompt);
     wcscpy(player1->name, player1_name);
     free(player1_name);
-    prompt.message = L"Player2의 이름을 입력하세요";
+    prompt.message = L"Player 2의 이름을 입력하세요";
     prompt.outline_tbcolor = TO_TBCOLOR(LIGHT_PURPLE, BLACK);
     prompt.text_tbcolor = TO_TBCOLOR(LIGHT_PURPLE, BLACK);
     prompt.message_tbcolor = TO_TBCOLOR(BLACK, WHITE);
     wchar_t *player2_name = run_prompt(&prompt);
     wcscpy(player2->name, player2_name);
     free(player2_name);
+}
+
+/**
+ * @brief 타이머 설정 메뉴를 실행한다.
+ * @param 타이머 시간
+ */
+TimerValue run_select_timer_time_menu()
+{
+    MenuData menu;
+    menu.name = L"타이머 시간";
+    wchar_t **list = malloc(sizeof(wchar_t *) * 4);
+    list[0] = L"   10초";
+    list[1] = L"   20초";
+    list[2] = L"   30초";
+    list[3] = L"   무한";
+    menu.list = list;
+    menu.length = 4;
+    menu.current_index = 0;
+
+    menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);
+    menu.name_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+    menu.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
+    menu.selected_tbcolor = TO_TBCOLOR(JADE, LIGHT_RED);
+    menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, GRAY);
+
+    menu.x = 38;
+    menu.y = 15;
+
+    int index = run_menu(&menu, true);
+    free(list);
+    return index;
 }
 
 /**
