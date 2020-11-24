@@ -232,6 +232,40 @@ int run_main_menu()
 }
 
 /**
+ * @brief N목 선택 화면을 실행한다
+ * @return 선택한 승리 조건
+ */
+int run_select_nmok_menu()
+{
+    MenuData menu;
+    menu.name = L" 조건 ";
+    wchar_t **list = malloc(sizeof(wchar_t *) * 6);
+    list[0] = L"  4목";
+    list[1] = L"  6목";
+    list[2] = L"  7목";
+    list[3] = L"  8목";
+    list[4] = L"  9목";
+    list[5] = L" 10목";
+    menu.list = list;
+    menu.length = 6;
+    menu.current_index = 0;
+
+    menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);
+    menu.name_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+    menu.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
+    menu.selected_tbcolor = TO_TBCOLOR(JADE, LIGHT_RED);
+    menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, GRAY);
+
+    menu.x = 40;
+    menu.y = 14;
+
+    int index = run_menu(&menu, true);
+    free(list);
+    return index + 4 + (index > 0);
+}
+
+
+/**
  * @brief 이긴 줄을 점멸합니다.
  * @param grid 격자 렌더 데이터
  * @param player_glyph 플레이어 SimpleGlyph

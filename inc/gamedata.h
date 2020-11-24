@@ -74,6 +74,7 @@ typedef struct
     wchar_t msg[8][BUFSIZ];
     GridRenderData *grd;
     TimerValue timer_value;
+    bool nmok_mode;
     bool regame;
     bool status_inited;
     int tick;

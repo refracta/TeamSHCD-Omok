@@ -68,12 +68,12 @@ void run_main(GameData *data)
     switch (selection)
     {
         case MM_OMOK:
+            data->nmok_mode = false;
             change_status(data, GS_GAME);
             break;
         case MM_NMOK:
-            xywprintf(49, 18, L"추후지원 예정입니다.");
-            wait(1000);
-            xywprintf(49, 18, L"                    ");
+            data->nmok_mode = true;
+            change_status(data, GS_GAME);
             break;
         case MM_HELP:
             change_status(data, GS_HELP);
@@ -95,7 +95,12 @@ void run_game(GameData *data)
         if (!data->regame)
         {
             set_console_size(98, 35);
-            data->victory_condition = 5;
+            if(data->nmok_mode){
+                data->victory_condition = run_select_nmok_menu();
+                clear_console();
+            }else{
+                data->victory_condition = 5;
+            }
             run_player_name_prompt(&(data->p1id.player), &(data->p2id.player));
             clear_console();
             TimerValue timer_value = run_select_timer_time_menu();
