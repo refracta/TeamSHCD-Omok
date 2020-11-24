@@ -204,17 +204,18 @@ TimerValue run_select_timer_time_menu()
  * @brief 메인 화면 메뉴를 실행한다.
  * @return 선택한 메뉴 색인
  */
-int run_main_menu()
+MainMenu run_main_menu()
 {
     MenuData menu;
     menu.name = L" 메뉴";
-    wchar_t **list = malloc(sizeof(wchar_t *) * 4);
+    wchar_t **list = malloc(sizeof(wchar_t *) * 5);
     list[0] = L" 오목";
-    list[1] = L" N목";
-    list[2] = L"도움말";
-    list[3] = L"나가기";
+    list[1] = L"  N목";
+    list[2] = L" 랭킹";
+    list[3] = L"도움말";
+    list[4] = L"나가기";
     menu.list = list;
-    menu.length = 4;
+    menu.length = 5;
     menu.current_index = 0;
 
     menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);
