@@ -94,7 +94,8 @@ void run_game(GameData *data)
         set_console_size(98, 35);
         run_player_name_prompt(&(data->p1id.player), &(data->p2id.player));
         clear_console();
-        draw_game_rule();
+        data->victory_condition = 5;
+        draw_game_rule(data->victory_condition, L"10초");
         for (int i = 0; i < 8; i++)
         {
             data->msg[i][0] = '\0';
