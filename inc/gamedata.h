@@ -43,6 +43,7 @@ typedef enum
 typedef struct
 {
     GameStatus status;
+    int victory_condition;
     PlayerInterfaceData p1id;
     PlayerInterfaceData p2id;
     wchar_t msg[8][BUFSIZ];

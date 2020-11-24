@@ -105,7 +105,9 @@ void run_game(GameData *data)
         data->p2id.bar_tbcolor = PI_BAR_TBCOLOR;
         data->p2id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
 
-        draw_game_rule();
+        data->victory_condition = 5;
+        draw_game_rule(data->victory_condition, L"10초");
+
         for (int i = 0; i < 8; i++)
         {
             data->msg[i][0] = '\0';
@@ -126,10 +128,9 @@ void run_game(GameData *data)
     run_select_stone_position(data, player_number);
 
     char player_glyph = (player_number == 1 ? data->p1id : data->p2id).player.glyph;
-    if (check_winnmok(data->grd->grid, 5, data->grd->width, data->grd->height, data->grd->cursor_x, data->grd->cursor_y,
+    if (check_winnmok(data->grd->grid, data->victory_number, data->grd->width, data->grd->height, data->grd->cursor_x, data->grd->cursor_y,
                       player_glyph))
     {
-        // Merge 시 data->victory_number 기반으로 바꿀 것
 
         add_message_to_list(data->msg, player_glyph == SG_BLACK ? L"흑의 승리입니다." : L"백의 승리입니다.");
         add_message_to_list(data->msg, L"<대국이 끝났습니다>");
