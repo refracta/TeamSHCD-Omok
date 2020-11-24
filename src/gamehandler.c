@@ -208,18 +208,7 @@ void run_game(GameData *data)
         add_message_to_list(data->msg, player_glyph == SG_BLACK ? L"흑의 승리입니다." : L"백의 승리입니다.");
         add_message_to_list(data->msg, L"<대국이 끝났습니다>");
         draw_game_message(data->msg);
-
-        RA(OCTAVE_5, 200);
-        RA(OCTAVE_5, 100);
-        RA(OCTAVE_5, 300);
-        
-        SI(OCTAVE_5, 200);
-        RA(OCTAVE_5, 200);
-        SI(OCTAVE_5, 200);
-
-        DO(OCTAVE_6, 200);
-        DO(OCTAVE_6, 100);
-        DO(OCTAVE_6, 700);
+        VICTORY_FANFARE();
 
         get_key_input();
         change_status(data, GS_MAIN);
