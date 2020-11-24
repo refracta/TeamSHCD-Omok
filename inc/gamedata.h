@@ -33,7 +33,7 @@
  */
 typedef enum
 {
-    GS_INTRO, GS_MAIN, GS_GAME, GS_HELP
+    GS_INTRO, GS_MAIN, GS_GAME, GS_RANKING, GS_HELP
 } GameStatus;
 
 /**

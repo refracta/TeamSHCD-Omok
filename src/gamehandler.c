@@ -64,7 +64,7 @@ void run_main(GameData *data)
         data->status_inited = true;
     }
     xyprintf(30, 1, ASCII_OMOK);
-    int selection = run_main_menu();
+    MainMenu selection = run_main_menu();
     switch (selection)
     {
         case MM_OMOK:
@@ -74,6 +74,9 @@ void run_main(GameData *data)
             xywprintf(49, 18, L"추후지원 예정입니다.");
             wait(1000);
             xywprintf(49, 18, L"                    ");
+            break;
+        case MM_RANKING:
+            change_status(data, GS_RANKING);
             break;
         case MM_HELP:
             change_status(data, GS_HELP);
@@ -177,6 +180,21 @@ void run_game(GameData *data)
 }
 
 /**
+ * @brief 랭킹 상태에서 실행되는 함수
+ * @param data 게임 데이터 구조체의 포인터
+ */
+void run_ranking(GameData *data)
+{
+    xywprintf(38, 10, L"1위: 상하이 조");
+    xywprintf(38, 11, L"2위: 심영");
+    xywprintf(38, 12, L"3위: 김두한");
+    xywprintf(38, 13, L"4위: 조병옥");
+    xywprintf(38, 14, L"랭킹 갱신일: 1972년 11월 21일");
+    get_key_input();
+    change_status(data, GS_MAIN);
+}
+
+/**
  * @brief 도움말 상태에서 실행되는 함수
  * @param data 게임 데이터 구조체의 포인터
  */
@@ -205,6 +223,9 @@ void game_loop(GameData *data)
             break;
         case GS_GAME:
             run_game(data);
+            break;
+        case GS_RANKING:
+            run_ranking(data);
             break;
         case GS_HELP:
             run_help(data);
