@@ -14,7 +14,7 @@ void draw_game_rule(int victory_condition, wchar_t * time_limit)
     wchar_t **list = malloc(sizeof(wchar_t *) * 4);
 
     wchar_t win_condition_text[BUFSIZ];
-    swprintf(win_condition_text, BUFSIZ, L"승리 조건: %d개의 돌", victory_condition);
+    swprintf(win_condition_text, BUFSIZ, L"승리: %d개의 돌", victory_condition);
     list[0] = win_condition_text;
 
     if(victory_condition == 5){
