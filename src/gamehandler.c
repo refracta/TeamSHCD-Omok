@@ -24,6 +24,7 @@ void change_status(GameData *data, GameStatus status)
     data->status = status;
     data->status_inited = false;
     data->tick = 0;
+    data->turn = 1;
     set_print_color(DEFAULT_TBCOLOR);
     clear_console();
 }
@@ -92,127 +93,75 @@ void run_game(GameData *data)
     if (!data->status_inited)
     {
         set_console_size(98, 35);
-        run_player_name_prompt(&(data->p1id.player), &(data->p2id.player));
+        if(!data->regame){
+            run_player_name_prompt(&(data->p1id.player), &(data->p2id.player));
+        }
         clear_console();
+
+        init_grd(data);
+        init_pid(data);
+        draw_player_interface(&data->p1id);
+        draw_player_interface(&data->p2id);
+        data->p2id.bar_tbcolor = PI_BAR_TBCOLOR;
+        data->p2id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
+
         data->victory_condition = 5;
         draw_game_rule(data->victory_condition, L"10초");
+
         for (int i = 0; i < 8; i++)
         {
             data->msg[i][0] = '\0';
         }
         draw_game_message(data->msg);
 
-        data->grd = malloc_grd(GRID_SIZE, GRID_SIZE);
-
-        data->grd->line_color = GRD_LINE_TBCOLOR;
-        data->grd->black_color = GRD_BLACK_TBCOLOR;
-        data->grd->white_color = GRD_WHITE_TBCOLOR;
-        data->grd->cursor_color = GRD_CURSOR_TBCOLOR;
-        data->grd->banned_color = GRD_BANNED_TBCOLOR;
-
-        //data->grd->grid[10][10] = SG_BLACK;
-        data->grd->stone_colors[10][11] = data->grd->black_color;
-        data->grd->grid[10][11] = SG_BLACK;
-        data->grd->stone_colors[10][12] = data->grd->black_color;
-        data->grd->grid[10][12] = SG_BLACK;
-        data->grd->stone_colors[11][10] = data->grd->black_color;
-        data->grd->grid[11][10] = SG_BLACK;
-        data->grd->stone_colors[12][10] = data->grd->black_color;
-        data->grd->grid[12][10] = SG_BLACK;
-
-        data->grd->stone_colors[10 + 4][11] = data->grd->black_color;
-        data->grd->grid[10 + 4][11] = SG_BLACK;
-        data->grd->stone_colors[10 + 4][12] = data->grd->black_color;
-        data->grd->grid[10 + 4][12] = SG_BLACK;
-        data->grd->stone_colors[10 + 4][13] = data->grd->black_color;
-        data->grd->grid[10 + 4][13] = SG_BLACK;
-        data->grd->stone_colors[11 + 4][10] = data->grd->black_color;
-        data->grd->grid[11 + 4][10] = SG_BLACK;
-        data->grd->stone_colors[12 + 4][10] = data->grd->black_color;
-        data->grd->grid[12 + 4][10] = SG_BLACK;
-        data->grd->stone_colors[13 + 4][10] = data->grd->black_color;
-        data->grd->grid[13 + 4][10] = SG_BLACK;
-
-        data->grd->stone_colors[5][10] = data->grd->black_color;
-        data->grd->grid[5][10] = SG_BLACK;
-        data->grd->stone_colors[5][11] = data->grd->black_color;
-        data->grd->grid[5][11] = SG_BLACK;
-        data->grd->stone_colors[5][12] = data->grd->black_color;
-        data->grd->grid[5][12] = SG_BLACK;
-        data->grd->stone_colors[5][13] = data->grd->black_color;
-        data->grd->grid[5][13] = SG_BLACK;
-        data->grd->stone_colors[5][15] = data->grd->black_color;
-        data->grd->grid[5][15] = SG_BLACK;
-
-        data->grd->x = 1 + 14;
-        data->grd->y = 3 + 5;
-
-        data->p1id.x = 0 + 14;
-        data->p1id.y = 0;
-        data->p1id.width = (19 + 15) * 2;
-        data->p1id.bar_tbcolor = PI_BAR_TBCOLOR;
-        data->p1id.timer.left_seconds = 10;
-        data->p1id.timer.percent = 100;
-
-        data->p1id.player.player_number = 1;
-        data->p1id.direction = 0;
-        data->p1id.x = 0 + 14;
-        data->p1id.y = 0;
-        data->p1id.width = (19 + 15) * 2;
-        data->p1id.player.win = 1;
-        data->p1id.player.lose = 0;
-        data->p1id.player.glyph = SG_BLACK;
-        data->p1id.glyph_tbcolor = P1_GLYPH_TBCOLOR;
-        data->p1id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
-        data->p1id.text_tbcolor = PI_TEXT_TBCOLOR;
-        data->p1id.player.color = P1_DEFAULT_TBCOLOR;
-
-        draw_player_interface(&data->p1id);
-
-        data->p2id.x = 0 + 14;
-        data->p2id.y = 7 + 19;
-        data->p2id.width = (19 + 15) * 2;
-        data->p2id.bar_tbcolor = PI_DISABLED_BAR_TBCOLOR;
-        data->p2id.outline_tbcolor = PI_DISABLED_OUTLINE_TBCOLOR;
-        data->p2id.timer.left_seconds = 10;
-        data->p2id.timer.percent = 100;
-
-        data->p2id.player.player_number = 2;
-        data->p2id.direction = 1;
-        data->p2id.x = 0 + 14;
-        data->p2id.y = 7 + 17 + 4;
-        data->p2id.width = (19 + 15) * 2;
-        data->p2id.player.win = 0;
-        data->p2id.player.lose = 1;
-        data->p2id.player.glyph = SG_WHITE;
-        data->p2id.glyph_tbcolor = P2_GLYPH_TBCOLOR;
-        data->p2id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
-        data->p2id.text_tbcolor = PI_TEXT_TBCOLOR;
-        data->p2id.player.color = P2_DEFAULT_TBCOLOR;
-
-        draw_player_interface(&data->p2id);
-
-        data->p2id.bar_tbcolor = PI_BAR_TBCOLOR;
-        data->p2id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
-
         data->status_inited = true;
     }
 
-    int player_number = data->tick++ % 2 + 1;
+    int player_number = (data->turn++ % 2)? 1 : 2;
+    /*
+     * 1 -> P1 , mod(1, 2) = 1
+     * 2 -> P2 , mod(2, 2) = 0
+     * 3 -> P1 , mod(3, 2) = 1
+     * 4 -> P2 , mod(4, 2) = 0
+     * */
 
     run_select_stone_position(data, player_number);
 
     char player_glyph = (player_number == 1 ? data->p1id : data->p2id).player.glyph;
-    if (check_winnmok(data->grd->grid, 5, data->grd->width, data->grd->height, data->grd->cursor_x, data->grd->cursor_y,
+    if (check_winnmok(data->grd->grid, data->victory_condition, data->grd->width, data->grd->height, data->grd->cursor_x, data->grd->cursor_y,
                       player_glyph))
     {
+
         add_message_to_list(data->msg, player_glyph == SG_BLACK ? L"흑의 승리입니다." : L"백의 승리입니다.");
         add_message_to_list(data->msg, L"<대국이 끝났습니다>");
+        add_message_to_list(data->msg, L"(r)egame");
+        add_message_to_list(data->msg, L"(m)ain screen");
+        add_message_to_list(data->msg, L"(s)ave game dump");
         draw_game_message(data->msg);
         VICTORY_FANFARE();
 
-        get_key_input();
-        change_status(data, GS_MAIN);
+        while(true){
+            char c = get_key_input();
+            switch (c)
+            {
+                case 'r':
+                case 'R':
+                    free_grd(data->grd);
+                    data->regame = true;
+                    change_status(data, GS_GAME);
+                    return;
+                case 'm':
+                case 'M':
+                    free_grd(data->grd);
+                    data->regame = false;
+                    change_status(data, GS_MAIN);
+                    return;
+                case 's':
+                case 'S':
+                    // save_dump() ?
+                    return;
+            }
+        }
     }
 }
 
@@ -265,12 +214,20 @@ void init_game()
 }
 
 /**
+ * @brief 게임 시작시 데이터 초기화 작업을 진행한다.
+ */
+void init_game_data(GameData * data){
+    data->regame = false;
+}
+
+/**
  * @brief 게임을 시작한다.
  */
 void start_game()
 {
     init_game();
     GameData data;
+    init_game_data(&data);
     change_status(&data, GS_INTRO);
     while (true)
     {

@@ -30,7 +30,7 @@ GridRenderData *malloc_grd(int width, int height)
 */
 void free_grd(GridRenderData *grd)
 {
-    free_double_pointer(grd->grid, grd->width);
+    free_double_pointer(grd->stone_colors, grd->width);
     free_double_pointer(grd->grid, grd->width);
     free(grd);
 }
