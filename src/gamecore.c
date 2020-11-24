@@ -708,7 +708,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
 
     for (int i = 1; i < 5; i++)
     {
-        if (x - i > width - 1 || y + i < 0)
+        if (x - i < 0 || y + i > height -1)
         {
             break;
         }
@@ -1042,7 +1042,7 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
     int checkglyph = 0;
     for (int i = 0; i < width - (n - 1); i++)
     {
-        for (int a = 0; a < n; a++)
+        for (int a = 0; a < n+1; a++)
         {
             if (grid[i + a][y] == glyph)
             {
@@ -1062,7 +1062,7 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
 
     for (int i = 0; i < height - (n - 1); i++)
     {
-        for (int a = 0; a < n; a++)
+        for (int a = 0; a < n+1; a++)
         {
             if (grid[x][i + a] == glyph)
             {
@@ -1084,7 +1084,7 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
     {
         for (int j = 0; j < height - (n - 1); j++)
         {
-            for (int a = 0; a < n; a++)
+            for (int a = 0; a < n+1; a++)
             {
                 if (grid[i + a][j + a] == glyph)
                 {
@@ -1107,7 +1107,7 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
     {
         for (int j = (n - 1); j < height; j++)
         {
-            for (int a = 0; a < n; a++)
+            for (int a = 0; a < n+1; a++)
             {
                 if (grid[i + a][j - a] == glyph)
                 {
