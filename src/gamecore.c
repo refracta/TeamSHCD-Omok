@@ -80,12 +80,12 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             if (grid[x + i][y] == glyph)
             {
                 countglyph++;
+                if (i == 3 && grid[x + i - 1][y] == SG_EMPTY && grid[x + i - 2][y] == SG_EMPTY)
+                    countglyph--;
             }
             else
             {
                 countempty++;
-                if (grid[x + i - 1][y] == SG_EMPTY && i > 1)
-                    break;
             }
         }
         // 4번째 칸이 백돌일 경우 추가 진행
@@ -122,12 +122,12 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             if (grid[x - i][y] == glyph)
             {
                 countglyph++;
+                if (i==3&&grid[x - i + 1][y] == SG_EMPTY && grid[x - i + 2][y] == SG_EMPTY)
+                    countglyph--;
             }
             else
             {
                 countempty++;
-                if (grid[x - i + 1][y] == SG_EMPTY && i > 1)
-                    break;
             }
         }
         // 4번째 칸이 백돌일 경우 추가 진행
@@ -170,12 +170,12 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             if (grid[x][y + i] == glyph)
             {
                 countglyph++;
+                if (i == 3 && grid[x][y+i-1] == SG_EMPTY && grid[x][y+i-2] == SG_EMPTY)
+                    countglyph--;
             }
             else
             {
                 countempty++;
-                if (grid[x][y+i-1] == SG_EMPTY && i > 1)
-                    break;
             }
         }
 
@@ -215,12 +215,12 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             if (grid[x][y - i] == glyph)
             {
                 countglyph++;
+                if (i == 3 && grid[x][y - i + 1] == SG_EMPTY && grid[x][y - i + 2] == SG_EMPTY)
+                    countglyph--;
             }
             else
             {
                 countempty++;
-                if (grid[x][y-i+1] == SG_EMPTY && i > 1)
-                    break;
             }
         }
         // 4번째 칸이 백돌일 경우 추가 진행
@@ -264,12 +264,12 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             if (grid[x + i][y + i] == glyph)
             {
                 countglyph++;
+                if (i == 3 && grid[x+i-1][y + i - 1] == SG_EMPTY && grid[x+i-2][y + i - 2] == SG_EMPTY)
+                    countglyph--;
             }
             else
             {
                 countempty++;
-                if (grid[x+i-1][y+i-1] == SG_EMPTY && i > 1)
-                    break;
             }
         }
 
@@ -308,12 +308,12 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             if (grid[x - i][y - i] == glyph)
             {
                 countglyph++;
+                if (i==3&&grid[x+i-1][y + i -1] == SG_EMPTY && grid[x+i-2][y + i - 2] == SG_EMPTY)
+                    countglyph--;
             }
             else
             {
                 countempty++;
-                if (grid[x-i+1][y-i+1] == SG_EMPTY && i > 1)
-                    break;
                
             }
         }
@@ -359,12 +359,12 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             if (grid[x - i][y + i] == glyph)
             {
                 countglyph++;
+                if (i==3&&grid[x-i+1][y + i - 1] == SG_EMPTY && grid[x-i+2][y + i - 2] == SG_EMPTY)
+                    countglyph--;
             }
             else
             {
                 countempty++;
-                if (grid[x-i+1][y+i-1] == SG_EMPTY && i > 1)
-                    break;
             }
         }
 
@@ -402,12 +402,12 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             if (grid[x + i][y - i] == glyph)
             {
                 countglyph++;
+                if (grid[x+i-1][y - i + 1] == SG_EMPTY && grid[x+i-2][y - i + 2] == SG_EMPTY && i == 3)
+                    countglyph--;
             }
             else
             {
                 countempty++;
-                if (grid[x+i-1][y-i+1] == SG_EMPTY && i > 1)
-                    break;
             }
         }
 
@@ -473,7 +473,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             if (grid[x + i][y] == glyph)
             {
                 countglyph++;
-                if (i > 2 && grid[x + i - 1][y] == glyph && grid[x + i - 2][y] == glyph)
+                if (i ==3  && grid[x + i - 1][y] == glyph && grid[x + i - 2][y] == glyph)
                     check_cont_1++;
                 if (i == 2 && grid[x + i - 1][y] == SG_EMPTY)
                     check_jumpglyph_1++;
@@ -481,8 +481,6 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             else
             {
                 countempty++;
-                if (grid[x+i-1][y] == SG_EMPTY && i > 1)
-                    break;
             }
         }
     }
@@ -504,7 +502,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             if (grid[x - i][y] == glyph)
             {
                 countglyph++;
-                if (i > 2 && grid[x - i + 1][y] == glyph && grid[x - i + 2][y] == glyph)
+                if (i ==3 && grid[x - i + 1][y] == glyph && grid[x - i + 2][y] == glyph)
                     check_cont_2++;
                 if (i == 2 && grid[x - i + 1][y] == SG_EMPTY)
                     check_jumpglyph_2++;
@@ -512,8 +510,6 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             else
             {
                 countempty++;
-                if (grid[x-i+1][y] == SG_EMPTY && i > 1)
-                    break;
             }
         }
     }
@@ -523,7 +519,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
     {
         check__44 += 1;
     } 
-    else if ((check_cont_1 == 1 && check_jumpglyph_2 == 1) || (check_cont_2 == 1 && check_jumpglyph_1))
+    else if ((check_cont_1 == 1 && check_jumpglyph_2 == 1) || (check_cont_2 == 1 && check_jumpglyph_1==1))
     {
         check__44 += 1;
     }
@@ -554,7 +550,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             if (grid[x][y + i] == glyph)
             {
                 countglyph++;
-                if (i > 2 && grid[x][y+i-1] == glyph && grid[x][y+i-2] == glyph)
+                if (i == 3 && grid[x][y+i-1] == glyph && grid[x][y+i-2] == glyph)
                     check_cont_1++;
                 if (i == 2 && grid[x][y+i-1] == SG_EMPTY)
                     check_jumpglyph_1++;
@@ -562,8 +558,6 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             else
             {
                 countempty++;
-                if (grid[x][y+i-1] == SG_EMPTY && i > 1)
-                    break;
             }
         }
     }
@@ -585,7 +579,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             if (grid[x][y - i] == glyph)
             {
                 countglyph++;
-                if (i > 2 && grid[x][y-i+1] == glyph && grid[x][y-i+2] == glyph)
+                if (i == 3 && grid[x][y-i+1] == glyph && grid[x][y-i+2] == glyph)
                     check_cont_2++;
                 if (i == 2 && grid[x][y-i+1] == SG_EMPTY)
                     check_jumpglyph_2++;
@@ -593,8 +587,6 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             else
             {
                 countempty++;
-                if (grid[x][y-i+1] == SG_EMPTY && i > 1)
-                    break;
             }
         }
     }
@@ -604,7 +596,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
     {
         check__44 += 1;
     } 
-    else if ((check_cont_1 == 1 && check_jumpglyph_2 == 1) || (check_cont_2 == 1 && check_jumpglyph_1))
+    else if ((check_cont_1 == 1 && check_jumpglyph_2 == 1) || (check_cont_2 == 1 && check_jumpglyph_1==1))
     {
         check__44 += 1;
     }
@@ -637,7 +629,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             if (grid[x + i][y + i] == glyph)
             {
                 countglyph++;
-                if (i > 2 && grid[x + i - 1][y+i-1] == glyph && grid[x + i - 2][y+i-1] == glyph)
+                if (i == 3 && grid[x + i - 1][y+i-1] == glyph && grid[x + i - 2][y+i-1] == glyph)
                     check_cont_1++;
                 if (i == 2 && grid[x + i - 1][y+i-1] == SG_EMPTY)
                     check_jumpglyph_1++;
@@ -645,8 +637,6 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             else
             {
                 countempty++;
-                if (grid[x+i-1][y+i-1] == SG_EMPTY && i > 1)
-                    break;
             }
         }
     }
@@ -670,7 +660,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             if (grid[x - i][y - i] == glyph)
             {
                 countglyph++;
-                if (i > 2 && grid[x - i + 1][y-i+1] == glyph && grid[x - i + 2][y-i+2] == glyph)
+                if (i ==3 && grid[x - i + 1][y-i+1] == glyph && grid[x - i + 2][y-i+2] == glyph)
                     check_cont_2++;
                 if (i == 2 && grid[x - i + 1][y-i+1] == SG_EMPTY)
                     check_jumpglyph_2++;
@@ -678,8 +668,6 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             else
             {
                 countempty++;
-                if (grid[x-i+1][y-i+1] == SG_EMPTY && i > 1)
-                    break;
             }
         }
     }
@@ -687,9 +675,9 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
     // 우측으로 떨어지는 대각선 44
     if (countempty >= countreverseglyph && countglyph == 4)
     {
-        check__44 = 1;
+        check__44 += 1;
     }  
-    else if ((check_cont_1 == 1 && check_jumpglyph_2 == 1) || (check_cont_2 == 1 && check_jumpglyph_1))
+    else if ((check_cont_1 == 1 && check_jumpglyph_2 == 1) || (check_cont_2 == 1 && check_jumpglyph_1==1))
     {
         check__44 += 1;
     }
@@ -722,17 +710,15 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
         {
             if (grid[x - i][y + i] == glyph)
             {
-                countglyph++;
-                if (i > 2 && grid[x - i + 1][y+i-1] == glyph && grid[x - i + 2][y+i-2] == glyph)
+                countglyph++; 
+                if (i ==3 && grid[x - i + 1][y+i-1] == glyph && grid[x - i + 2][y+i-2] == glyph)
                     check_cont_1++;
-                if (i == 2 && grid[x - i + 1][y+i-2] == SG_EMPTY)
+                if (i == 2 && grid[x - i + 1][y+i-1] == SG_EMPTY)
                     check_jumpglyph_1++;
             }
             else
             {
                 countempty++;
-                if (grid[x-i+1][y+i-1] == SG_EMPTY && i > 1)
-                    break;
             }
         }
     }
@@ -756,7 +742,7 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             if (grid[x + i][y - i] == glyph)
             {
                 countglyph++;
-                if (i > 2 && grid[x + i - 1][y-i+1] == glyph && grid[x + i - 2][y-i+2] == glyph)
+                if (i ==3 && grid[x + i - 1][y-i+1] == glyph && grid[x + i - 2][y-i+2] == glyph)
                     check_cont_2++;
                 if (i == 2 && grid[x + i - 1][y-i+1]== SG_EMPTY)
                     check_jumpglyph_2++;
@@ -764,8 +750,6 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
             else
             {
                 countempty++;
-                if (grid[x+i-1][y-i+1] == SG_EMPTY && i > 1)
-                    break;
             }
         }
     }
@@ -773,15 +757,16 @@ bool check_double_four(char **grid, int width, int height, int x, int y, char gl
     // 좌측으로 떨어지는 대각선 방향 44
     if (countempty >= countreverseglyph && countglyph == 4)
     {
-        check__44 = 1;  
-
+        check__44 += 1;  
     }
-    else if ((check_cont_1 == 1 && check_jumpglyph_2 == 1) || (check_cont_2 == 1 && check_jumpglyph_1))
+    else if ((check_cont_1 == 1 && check_jumpglyph_2 == 1) || (check_cont_2 == 1 && check_jumpglyph_1==1))
     {
         check__44 += 1;
     }
 
-    else if (check__44 >= 2)
+
+
+    if (check__44 >= 2)
     {
         return false;  //  // 4*4 판정에서 가로,세로,우측 대각선, 좌측 대각선에서 2개 이상이 판정 될 경우, 4*4으로 취급하여 금수가 됨.
     }
@@ -1007,23 +992,31 @@ bool check_overline(char **grid, int width, int height, int x, int y, char glyph
  * @param height 격자의 세로 길이
  * @return 정상적인 수면 ture 둘 수 없다면 false
  */
-bool check_confirm(char **grid, int width, int height, int x, int y, char glyph)
+int check_confirm(char **grid, int width, int height, int x, int y, char glyph)
 {
     if (glyph == SG_BLACK)
     {
         if (check_double_three(grid, width, height, x, y, glyph) &&
             check_double_four(grid, width, height, x, y, glyph) && check_overline(grid, width, height, x, y, glyph))
         {
-            return true;
+            return PLACE_VALID;
         }
-        else
+        else if(!check_double_three(grid,width,height,x,y,glyph))
         {
-            return false;
+            return PLACE_33;
+        }
+        else if (!check_double_four(grid, width, height, x, y, glyph))
+        {
+            return PLACE_44;
+        }
+        else if (!check_overline(grid, width, height, x, y, glyph))
+        {
+            return PLACE_OVERLINE;
         }
     }
     else if (glyph == SG_WHITE)
     {
-        return true;
+        return PLACE_VALID;
     }
 }
 
@@ -1039,8 +1032,8 @@ bool check_confirm(char **grid, int width, int height, int x, int y, char glyph)
  */
 bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char glyph)
 {
-    int checkglyph = 0;
-    for (int i = 0; i < width - (n - 1); i++)
+    int checkglyph = 0; // i<13 a<6
+    for (int i = 0; i < width - (n-1); i++)
     {
         for (int a = 0; a < n+1; a++)
         {
