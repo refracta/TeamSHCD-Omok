@@ -128,7 +128,7 @@ void run_game(GameData *data)
     run_select_stone_position(data, player_number);
 
     char player_glyph = (player_number == 1 ? data->p1id : data->p2id).player.glyph;
-    if (check_winnmok(data->grd->grid, data->victory_number, data->grd->width, data->grd->height, data->grd->cursor_x, data->grd->cursor_y,
+    if (check_winnmok(data->grd->grid, data->victory_condition, data->grd->width, data->grd->height, data->grd->cursor_x, data->grd->cursor_y,
                       player_glyph))
     {
 
