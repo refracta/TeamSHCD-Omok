@@ -4,6 +4,7 @@
 */
 #include "gamehandler.h"
 #include "beeputils.h"
+#include "fileutils.h"
 
 /**
  * @brief 현재 게임의 상태를 변경합니다. 게임 데이터의 상태 변수를 변경하고, 상태 변경시의 초기화 작업을 수행한다.
@@ -152,6 +153,9 @@ void run_game(GameData *data)
         add_message_to_list(data->msg, L"(r)egame");
         add_message_to_list(data->msg, L"(b)ack to main");
         add_message_to_list(data->msg, L"(s)ave game dump");
+
+        append_rank(player_glyph == SG_BLACK ? data->p1id.player.name : data->p2id.player.name, player_glyph == SG_BLACK ? data->p2id.player.name : data->p1id.player.name);
+
         draw_game_message(data->msg);
 
         run_win_line_blink(data->grd, data->victory_condition, player_glyph, player_color, 5, 100);
@@ -190,14 +194,12 @@ void run_game(GameData *data)
  */
 void run_ranking(GameData *data)
 {
-    xywprintf(38, 10, L"1위: 상하이 조");
-    xywprintf(38, 11, L"2위: 심영");
-    xywprintf(38, 12, L"3위: 김두한");
-    xywprintf(38, 13, L"4위: 조병옥");
-    xywprintf(38, 14, L"랭킹 갱신일: 1972년 11월 21일");
+    print_ranking();
+    
     get_key_input();
     change_status(data, GS_MAIN);
 }
+
 
 /**
  * @brief 도움말 상태에서 실행되는 함수
