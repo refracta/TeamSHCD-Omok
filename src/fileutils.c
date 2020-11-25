@@ -12,6 +12,7 @@
  * @brief 파일에 값을 추가한다
  * @param path 파일의 경로
  * @param data 추가할 문자열
+ * @return 오류가 있다면 -1, 정상 실행시 0
 */
 int file_append(char path[], wchar_t data[])
 {
@@ -60,6 +61,12 @@ void append_rank(wchar_t winner_name[], wchar_t loser_name[])
 	file_append("loseData.omok", loser_name);
 }
 
+/**
+ * @brief 이름을 입력받아 해당 이름이 존재하는지 판단한다
+ * @param path 파일의 경로
+ * @param name 검사할 이름
+ * @return 이름이 파일에 존재하면 존재하는 줄 번호를 반환
+*/
 int get_exist(char path[], wchar_t name[])
 {
     FILE* pStream = fopen(path, "rt");
@@ -91,6 +98,13 @@ int get_exist(char path[], wchar_t name[])
     return -1;
 }
 
+/**
+ * @brief 현재 커서의 이전 행에서 파일 커서의 좌표를 가져온다.
+ * @param path 파일의 경로
+ * @param curindex 현재 커서 위치
+ * @param pos[] 파일 커서의 좌표 ([0]: 현재 좌표, [1] 이전 좌표)가 담길 배열
+ * @return 일치하는 행이 없을 경우 -1을 return하며, 그렇지 않은 경우 param3을 반환한다.
+*/
 fpos_t* get_file_cur(char path[], int curIndex, fpos_t pos[])
 {
     FILE* pStream = fopen(path, "rt");
@@ -109,6 +123,9 @@ fpos_t* get_file_cur(char path[], int curIndex, fpos_t pos[])
     return -1;
 }
 
+/**
+ * @brief 랭킹 출력
+*/
 void print_ranking()
 {
     rankedPlayer player[BUFSIZ] = { -1 };
@@ -163,13 +180,18 @@ void print_ranking()
     }
 }
 
+/**
+ * @brief 오름차순 정렬
+ * @param player[] 랭킹순으로 정렬할 구조체
+ * @param length 정렬할 요소의 개수
+*/
 void ascending(rankedPlayer player[], int length)
 {
-    int i, j, tmp = 0;
+    int tmp = 0;
     wchar_t tmpstr[BUFSIZ] = { 0 };
-    for (i = 0; i < length; i++)
+    for (int i = 0; i < length; i++)
     {
-        for (j = i; j < length; j++)
+        for (int j = i; j < length; j++)
         {
             if (player[i].rank > player[j].rank)
             {
