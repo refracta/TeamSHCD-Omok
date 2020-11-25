@@ -58,7 +58,8 @@ int file_append(char path[], wchar_t data[])
 void append_rank(wchar_t winner_name[], wchar_t loser_name[])
 {
     file_append("winData.omok", winner_name);
-	file_append("loseData.omok", loser_name);
+    //lose Data 필요시 주석 해제
+	//file_append("loseData.omok", loser_name);
 }
 
 /**
