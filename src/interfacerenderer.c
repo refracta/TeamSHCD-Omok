@@ -206,17 +206,17 @@ void draw_player_interface(PlayerInterfaceData *data)
 
     set_print_color(TO_TBCOLOR(TO_BACKGROUND_COLOR(data->bar_tbcolor), TO_TEXT_COLOR(data->bar_tbcolor)));
     set_cursor_position(data->x + 2, data->y + timebar_y);
-    for (int i = 0; i < (data->width / 2 - 4); i++)
+    for (int i = 0; i < (data->width - 8); i++)
     {
-        wprintf(L"%s", L"　");
+        wprintf(L"%s", L" ");
     }
 
     set_print_color(data->bar_tbcolor);
     set_cursor_position(data->x + 2, data->y + timebar_y);
     int percent = data->timer.left_seconds < 0 ? 100 : data->timer.percent;
-    for (int i = 0; i < (int) (((data->width / 2 - 4) * (double) percent / 100.0)); i++)
+    for (int i = 0; i < (int) (((data->width - 8) * (double) percent / 100.0)); i++)
     {
-        wprintf(L"%s", L"　");
+        wprintf(L"%s", L" ");
     }
 
     //player info
