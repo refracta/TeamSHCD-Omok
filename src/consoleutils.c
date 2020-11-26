@@ -310,10 +310,14 @@ int wait_with_handler(unsigned long ms, int (*handler)(int, void *), void *data)
         {
             int c = _getwch();
             c = (c == 0xE0 || c == 0) ? _getwch() : c;
-            int result = handler(c, data);
-            if (result > -1)
-            {
-                return result;
+            if(handler == NULL){
+                return c;
+            }else{
+                int result = handler(c, data);
+                if (result > -1)
+                {
+                    return result;
+                }
             }
         }
         clock_gettime(CLOCK_MONOTONIC, &end);

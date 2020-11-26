@@ -18,6 +18,8 @@
 #include "gameviewrunner.h"
 #include "gamedata.h"
 #include "keycode.h"
+#include "beeputils.h"
+#include "fileutils.h"
 
 void start_game();
 
