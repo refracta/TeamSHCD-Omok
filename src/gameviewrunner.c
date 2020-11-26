@@ -274,7 +274,9 @@ int run_select_nmok_menu()
  * @param number 점멸 횟수
  * @param wait_time 점멸간 대기 시간 (MS)
  */
-void run_win_line_blink(GridRenderData * grd, int victory_condition, char player_glyph, short blink_color, int number, int wait_time){
+void run_win_line_blink(GridRenderData *grd, int victory_condition, char player_glyph, short blink_color, int number,
+                        int wait_time)
+{
     int **win_line = get_win_line(grd->grid, victory_condition, grd->width, grd->height,
                                   player_glyph);
     for (int j = 0; j < number; j++)

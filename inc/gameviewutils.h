@@ -7,9 +7,9 @@
 #include "consoleutils.h"
 #include "gamedata.h"
 
-void init_grd(GameData * data);
+void init_grd(GameData *data);
 
-void init_pid(GameData * data);
+void init_pid(GameData *data);
 
 int add_message_to_list(wchar_t list[8][BUFSIZ], wchar_t *data);
 

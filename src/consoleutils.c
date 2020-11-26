@@ -219,7 +219,7 @@ void xyprintf(int x, int y, char *format, ...)
         {
             buffer_ptr[i] = '\0';
             set_cursor_position(x, y + delta++);
-            printf("%s", target);
+            printf(target);
             target = buffer_ptr + i + 1;
         }
     }
@@ -265,7 +265,7 @@ void xywprintf(int x, int y, wchar_t *format, ...)
         {
             buffer_ptr[i] = '\0';
             set_cursor_position(x, y + delta++);
-            wprintf(L"%s", target);
+            wprintf(target);
             target = buffer_ptr + i + 1;
         }
     }
