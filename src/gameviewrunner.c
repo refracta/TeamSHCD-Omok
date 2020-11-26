@@ -53,7 +53,7 @@ int handle_ssp_key_input(int c, void *param)
                     FA_S(OCTAVE_6, 20);
                     FA_S(OCTAVE_6, 20);
                     break;
-                case PLACE_OVERLINE:
+                case PLACE_OVERLINE:    
                     add_message_to_list(data->msg, L"장목인 자리입니다.");
                     draw_game_message(data->msg);
                     FA_S(OCTAVE_6, 20);
