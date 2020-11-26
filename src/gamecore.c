@@ -10,9 +10,9 @@
 * @param width 격자의 세로 길이
 * @return 격자 이중 포인터
 */
-char **generate_grid(int width, int height)
+char** generate_grid(int width, int height)
 {
-    char **grid = (char **) malloc_double_pointer(sizeof(char), width, height);
+    char** grid = (char**)malloc_double_pointer(sizeof(char), width, height);
     if (grid == NULL)
     {
         return NULL;
@@ -34,7 +34,7 @@ char **generate_grid(int width, int height)
  * @param width 격자의 가로 길이
  * @param height 격자의 세로 길이
  */
-void copy_grid(char **grid, char **copygrid, int width, int height)
+void copy_grid(char** grid, char** copygrid, int width, int height)
 {
     for (int i = 0; i < width; i++)
     {
@@ -156,13 +156,13 @@ bool check_double_three(char** grid, int width, int height, int x, int y, char g
         int right = (countglyphtwo + countemptytwo);
 
         //벽으로 막힌경우 - 열린3이 아님
-        if (x - left != 0 && x + right != width-1)
+        if (x - left != 0 && x + right != width - 1)
         {
             if (x - left - 1 < 0 || x + right + 1 > width - 1)
             {
                 check__33++;
             }
-            else if (grid[x-left-1][y] != TO_REVERSE_SG(glyph) && grid[x+right+1][y] != TO_REVERSE_SG(glyph))
+            else if (grid[x - left - 1][y] != TO_REVERSE_SG(glyph) && grid[x + right + 1][y] != TO_REVERSE_SG(glyph))
             {
                 check__33++;
             }
@@ -228,7 +228,7 @@ bool check_double_three(char** grid, int width, int height, int x, int y, char g
 
         if (grid[x][y + i] == glyph)
         {
-            emptycheck=0;
+            emptycheck = 0;
             countglyphtwo++;
         }
 
@@ -269,7 +269,7 @@ bool check_double_three(char** grid, int width, int height, int x, int y, char g
         int down = (countglyphtwo + countemptytwo);
 
         //벽으로 막힌경우 - 열린3이 아님
-        if (y - up != 0 && y + down != height-1)
+        if (y - up != 0 && y + down != height - 1)
         {
             if (y - up - 1 < 0 || y + down + 1 > height - 1)
             {
@@ -335,7 +335,7 @@ bool check_double_three(char** grid, int width, int height, int x, int y, char g
 
     for (int i = 1;; i++)
     {
-        if (x + i == width|| y + i == height)
+        if (x + i == width || y + i == height)
             break;
 
         if (grid[x + i][y + i] == glyph)
@@ -378,8 +378,8 @@ bool check_double_three(char** grid, int width, int height, int x, int y, char g
         int leftup = (countglyphone + countemptyone);
         int rightDown = (countglyphtwo + countemptytwo);
         //벽으로 막힌경우 - 열린3이 아님
-        if (x - leftup != 0 && y - leftup != 0 && x + rightDown != width-1 && y + rightDown != height-1)
-        {   
+        if (x - leftup != 0 && y - leftup != 0 && x + rightDown != width - 1 && y + rightDown != height - 1)
+        {
             if (x - leftup - 1 < 0 || y - leftup - 1 < 0 || x + rightDown + 1 > width - 1 || y + rightDown + 1 > height - 1)
             {
                 check__33++;
@@ -459,7 +459,7 @@ bool check_double_three(char** grid, int width, int height, int x, int y, char g
         {
             if (emptycheck == 0)
             {
-                emptycheck ++;
+                emptycheck++;
             }
             else
             {
@@ -487,7 +487,7 @@ bool check_double_three(char** grid, int width, int height, int x, int y, char g
         int rightUp = (countglyphtwo + countemptytwo);
 
         //벽으로 막힌경우 - 열린3이 아님
-        if (x - leftDown != 0 && y - rightUp != 0 && x + rightUp != width-1 && y + leftDown != height-1)
+        if (x - leftDown != 0 && y - rightUp != 0 && x + rightUp != width - 1 && y + leftDown != height - 1)
         {
             if (x - leftDown - 1 < 0 || y - rightUp - 1 < 0 || x + rightUp + 1 > width - 1 || y + leftDown + 1 > height - 1)
             {
@@ -517,7 +517,7 @@ bool check_double_three(char** grid, int width, int height, int x, int y, char g
  * @param glyph 현재 돌의 색
  * @return 정상적인 수거나 승리하였으면 ture 금수이거나 승리하지 않았으면 false
  */
-bool check_doublefour_overline_fivewin(char **grid, int width, int height, int x, int y, char glyph, int number)
+bool check_all_conditions(char** grid, int width, int height, int x, int y, char glyph, int number)
 {
     int check__44 = 0;
     int countglyphone = 0;
@@ -538,7 +538,7 @@ bool check_doublefour_overline_fivewin(char **grid, int width, int height, int x
         countemptytwo = 0;
     }
 
-    for(int i=1;;i++)
+    for (int i = 1;; i++)
     {
         if (x - i == -1)
             break;
@@ -577,7 +577,7 @@ bool check_doublefour_overline_fivewin(char **grid, int width, int height, int x
             }
 
             if (i == 1)
-                overemptyone++;         
+                overemptyone++;
         }
     }
 
@@ -600,7 +600,7 @@ bool check_doublefour_overline_fivewin(char **grid, int width, int height, int x
         if (grid[x + i][y] == TO_REVERSE_SG(glyph))
             break;
 
-        if (grid[x+i][y] == SG_EMPTY)
+        if (grid[x + i][y] == SG_EMPTY)
         {
             if (emptycheck == 0)
             {
@@ -659,7 +659,7 @@ bool check_doublefour_overline_fivewin(char **grid, int width, int height, int x
     overfourone = 0;
     overemptytwo = 0;
     overfourtwo = 0;
-    if (number==2 || number == 3)
+    if (number == 2 || number == 3)
     {
         countemptyone = 0;
         countemptytwo = 0;
@@ -842,7 +842,7 @@ bool check_doublefour_overline_fivewin(char **grid, int width, int height, int x
 
     for (int i = 1;; i++)
     {
-        if (x + i == width|| y + i == height)
+        if (x + i == width || y + i == height)
             break;
 
         if (grid[x + i][y + i] == glyph)
@@ -860,7 +860,7 @@ bool check_doublefour_overline_fivewin(char **grid, int width, int height, int x
         {
             if (emptycheck == 0)
             {
-                emptycheck ++;
+                emptycheck++;
             }
             else
             {
@@ -988,7 +988,7 @@ bool check_doublefour_overline_fivewin(char **grid, int width, int height, int x
         {
             if (emptycheck == 0)
             {
-                emptycheck ++;
+                emptycheck++;
             }
             else
             {
@@ -1037,7 +1037,7 @@ bool check_doublefour_overline_fivewin(char **grid, int width, int height, int x
     }
 
     if (number == 1)
-    { 
+    {
         char** copygrid = generate_grid(width, height);
         copy_grid(grid, copygrid, width, height);
 
@@ -1175,31 +1175,31 @@ bool check_doublefour_overline_fivewin(char **grid, int width, int height, int x
  * @param width 격자의 가로 길이
  * @param height 격자의 세로 길이
  * @param glyph 현재 돌의 색
- * @return 승리하거나 유효하면 PLACE_VALID, 3*3 조건에 부합하지 않으면 PLACE_33, 
-           4*4조건에 부합하지 않으면 PLACE_44, 장목 조건에 부합하지 않으면 PLACE_OVERLINE 
+ * @return 승리하거나 유효하면 PLACE_VALID, 3*3 조건에 부합하지 않으면 PLACE_33,
+           4*4조건에 부합하지 않으면 PLACE_44, 장목 조건에 부합하지 않으면 PLACE_OVERLINE
  */
-int check_confirm(char **grid, int width, int height, int x, int y, char glyph)
+CheckResult check_confirm(char** grid, int width, int height, int x, int y, char glyph)
 {
     if (glyph == SG_BLACK)
     {
 
-        if (check_doublefour_overline_fivewin(grid, width, height, x, y, glyph, 3))
+        if (check_all_conditions(grid, width, height, x, y, glyph, 3))
             return PLACE_VALID;
         else if (check_double_three(grid, width, height, x, y, glyph) &&
-            check_doublefour_overline_fivewin(grid, width, height, x, y, glyph,1) &&
-            check_doublefour_overline_fivewin(grid, width, height, x, y, glyph, 2))
+            check_all_conditions(grid, width, height, x, y, glyph, 1) &&
+            check_all_conditions(grid, width, height, x, y, glyph, 2))
         {
             return PLACE_VALID;
         }
-        else if(!check_double_three(grid,width,height,x,y,glyph))
+        else if (!check_double_three(grid, width, height, x, y, glyph))
         {
             return PLACE_33;
         }
-        else if (!check_doublefour_overline_fivewin(grid, width, height, x, y, glyph,1))
+        else if (!check_all_conditions(grid, width, height, x, y, glyph, 1))
         {
             return PLACE_44;
         }
-        else if (!check_doublefour_overline_fivewin(grid, width, height, x, y, glyph, 2))
+        else if (!check_all_conditions(grid, width, height, x, y, glyph, 2))
         {
             return PLACE_OVERLINE;
         }
@@ -1221,20 +1221,20 @@ int check_confirm(char **grid, int width, int height, int x, int y, char glyph)
  * @glyph 현재 돌의 색깔
  * @return 승리했으면 true, 패배했으면 false
  */
-bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char glyph)
+bool check_winnmok(char** grid, int n, int width, int height, int x, int y, char glyph)
 {
     char** copygrid = generate_grid(width, height);
     copy_grid(grid, copygrid, width, height);
     copygrid[x][y] = glyph;
 
     int checkglyph = 0; // i<13 a<6
-    for (int i = 0; i < width - (n-1); i++)
+    for (int i = 0; i < width - (n - 1); i++)
     {
         for (int a = 0; a < n; a++)
         {
             if (copygrid[i + a][y] == glyph)
             {
-               checkglyph++;
+                checkglyph++;
             }
             else
             {
@@ -1276,7 +1276,7 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
             {
                 if (copygrid[i + a][j + a] == glyph)
                 {
-                   checkglyph++;
+                    checkglyph++;
                 }
                 else
                 {
