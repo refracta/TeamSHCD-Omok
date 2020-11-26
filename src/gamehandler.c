@@ -88,10 +88,13 @@ void run_game(GameData *data)
         if (!data->regame)
         {
             set_console_size(98, 35);
-            if(data->nmok_mode){
+            if (data->nmok_mode)
+            {
                 data->victory_condition = run_select_nmok_menu();
                 clear_console();
-            }else{
+            }
+            else
+            {
                 data->victory_condition = 5;
             }
             run_player_name_prompt(&(data->p1id.player), &(data->p2id.player));
@@ -143,7 +146,8 @@ void run_game(GameData *data)
         add_message_to_list(data->msg, L"(b)ack to main");
         add_message_to_list(data->msg, L"(s)ave game dump");
 
-        append_rank(player_glyph == SG_BLACK ? data->p1id.player.name : data->p2id.player.name, player_glyph == SG_BLACK ? data->p2id.player.name : data->p1id.player.name);
+        append_rank(player_glyph == SG_BLACK ? data->p1id.player.name : data->p2id.player.name,
+                    player_glyph == SG_BLACK ? data->p2id.player.name : data->p1id.player.name);
 
         draw_game_message(data->msg);
 
@@ -184,7 +188,7 @@ void run_game(GameData *data)
 void run_ranking(GameData *data)
 {
     print_ranking();
-    
+
     get_key_input();
     change_status(data, GS_MAIN);
 }

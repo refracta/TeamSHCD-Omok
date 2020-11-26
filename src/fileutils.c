@@ -18,20 +18,24 @@ int file_append(char path[], wchar_t data[])
 {
     if (get_exist(path, data) == -1)
     {
-        FILE* pStream = fopen(path, "a");
+        FILE *pStream = fopen(path, "a");
         if (pStream == NULL)
+        {
             return -1;
+        }
         fwprintf(pStream, L"%s %04d\n", data, 1);
         fclose(pStream);
     }
     else
     {
-        FILE* pStream = fopen(path, "r+");
+        FILE *pStream = fopen(path, "r+");
         if (pStream == NULL)
+        {
             return -1;
+        }
         int tempCount = 0;
 
-        fpos_t pos[2] = { 0 };
+        fpos_t pos[2] = {0};
         get_file_cur(path, get_exist(path, data), pos);
         fpos_t point = pos[0] - 6;
         fpos_t prevLinePos = pos[1];
@@ -42,11 +46,11 @@ int file_append(char path[], wchar_t data[])
         tempCount++;
         fsetpos(pStream, &prevLinePos);
         fwprintf(pStream, L"%s %04d\n", data, tempCount);
-        
+
         fclose(pStream);
     }
 
-	return 0;
+    return 0;
 }
 
 /**
@@ -59,7 +63,7 @@ void append_rank(wchar_t winner_name[], wchar_t loser_name[])
 {
     file_append("winData.omok", winner_name);
     //lose Data 필요시 주석 해제
-	//file_append("loseData.omok", loser_name);
+    //file_append("loseData.omok", loser_name);
 }
 
 /**
@@ -70,7 +74,7 @@ void append_rank(wchar_t winner_name[], wchar_t loser_name[])
 */
 int get_exist(char path[], wchar_t name[])
 {
-    FILE* pStream = fopen(path, "rt");
+    FILE *pStream = fopen(path, "rt");
 
     if (pStream == NULL)
     {
@@ -106,9 +110,9 @@ int get_exist(char path[], wchar_t name[])
  * @param pos[] 파일 커서의 좌표 ([0]: 현재 좌표, [1] 이전 좌표)가 담길 배열
  * @return 일치하는 행이 없을 경우 -1을 return하며, 그렇지 않은 경우 param3을 반환한다.
 */
-fpos_t* get_file_cur(char path[], int curIndex, fpos_t pos[])
+fpos_t *get_file_cur(char path[], int curIndex, fpos_t pos[])
 {
-    FILE* pStream = fopen(path, "rt");
+    FILE *pStream = fopen(path, "rt");
     wchar_t buf[BUFSIZ];
     int index = 0;
     while (fgetws(buf, BUFSIZ, pStream) != NULL)
@@ -129,9 +133,9 @@ fpos_t* get_file_cur(char path[], int curIndex, fpos_t pos[])
 */
 void print_ranking()
 {
-    rankedPlayer player[BUFSIZ] = { -1 };
-    FILE* pStream = fopen("winData.omok", "r+");
-    wchar_t* tempbuf;
+    rankedPlayer player[BUFSIZ] = {-1};
+    FILE *pStream = fopen("winData.omok", "r+");
+    wchar_t *tempbuf;
 
     if (pStream == NULL)
     {
@@ -155,7 +159,9 @@ void print_ranking()
         for (int j = 0; j < index; j++)
         {
             if (player[i].win < player[j].win)
-                player[i].rank++; 
+            {
+                player[i].rank++;
+            }
         }
     }
 
@@ -167,16 +173,23 @@ void print_ranking()
     xywprintf(43, 6, L"순위");
     xywprintf(49, 6, L"닉네임");
     xywprintf(75, 6, L"승리");
-    if (index > 9) index = 9;
+    if (index > 9)
+    {
+        index = 9;
+    }
     short origin_color = get_print_color();
     for (int i = 0; i < index; i++)
     {
         if (player[i].rank <= 3)
+        {
             set_print_color(14);
+        }
         else
+        {
             set_print_color(origin_color);
+        }
         xywprintf(43, 9 + i * 2, L"%2d위: ", player[i].rank);
-        xywprintf(49, 9 + i * 2, L"%s", player[i].name);
+        xywprintf(49, 9 + i * 2, player[i].name);
         xywprintf(75, 9 + i * 2, L"%d회", player[i].win);
     }
 }
@@ -189,7 +202,7 @@ void print_ranking()
 void ascending(rankedPlayer player[], int length)
 {
     int tmp = 0;
-    wchar_t tmpstr[BUFSIZ] = { 0 };
+    wchar_t tmpstr[BUFSIZ] = {0};
     for (int i = 0; i < length; i++)
     {
         for (int j = i; j < length; j++)

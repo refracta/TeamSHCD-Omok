@@ -4,7 +4,8 @@
 */
 #include "gameviewutils.h"
 
-void init_grd(GameData * data){
+void init_grd(GameData *data)
+{
     data->grd = malloc_grd(GRID_SIZE, GRID_SIZE);
 
     data->grd->line_color = GRD_LINE_TBCOLOR;
@@ -46,12 +47,14 @@ void init_grd(GameData * data){
     data->grd->stone_colors[5][15] = data->grd->black_color;
     data->grd->grid[5][15] = SG_BLACK;
 
-    for(int i = 0; i < data->victory_condition - 1; i++){
+    for (int i = 0; i < data->victory_condition - 1; i++)
+    {
         data->grd->stone_colors[10][i] = data->grd->black_color;
         data->grd->grid[10][i] = SG_BLACK;
     }
 
-    for(int i = 0; i < data->victory_condition - 1; i++){
+    for (int i = 0; i < data->victory_condition - 1; i++)
+    {
         data->grd->stone_colors[11][i] = data->grd->white_color;
         data->grd->grid[11][i] = SG_WHITE;
     }
@@ -60,7 +63,8 @@ void init_grd(GameData * data){
     data->grd->y = 3 + 5;
 }
 
-void init_pid(GameData * data){
+void init_pid(GameData *data)
+{
     data->p1id.x = 0 + 14;
     data->p1id.y = 0;
     data->p1id.width = (19 + 15) * 2;

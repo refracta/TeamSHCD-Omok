@@ -7,7 +7,7 @@
 /**
  * @brief 게임 규칙 인터페이스를 그립니다.
  */
-void draw_game_rule(int victory_condition, wchar_t * time_limit)
+void draw_game_rule(int victory_condition, wchar_t *time_limit)
 {
     MenuData menu;
     menu.name = L"       규칙        ";
@@ -17,10 +17,13 @@ void draw_game_rule(int victory_condition, wchar_t * time_limit)
     swprintf(win_condition_text, BUFSIZ, L"승리: %d개의 돌", victory_condition);
     list[0] = win_condition_text;
 
-    if(victory_condition == 5){
+    if (victory_condition == 5)
+    {
         list[1] = L"렌주룰: 흑의 3x3,";
         list[2] = L"4x4, 장목 금지";
-    }else{
+    }
+    else
+    {
         list[1] = L"자유룰: 금지 조건이";
         list[2] = L"없습니다.";
     }
