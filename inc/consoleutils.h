@@ -14,9 +14,10 @@
 #define CURSOR_SIZE_SMALL 25
 #define CURSOR_SIZE_LARGE 100
 
-#define TO_TEXT_COLOR(tbcolor) (tbcolor % 16)
-#define TO_BACKGROUND_COLOR(tbcolor) (tbcolor / 16)
-#define TO_TBCOLOR(text_color, background_color) (16 * background_color + text_color)
+#define NUMBER_OF_COLOR 16
+#define TO_TEXT_COLOR(tbcolor) (tbcolor % NUMBER_OF_COLOR)
+#define TO_BACKGROUND_COLOR(tbcolor) (tbcolor / NUMBER_OF_COLOR)
+#define TO_TBCOLOR(text_color, background_color) (NUMBER_OF_COLOR * background_color + text_color)
 
 /**
  * @brief 콘솔에서 사용하는 색깔 열거형

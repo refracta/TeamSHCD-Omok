@@ -3,8 +3,7 @@
   @brief 게임 핸들러
 */
 #include "gamehandler.h"
-#include "beeputils.h"
-#include "fileutils.h"
+
 
 /**
  * @brief 현재 게임의 상태를 변경합니다. 게임 데이터의 상태 변수를 변경하고, 상태 변경시의 초기화 작업을 수행한다.
@@ -31,23 +30,13 @@ void change_status(GameData *data, GameStatus status)
 }
 
 /**
- * @brief 인트로 스킵용 키 핸들러
- * @param c getch 반환 값
- * @return 키 핸들러 상수
- */
-int skip_intro(int c, void *data)
-{
-    return 0;
-}
-
-/**
  * @brief 인트로 상태에서 실행되는 함수
  * @param data 게임 데이터 구조체의 포인터
  */
 void run_intro(GameData *data)
 {
     draw_intro(data->tick++);
-    if (wait_with_handler(20, skip_intro, NULL) > -1 || data->tick > INTRO_FULL_TICK)
+    if (wait_with_handler(20, NULL, NULL) != -1 || data->tick > INTRO_FULL_TICK)
     {
         change_status(data, GS_MAIN);
     }
@@ -207,11 +196,26 @@ void run_ranking(GameData *data)
  */
 void run_help(GameData *data)
 {
-    xywprintf(38, 10, L"간단한 오목을 즐길 수 있는 프로그램입니다.");
-    xywprintf(63, 12, L"SHCD, VERSION 1.0.0");
-    xyprintf(46, 17, ASCII_PEOPLE1);
-    xyprintf(64, 15, ASCII_PEOPLE2);
+    xywprintf(5, 3, HELP_TEXT);
+    set_print_color(TO_TBCOLOR(YELLOW, BLACK));
+    xywprintf(38, 17, L"간단한 오목을 즐길 수 있는 프로그램입니다.");
+    xywprintf(60, 18, L"SHCD, VERSION 1.0.0");
+    set_print_color(TO_TBCOLOR(GREEN, BLACK));
+    xyprintf(46, 22, ASCII_PEOPLE1);
+    set_print_color(TO_TBCOLOR(JADE, BLACK));
+    xyprintf(64, 20, ASCII_PEOPLE2);
+
+
     get_key_input();
+    for(int i =0; i < 10; i++){
+        set_print_color(TO_TBCOLOR(rand() % (NUMBER_OF_COLOR - 1) + 1, BLACK));
+        xyprintf(46, 22, ASCII_PEOPLE1);
+        set_print_color(TO_TBCOLOR(rand() % (NUMBER_OF_COLOR - 1) + 1, BLACK));
+        xyprintf(64, 20, ASCII_PEOPLE2);
+        if(wait_with_handler(100, NULL, NULL) != -1){
+            break;
+        }
+    }
     change_status(data, GS_MAIN);
 }
 
@@ -258,6 +262,7 @@ void init_game()
 void init_game_data(GameData *data)
 {
     data->regame = false;
+    srand(time(NULL));
 }
 
 /**
