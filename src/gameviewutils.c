@@ -14,7 +14,7 @@ void init_grd(GameData *data)
     data->grd->cursor_color = GRD_CURSOR_TBCOLOR;
     data->grd->banned_color = GRD_BANNED_TBCOLOR;
 
-    data->grd->stone_colors[10][11] = data->grd->black_color;
+/*    data->grd->stone_colors[10][11] = data->grd->black_color;
     data->grd->grid[10][11] = SG_BLACK;
     data->grd->stone_colors[10][12] = data->grd->black_color;
     data->grd->grid[10][12] = SG_BLACK;
@@ -57,7 +57,7 @@ void init_grd(GameData *data)
     {
         data->grd->stone_colors[11][i] = data->grd->white_color;
         data->grd->grid[11][i] = SG_WHITE;
-    }
+    }*/
 
     data->grd->x = 1 + 14;
     data->grd->y = 3 + 5;

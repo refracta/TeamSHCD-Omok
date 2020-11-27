@@ -12,4 +12,4 @@ include_directories(inc/)
 add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
-add_executable(BoardGame ${PROJECT_C_FILES} ${PROJECT_HEADER_FILES})
+add_executable(TeamSHCD-Omok ${PROJECT_C_FILES} ${PROJECT_HEADER_FILES})

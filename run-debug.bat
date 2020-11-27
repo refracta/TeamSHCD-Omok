@@ -1,1 +1,1 @@
-start cmd /k ""cmake-build-debug/BoardGame.exe""
+start cmd /k ""cmake-build-debug/TeamSHCD-Omok.exe""
