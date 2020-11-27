@@ -27,10 +27,12 @@ void copy_grid(char **grid, char **copygrid, int width, int height);
 
 bool check_double_three(char **grid, int width, int height, int x, int y, char glyph);
 
-bool check_all_conditions(char **grid, int width, int height, int x, int y, char glyph, int number);
+bool check_all_conditions(char **grid,int n, int width, int height, int x, int y, char glyph, int number);
 
 CheckResult check_confirm(char **grid, int width, int height, int x, int y, char glyph);
 
 bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char glyph);
+
+int** get_win_line(char** grid, int n, int* x, int* y, int width, int height, char glyph);
 
 #endif

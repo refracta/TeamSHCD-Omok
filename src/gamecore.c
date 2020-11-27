@@ -509,6 +509,7 @@ bool check_double_three(char** grid, int width, int height, int x, int y, char g
 /**
  * @brief 4*4 조건,장목,승리 조건 중 선택하여 통과되는지 확인한다.
  * @param grid 돌이 놓인 오목판
+ * @param n N개를 둬야 승리하는지 알려준다.
  * @param x 놓는 돌의 x좌표
  * @param y 놓는 돌의 y좌표
  * @param width 격자의 가로 길이
@@ -517,7 +518,7 @@ bool check_double_three(char** grid, int width, int height, int x, int y, char g
  * @param glyph 현재 돌의 색
  * @return 정상적인 수거나 승리하였으면 ture 금수이거나 승리하지 않았으면 false
  */
-bool check_all_conditions(char** grid, int width, int height, int x, int y, char glyph, int number)
+bool check_all_conditions(char** grid, int n,int width, int height, int x, int y, char glyph, int number)
 {
     int check__44 = 0;
     int countglyphone = 0;
@@ -531,6 +532,9 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
     int overfourone = 0;
     int overemptytwo = 0;
     int overfourtwo = 0;
+    int winx[20] = { 0 };
+    int winy[20] = { 0 };
+    int wincheck = 0;
 
     if (number == 2 || number == 3)
     {
@@ -547,6 +551,9 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
         {
             emptycheck = 0;
             countglyphone++;
+            winx[wincheck] = x-i;
+            winy[wincheck] = y;
+            wincheck++;
             if (i == 2 && overemptyone == 1)
                 overfourone++;
 
@@ -593,6 +600,9 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
         {
             emptycheck = 0;
             countglyphtwo++;
+            winx[wincheck] = x+i;
+            winy[wincheck] = y;
+            wincheck++;
             if (i == 2 && overemptytwo == 1)
                 overfourtwo++;
         }
@@ -644,8 +654,11 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
 
     if (number == 3)
     {
-        if (countglyph == 5)
+        if (countglyph == n)
+        {
+            get_win_line(grid, n, winx, winy, width, height, glyph);
             return true;
+        }
     }
 
     countglyphone = 0;
@@ -659,6 +672,7 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
     overfourone = 0;
     overemptytwo = 0;
     overfourtwo = 0;
+    wincheck = 0;
     if (number == 2 || number == 3)
     {
         countemptyone = 0;
@@ -674,6 +688,9 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
         {
             emptycheck = 0;
             countglyphone++;
+            winx[wincheck] = x;
+            winy[wincheck] = y-i;
+            wincheck++;
             if (i == 2 && overemptyone == 1)
                 overfourone++;
         }
@@ -719,6 +736,9 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
         {
             emptycheck = 0;
             countglyphtwo++;
+            winx[wincheck] = x;
+            winy[wincheck] = y + i;
+            wincheck++;
             if (i == 2 && overemptytwo == 1)
                 overfourtwo++;
         }
@@ -771,8 +791,11 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
 
     if (number == 3)
     {
-        if (countglyph == 5)
+        if (countglyph == n)
+        {
+            get_win_line(grid, n, winx, winy, width, height, glyph);
             return true;
+        }
     }
 
 
@@ -787,6 +810,7 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
     overfourone = 0;
     overemptytwo = 0;
     overfourtwo = 0;
+    wincheck = 0;
 
     if (number == 2 || number == 3)
     {
@@ -803,6 +827,9 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
         {
             emptycheck = 0;
             countglyphone++;
+            winx[wincheck] = x-i;
+            winy[wincheck] = y - i;
+            wincheck++;
             if (i == 2 && overemptyone == 1)
                 overfourone++;
         }
@@ -849,6 +876,9 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
         {
             emptycheck = 0;
             countglyphtwo++;
+            winx[wincheck] = x+i;
+            winy[wincheck] = y + i;
+            wincheck++;
             if (i == 2 && overemptytwo == 1)
                 overfourtwo++;
         }
@@ -900,8 +930,11 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
 
     if (number == 3)
     {
-        if (countglyph == 5)
+        if (countglyph == n)
+        {
+            get_win_line(grid, n, winx, winy, width, height, glyph);
             return true;
+        }
     }
 
 
@@ -916,6 +949,8 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
     overfourone = 0;
     overemptytwo = 0;
     overfourtwo = 0;
+    wincheck = 0;
+
     if (number == 2 || number == 3)
     {
         countemptyone = 0;
@@ -931,6 +966,9 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
         {
             emptycheck = 0;
             countglyphone++;
+            winx[wincheck] = x-i;
+            winy[wincheck] = y + i;
+            wincheck++;
             if (i == 2 && overemptyone == 1)
                 overfourone++;
         }
@@ -965,7 +1003,6 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
     }
 
     countemptytwo = countemptyone;
-
     emptycheck = 0;
 
     for (int i = 1;; i++)
@@ -977,6 +1014,9 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
         {
             emptycheck = 0;
             countglyphtwo++;
+            winx[wincheck] = x+i;
+            winy[wincheck] = y - i;
+            wincheck++;
             if (i == 2 && overemptytwo == 1)
                 overfourtwo++;
         }
@@ -1030,8 +1070,11 @@ bool check_all_conditions(char** grid, int width, int height, int x, int y, char
 
     if (number == 3)
     {
-        if (countglyph == 5)
+        if (countglyph == n)
+        {
+            get_win_line(grid, n, winx, winy, width, height, glyph);
             return true;
+        }
         else
             return false;
     }
@@ -1183,11 +1226,11 @@ CheckResult check_confirm(char** grid, int width, int height, int x, int y, char
     if (glyph == SG_BLACK)
     {
 
-        if (check_all_conditions(grid, width, height, x, y, glyph, 3))
+        if (check_all_conditions(grid,5, width, height, x, y, glyph, 3))
             return PLACE_VALID;
         else if (check_double_three(grid, width, height, x, y, glyph) &&
-            check_all_conditions(grid, width, height, x, y, glyph, 1) &&
-            check_all_conditions(grid, width, height, x, y, glyph, 2))
+            check_all_conditions(grid,5, width, height, x, y, glyph, 1) &&
+            check_all_conditions(grid,5, width, height, x, y, glyph, 2))
         {
             return PLACE_VALID;
         }
@@ -1195,11 +1238,11 @@ CheckResult check_confirm(char** grid, int width, int height, int x, int y, char
         {
             return PLACE_33;
         }
-        else if (!check_all_conditions(grid, width, height, x, y, glyph, 1))
+        else if (!check_all_conditions(grid,5, width, height, x, y, glyph, 1))
         {
             return PLACE_44;
         }
-        else if (!check_all_conditions(grid, width, height, x, y, glyph, 2))
+        else if (!check_all_conditions(grid,5, width, height, x, y, glyph, 2))
         {
             return PLACE_OVERLINE;
         }
@@ -1210,109 +1253,30 @@ CheckResult check_confirm(char** grid, int width, int height, int x, int y, char
     }
 }
 
+
 /**
- * @brief N개의 돌이 연속적으로 놓아져 승리했는지 확인한다.
- * @param grid 돌이 놓인 오목판
- * @param N목에서 N의 수
- * @param x 놓는 돌의 x좌표
- * @param y 놓는 돌의 y좌표
+ * @brief 승리한 N개의 돌의 좌표를 얻는 함수
+ * @param grid 격자 데이터
+ * @param x 승리한 돌의 x좌표들
+ * @param y 승리한 돌의 y좌표들
  * @param width 격자의 가로 길이
  * @param height 격자의 세로 길이
  * @glyph 현재 돌의 색깔
- * @return 승리했으면 true, 패배했으면 false
+ * @return 승리한 돌 라인 데이터 Example:  { {stone1_x, stone1_y}, {stone2_x, stone2_y}, {stone3_x, stone3_y}, ... }
  */
-bool check_winnmok(char** grid, int n, int width, int height, int x, int y, char glyph)
+int** get_win_line(char** grid, int n, int* x, int* y, int width, int height, char glyph)
 {
-    char** copygrid = generate_grid(width, height);
-    copy_grid(grid, copygrid, width, height);
-    copygrid[x][y] = glyph;
-
-    int checkglyph = 0; // i<13 a<6
-    for (int i = 0; i < width - (n - 1); i++)
-    {
-        for (int a = 0; a < n; a++)
-        {
-            if (copygrid[i + a][y] == glyph)
-            {
-                checkglyph++;
-            }
-            else
-            {
-                break;
-            }
-        }
-        if (checkglyph == n)
-        {
-            return true;
-        }
-        checkglyph = 0;
+    int** win_line = (int**)malloc_double_pointer(sizeof(int), n, 2);
+    for (int i = 0; i < n; i++)
+    {   
+        win_line[i][0] = x[i];
+        win_line[i][1] = y[i];
     }
-
-    for (int i = 0; i < height - (n - 1); i++)
+    // Test Case
+    for (int i = 0; i < n; i++)
     {
-        for (int a = 0; a < n; a++)
-        {
-            if (copygrid[x][i + a] == glyph)
-            {
-                checkglyph++;
-            }
-            else
-            {
-                break;
-            }
-        }
-        if (checkglyph == n)
-        {
-            return true;
-        }
-        checkglyph = 0;
+        win_line[i][0] = glyph == SG_BLACK ? 10 : 11;
+        win_line[i][1] = i;
     }
-
-    for (int i = 0; i < width - (n - 1); i++)
-    {
-        for (int j = 0; j < height - (n - 1); j++)
-        {
-            for (int a = 0; a < n; a++)
-            {
-                if (copygrid[i + a][j + a] == glyph)
-                {
-                    checkglyph++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            if (checkglyph == n)
-            {
-                return true;
-            }
-            checkglyph = 0;
-        }
-    }
-
-    for (int i = 0; i < width - (n - 1); i++)
-    {
-        for (int j = (n - 1); j < height; j++)
-        {
-            for (int a = 0; a < n; a++)
-            {
-                if (copygrid[i + a][j - a] == glyph)
-                {
-                    checkglyph++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            if (checkglyph == n)
-            {
-                return true;
-            }
-            checkglyph = 0;
-        }
-    }
-
-    return false;
+    return win_line;
 }
