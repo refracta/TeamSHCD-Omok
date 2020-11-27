@@ -565,7 +565,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
  * @param glyph 현재 돌의 색
  * @return 정상적인 수거나 승리하였으면 ture 금수이거나 승리하지 않았으면 false
  */
-bool check_all_conditions(char **grid, int n, int width, int height, int x, int y, char glyph, int check_type)
+bool check_all_conditions(char **grid, int n, int width, int height, int x, int y, char glyph, CheckType check_type)
 {
     if (glyph == SG_WHITE)
     {
