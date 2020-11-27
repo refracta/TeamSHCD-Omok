@@ -18,6 +18,6 @@ fpos_t *get_file_cur(char path[], int curIndex, fpos_t pos[]);
 
 void print_ranking();
 
-void ascending(rankedPlayer player[]);
+void ascending(rankedPlayer player[], int length);
 
 #endif
