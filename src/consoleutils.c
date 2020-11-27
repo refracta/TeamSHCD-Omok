@@ -310,9 +310,12 @@ int wait_with_handler(unsigned long ms, int (*handler)(int, void *), void *data)
         {
             int c = _getwch();
             c = (c == 0xE0 || c == 0) ? _getwch() : c;
-            if(handler == NULL){
+            if (handler == NULL)
+            {
                 return c;
-            }else{
+            }
+            else
+            {
                 int result = handler(c, data);
                 if (result > -1)
                 {
