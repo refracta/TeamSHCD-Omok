@@ -201,8 +201,8 @@ void run_game(GameData *data)
     run_select_stone_position(data, player_number);
 
     char player_glyph = (player_number == 1 ? data->p1id : data->p2id).player.glyph;
-    if (check_winnmok(data->grd->grid, 5, data->grd->width, data->grd->height, data->grd->cursor_x, data->grd->cursor_y,
-                      player_glyph))
+    if (check_all_conditions(data->grd->grid, 5, data->grd->width, data->grd->height, data->grd->cursor_x, data->grd->cursor_y,
+                      player_glyph,3))
     {
         add_message_to_list(data->msg, player_glyph == SG_BLACK ? L"흑의 승리입니다." : L"백의 승리입니다.");
         add_message_to_list(data->msg, L"<대국이 끝났습니다>");
