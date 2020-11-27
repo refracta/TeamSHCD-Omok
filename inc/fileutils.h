@@ -11,7 +11,7 @@ typedef struct
     wchar_t name[BUFSIZ];
     int win;
     int rank;
-} rankedPlayer;
+} RankedPlayer;
 
 int file_append(char path[], wchar_t data[]);
 
@@ -23,6 +23,6 @@ fpos_t *get_file_cur(char path[], int curIndex, fpos_t pos[]);
 
 void print_ranking();
 
-void ascending(rankedPlayer player[], int length);
+void ascending(RankedPlayer player[], int length);
 
 #endif
