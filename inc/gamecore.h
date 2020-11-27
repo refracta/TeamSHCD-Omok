@@ -13,17 +13,30 @@
 
 #define TO_REVERSE_SG(sg) (sg == SG_BLACK ? SG_WHITE : SG_BLACK)
 
+typedef enum 
+{
+	PLACE_33,
+	PLACE_44,
+	PLACE_OVERLINE,
+	PLACE_VALID
+} CheckResult;
+
+typedef enum
+{
+    CHECK_44 = 1,
+    CHECK_OVERLINE = 2,
+    CHECK_WIN = 3
+} CheckType;
+
 char **generate_grid(int width, int height);
 
 void copy_grid(char **grid, char **copygrid, int width, int height);
 
 bool check_double_three(char **grid, int width, int height, int x, int y, char glyph);
 
-bool check_double_four(char **grid, int width, int height, int x, int y, char glyph);
+bool check_all_conditions(char **grid,int n, int width, int height, int x, int y, char glyph, CheckType check_type);
 
-bool check_overline(char **grid, int width, int height, int x, int y, char glyph);
-
-bool check_confirm(char **grid, int width, int height, int x, int y, char glyph);
+CheckResult check_confirm_omok(char **grid, int width, int height, int x, int y, char glyph);
 
 bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char glyph);
 
