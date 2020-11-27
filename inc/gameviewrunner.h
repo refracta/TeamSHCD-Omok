@@ -34,4 +34,5 @@ int run_select_nmok_menu();
 void run_win_line_blink(GridRenderData *grd, int victory_condition, char player_glyph, short blink_color, int number,
                         int wait_time);
 
+void update_position_message(GameData* data, int player_number);
 #endif
