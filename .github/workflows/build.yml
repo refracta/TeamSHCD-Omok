@@ -14,7 +14,7 @@ jobs:
         
       - name: Build Win32
         shell: cmd
-        run: call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe" /p:Configuration=Release /p:Platform=Win32 /p:OutDir=.\Win32\ .\BoardGame.vcxproj
+        run: call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe" /p:Configuration=Release /p:Platform=Win32 /p:OutDir=.\Win32\ .\TeamSHCD-Omok.vcxproj
 
       - name: CMake Clean
         shell: powershell
@@ -26,12 +26,12 @@ jobs:
 
       - name: Build x64
         shell: cmd
-        run: call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe" /p:Configuration=Release /p:Platform=x64 /p:OutDir=.\x64\ .\BoardGame.vcxproj
+        run: call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe" /p:Configuration=Release /p:Platform=x64 /p:OutDir=.\x64\ .\TeamSHCD-Omok.vcxproj
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: build
           path: |
-            Win32/BoardGame.exe
-            x64/BoardGame.exe
+            Win32/TeamSHCD-Omok.exe
+            x64/TeamSHCD-Omok.exe
