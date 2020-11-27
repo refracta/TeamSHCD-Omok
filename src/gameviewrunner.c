@@ -36,35 +36,37 @@ int handle_ssp_key_input(int c, void *param)
             {
                 CheckResult result = data->victory_condition == 5 ? check_confirm_omok(grd->grid, grd->width,
                                                                                        grd->height, grd->cursor_x,
-                                                                                       grd->cursor_y, pid->player.glyph) : PLACE_VALID;
+                                                                                       grd->cursor_y, pid->player.glyph)
+                                                                  : PLACE_VALID;
                 switch (result)
                 {
-                case PLACE_VALID:
-                    grd->grid[grd->cursor_x][grd->cursor_y] = pid->player.glyph;
-                    grd->stone_colors[grd->cursor_x][grd->cursor_y] = (pid->player.glyph == SG_BLACK ? grd->black_color
-                        : grd->white_color);
-                    draw_grid(grd);
-                    RA(OCTAVE_4, 20);
-                    return 0;
-                    break;
-                case PLACE_33:
-                    add_message_to_list(data->msg, L"쌍삼인 자리입니다.");
-                    draw_game_message(data->msg);
-                    FA_S(OCTAVE_6, 20);
-                    FA_S(OCTAVE_6, 20);
-                    break;
-                case PLACE_44:
-                    add_message_to_list(data->msg, L"쌍사인 자리입니다.");
-                    draw_game_message(data->msg);
-                    FA_S(OCTAVE_6, 20);
-                    FA_S(OCTAVE_6, 20);
-                    break;
-                case PLACE_OVERLINE:    
-                    add_message_to_list(data->msg, L"장목인 자리입니다.");
-                    draw_game_message(data->msg);
-                    FA_S(OCTAVE_6, 20);
-                    FA_S(OCTAVE_6, 20);
-                    break;
+                    case PLACE_VALID:
+                        grd->grid[grd->cursor_x][grd->cursor_y] = pid->player.glyph;
+                        grd->stone_colors[grd->cursor_x][grd->cursor_y] = (pid->player.glyph == SG_BLACK
+                                                                           ? grd->black_color
+                                                                           : grd->white_color);
+                        draw_grid(grd);
+                        RA(OCTAVE_4, 20);
+                        return 0;
+                        break;
+                    case PLACE_33:
+                        add_message_to_list(data->msg, L"쌍삼인 자리입니다.");
+                        draw_game_message(data->msg);
+                        FA_S(OCTAVE_6, 20);
+                        FA_S(OCTAVE_6, 20);
+                        break;
+                    case PLACE_44:
+                        add_message_to_list(data->msg, L"쌍사인 자리입니다.");
+                        draw_game_message(data->msg);
+                        FA_S(OCTAVE_6, 20);
+                        FA_S(OCTAVE_6, 20);
+                        break;
+                    case PLACE_OVERLINE:
+                        add_message_to_list(data->msg, L"장목인 자리입니다.");
+                        draw_game_message(data->msg);
+                        FA_S(OCTAVE_6, 20);
+                        FA_S(OCTAVE_6, 20);
+                        break;
                 }
             }
             else

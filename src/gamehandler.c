@@ -150,7 +150,7 @@ void run_game(GameData *data)
 
         draw_game_message(data->msg);
 
-        run_win_line_blink(data->grd, data->victory_condition, player_glyph, player_color, 5, 100);
+        // run_win_line_blink(data->grd, data->victory_condition, player_glyph, player_color, 5, 100);
 
         VICTORY_FANFARE();
 
