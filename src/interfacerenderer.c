@@ -160,8 +160,8 @@ void draw_prompt(PromptData *data)
 }
 
 /**
-* @brief 타이머를 그린다.
-* @param data 타이머 정보 데이터
+* @brief 플레이어 인터페이스 정보(타이머 및 플레이어 정보)를 그린다.
+* @param data 플레이어 인터페이스 정보 데이터
 */
 void draw_player_interface(PlayerInterfaceData *data)
 {
