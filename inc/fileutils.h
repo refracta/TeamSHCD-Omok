@@ -1,6 +1,11 @@
 #ifndef FILEUTILS_H
 #define FILEUTILS_H
 
+#include <stdio.h>
+#include <string.h>
+#include <wchar.h>
+#include "consoleutils.h"
+
 typedef struct
 {
     wchar_t name[BUFSIZ];

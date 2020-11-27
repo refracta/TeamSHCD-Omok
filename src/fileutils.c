@@ -2,11 +2,7 @@
   @file fileutils.c
   @brief 파일 유틸
 */
-#include <stdio.h>
-#include <string.h>
-#include <wchar.h>
 #include "fileutils.h"
-#include "consoleutils.h"
 
 /**
  * @brief 파일에 값을 추가한다
