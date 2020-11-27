@@ -135,10 +135,10 @@ void run_game(GameData *data)
     char player_glyph = (player_number == 1 ? data->p1id : data->p2id).player.glyph;
     char player_color = (player_number == 1 ? data->p1id : data->p2id).player.color;
     player_color = TO_TBCOLOR(TO_TEXT_COLOR(player_color), YELLOW);
-    if (check_all_conditions(data->grd->grid, data->victory_condition, data->grd->width, data->grd->height, data->grd->cursor_x, data->grd->cursor_y,
-                      player_glyph, 3))
+    if (check_all_conditions(data->grd->grid, data->victory_condition, data->grd->width, data->grd->height,
+                             data->grd->cursor_x, data->grd->cursor_y,
+                             player_glyph, CHECK_WIN))
     {
-
         add_message_to_list(data->msg, player_glyph == SG_BLACK ? L"흑의 승리입니다." : L"백의 승리입니다.");
         add_message_to_list(data->msg, L"<대국이 끝났습니다>");
         add_message_to_list(data->msg, L"(r)egame");
@@ -210,12 +210,14 @@ void run_help(GameData *data)
 
 
     get_key_input();
-    for(int i =0; i < 10; i++){
+    for (int i = 0; i < 10; i++)
+    {
         set_print_color(TO_TBCOLOR(rand() % (NUMBER_OF_COLOR - 1) + 1, BLACK));
         xyprintf(46, 22, ASCII_PEOPLE1);
         set_print_color(TO_TBCOLOR(rand() % (NUMBER_OF_COLOR - 1) + 1, BLACK));
         xyprintf(64, 20, ASCII_PEOPLE2);
-        if(wait_with_handler(100, NULL, NULL) != -1){
+        if (wait_with_handler(100, NULL, NULL) != -1)
+        {
             break;
         }
     }

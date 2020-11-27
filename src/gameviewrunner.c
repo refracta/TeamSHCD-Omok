@@ -32,11 +32,12 @@ int handle_ssp_key_input(int c, void *param)
             break;
         case SPACE_KEY:
         case ENTER_KEY:
-
             if (grd->grid[grd->cursor_x][grd->cursor_y] == SG_EMPTY)
             {
-                switch (check_confirm(grd->grid, grd->width, grd->height, grd->cursor_x,
-                    grd->cursor_y, pid->player.glyph))
+                CheckResult result = data->victory_condition == 5 ? check_confirm_omok(grd->grid, grd->width,
+                                                                                       grd->height, grd->cursor_x,
+                                                                                       grd->cursor_y, pid->player.glyph) : PLACE_VALID;
+                switch (result)
                 {
                 case PLACE_VALID:
                     grd->grid[grd->cursor_x][grd->cursor_y] = pid->player.glyph;
