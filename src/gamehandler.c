@@ -108,6 +108,7 @@ void run_game(GameData *data)
         init_pid(data);
         draw_player_interface(&data->p1id);
         draw_player_interface(&data->p2id);
+        update_position_message(2, 10, 10, 1);
         data->p2id.bar_tbcolor = PI_BAR_TBCOLOR;
         data->p2id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
 

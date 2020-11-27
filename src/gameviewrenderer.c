@@ -10,7 +10,7 @@
 void draw_game_rule(int victory_condition, wchar_t *time_limit)
 {
     MenuData menu;
-    menu.name = L"       규칙        ";
+    menu.name = L"        규칙       ";
     wchar_t **list = malloc(sizeof(wchar_t *) * 4);
 
     wchar_t win_condition_text[BUFSIZ];

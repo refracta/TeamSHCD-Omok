@@ -303,8 +303,10 @@ int wait_with_handler(unsigned long ms, int (*handler)(int, void *), void *data)
 {
     struct timespec begin, end;
     clock_gettime(CLOCK_MONOTONIC, &begin);
+    int index = 0;
     while (true)
     {
+        index++;
         wait(UNIT_WAIT);
         if (_kbhit())
         {
