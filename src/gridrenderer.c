@@ -30,7 +30,7 @@ GridRenderData *malloc_grd(int width, int height)
 */
 void free_grd(GridRenderData *grd)
 {
-    free_double_pointer(grd->grid, grd->width);
+    free_double_pointer(grd->stone_colors, grd->width);
     free_double_pointer(grd->grid, grd->width);
     free(grd);
 }
@@ -63,7 +63,7 @@ void draw_grid(GridRenderData *grd)
                     xywprintf(grd->x + j * 2, grd->y + i, L" ", SG2RG(glyph));
                 }
                 set_print_color(grd->stone_colors[j][i]);
-                xywprintf(grd->x + j * 2, grd->y + i, L"%s", SG2RG(glyph));
+                xywprintf(grd->x + j * 2, grd->y + i, SG2RG(glyph));
                 set_print_color(origin_color);
                 continue;
             }
@@ -71,46 +71,46 @@ void draw_grid(GridRenderData *grd)
             set_print_color(grd->line_color);
             if (i == first_index && j == first_index)
             {
-                xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_7);
+                xywprintf(grd->x + j * 2, grd->y + i, RG_GRID_TYPE_7);
             }
             else if (i == first_index && j == last_w_index)
             {
-                xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_9);
+                xywprintf(grd->x + j * 2, grd->y + i, RG_GRID_TYPE_9);
             }
             else if (i == first_index)
             {
-                xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_8);
+                xywprintf(grd->x + j * 2, grd->y + i, RG_GRID_TYPE_8);
             }
             else if (i != last_h_index && j == first_index)
             {
-                xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_4);
+                xywprintf(grd->x + j * 2, grd->y + i, RG_GRID_TYPE_4);
             }
             else if (i != last_h_index && j == last_w_index)
             {
-                xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_6);
+                xywprintf(grd->x + j * 2, grd->y + i, RG_GRID_TYPE_6);
             }
             else if (i == last_h_index && j == first_index)
             {
-                xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_1);
+                xywprintf(grd->x + j * 2, grd->y + i, RG_GRID_TYPE_1);
             }
             else if (i == last_h_index && j == last_w_index)
             {
-                xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_3);
+                xywprintf(grd->x + j * 2, grd->y + i, RG_GRID_TYPE_3);
             }
             else if (i == last_h_index)
             {
-                xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_2);
+                xywprintf(grd->x + j * 2, grd->y + i, RG_GRID_TYPE_2);
             }
             else
             {
-                xywprintf(grd->x + j * 2, grd->y + i, L"%s", RG_GRID_TYPE_5);
+                xywprintf(grd->x + j * 2, grd->y + i, RG_GRID_TYPE_5);
             }
             if ((j == last_w_index))
             {
                 wprintf(L" ");
                 continue;
             }
-            xywprintf(grd->x + j * 2 + 1, grd->y + i, L"%s", L" ");
+            xywprintf(grd->x + j * 2 + 1, grd->y + i, L" ");
         }
         wprintf(L"\n");
     }

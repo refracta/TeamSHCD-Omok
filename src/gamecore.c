@@ -656,7 +656,7 @@ bool check_all_conditions(char** grid, int n,int width, int height, int x, int y
     {
         if (countglyph == n)
         {
-            get_win_line(grid, n, winx, winy, width, height, glyph);
+            //get_win_line(grid, n, winx, winy, width, height, glyph);
             return true;
         }
     }
@@ -793,7 +793,7 @@ bool check_all_conditions(char** grid, int n,int width, int height, int x, int y
     {
         if (countglyph == n)
         {
-            get_win_line(grid, n, winx, winy, width, height, glyph);
+            //get_win_line(grid, n, winx, winy, width, height, glyph);
             return true;
         }
     }
@@ -932,7 +932,7 @@ bool check_all_conditions(char** grid, int n,int width, int height, int x, int y
     {
         if (countglyph == n)
         {
-            get_win_line(grid, n, winx, winy, width, height, glyph);
+            //get_win_line(grid, n, winx, winy, width, height, glyph);
             return true;
         }
     }
@@ -1072,7 +1072,7 @@ bool check_all_conditions(char** grid, int n,int width, int height, int x, int y
     {
         if (countglyph == n)
         {
-            get_win_line(grid, n, winx, winy, width, height, glyph);
+            //get_win_line(grid, n, winx, winy, width, height, glyph);
             return true;
         }
         else
@@ -1253,25 +1253,19 @@ CheckResult check_confirm(char** grid, int width, int height, int x, int y, char
     }
 }
 
-
 /**
- * @brief 승리한 N개의 돌의 좌표를 얻는 함수
+ * @brief N개의 돌이 연속적으로 놓아져 승리했는지 확인한다.
  * @param grid 격자 데이터
- * @param x 승리한 돌의 x좌표들
- * @param y 승리한 돌의 y좌표들
+ * @param x 놓는 돌의 x좌표
+ * @param y 놓는 돌의 y좌표
  * @param width 격자의 가로 길이
  * @param height 격자의 세로 길이
  * @glyph 현재 돌의 색깔
  * @return 승리한 돌 라인 데이터 Example:  { {stone1_x, stone1_y}, {stone2_x, stone2_y}, {stone3_x, stone3_y}, ... }
  */
-int** get_win_line(char** grid, int n, int* x, int* y, int width, int height, char glyph)
+int **get_win_line(char **grid, int n, int width, int height, char glyph)
 {
-    int** win_line = (int**)malloc_double_pointer(sizeof(int), n, 2);
-    for (int i = 0; i < n; i++)
-    {   
-        win_line[i][0] = x[i];
-        win_line[i][1] = y[i];
-    }
+    int **win_line = (int **) malloc_double_pointer(sizeof(int), n, 2);
     // Test Case
     for (int i = 0; i < n; i++)
     {

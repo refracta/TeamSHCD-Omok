@@ -42,3 +42,14 @@
 #define RA_S(o, t) PLAY_BEEP(o, VALUE_RA_S, t)
 #define SI(o, t) PLAY_BEEP(o, VALUE_SI, t)
 #endif
+
+#define VICTORY_FANFARE() \
+RA(OCTAVE_5, 200); \
+RA(OCTAVE_5, 100); \
+RA(OCTAVE_5, 300); \
+SI(OCTAVE_5, 200); \
+RA(OCTAVE_5, 200); \
+SI(OCTAVE_5, 200); \
+DO(OCTAVE_6, 200); \
+DO(OCTAVE_6, 100); \
+DO(OCTAVE_6, 700);

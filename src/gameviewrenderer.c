@@ -7,21 +7,32 @@
 /**
  * @brief 게임 규칙 인터페이스를 그립니다.
  */
-void draw_game_rule()
+void draw_game_rule(int victory_condition, wchar_t *time_limit)
 {
-
     MenuData menu;
-    menu.name = L"       규칙";
-    wchar_t **list = malloc(sizeof(wchar_t *) * 7);
-    list[0] = L"승리 조건: 5개의 돌";
-    list[1] = L"장목: 금지";
-    list[2] = L"흑의 3x3: 금지";
-    list[3] = L"시간 제한 20초";
-    list[4] = L"";
-    list[5] = L"착수 금지: 표시함";
-    list[6] = L"오목판: 19x19";
+    menu.name = L"       규칙        ";
+    wchar_t **list = malloc(sizeof(wchar_t *) * 4);
+
+    wchar_t win_condition_text[BUFSIZ];
+    swprintf(win_condition_text, BUFSIZ, L"승리: %d개의 돌", victory_condition);
+    list[0] = win_condition_text;
+
+    if (victory_condition == 5)
+    {
+        list[1] = L"렌주룰: 흑의 3x3,";
+        list[2] = L"4x4, 장목 금지";
+    }
+    else
+    {
+        list[1] = L"자유룰: 금지 조건이";
+        list[2] = L"없습니다.";
+    }
+
+    wchar_t time_limit_text[BUFSIZ];
+    swprintf(time_limit_text, BUFSIZ, L"시간 제한: %s", time_limit);
+    list[3] = time_limit_text;
     menu.list = list;
-    menu.length = 7;
+    menu.length = 4;
     menu.current_index = 0;
 
     menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);

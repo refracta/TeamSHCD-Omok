@@ -33,6 +33,6 @@ CheckResult check_confirm(char **grid, int width, int height, int x, int y, char
 
 bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char glyph);
 
-int** get_win_line(char** grid, int n, int* x, int* y, int width, int height, char glyph);
+int **get_win_line(char **grid, int n, int width, int height, char glyph);
 
 #endif

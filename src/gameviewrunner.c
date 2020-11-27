@@ -4,6 +4,11 @@
 */
 #include "gameviewrunner.h"
 
+/**
+ * @brief select_stone_position 내부에서 호출되는 키 핸들러
+ * @param c key value
+ * @param param 자유형 매개변수 포인터
+ */
 int handle_ssp_key_input(int c, void *param)
 {
     void **list = (void **) param;
@@ -74,6 +79,11 @@ int handle_ssp_key_input(int c, void *param)
     return -1;
 }
 
+/**
+ * @brief 돌 선택 인터페이스를 실행한다.
+ * @param data 게임 데이터
+ * @param player_number 플레이어 번호
+ */
 void run_select_stone_position(GameData *data, int player_number)
 {
     PlayerInterfaceData *id;
@@ -96,8 +106,8 @@ void run_select_stone_position(GameData *data, int player_number)
     draw_player_interface(id);
     draw_select_stone(data->grd);
     void *param[] = {data, id};
-    int original_seconds = copy_id.timer.left_seconds;
-    for (int i = 0; i < original_seconds; i++,
+    int original_seconds = id->timer.left_seconds;
+    for (int i = 0; i < original_seconds || id->timer.left_seconds == -1; i++,
             copy_id.timer.left_seconds--,
             copy_id.timer.percent = ((double) copy_id.timer.left_seconds / id->timer.left_seconds) * 100)
     {
@@ -128,11 +138,14 @@ void run_select_stone_position(GameData *data, int player_number)
     return;
 }
 
+/**
+ * @brief 플레이어 이름을 묻는 프로프트를 실행하고 이름 값을 초기화합니다.
+ */
 void run_player_name_prompt(PlayerData *player1, PlayerData *player2)
 {
     PromptData prompt;
-    prompt.message = L"Player1의 이름을 입력하세요";
-    prompt.x = 27;
+    prompt.message = L"Player 1의 이름을 입력하세요";
+    prompt.x = 26;
     prompt.y = 16;
     prompt.rlen = 30;
     prompt.outline_tbcolor = TO_TBCOLOR(LIGHT_JADE, BLACK);
@@ -141,7 +154,7 @@ void run_player_name_prompt(PlayerData *player1, PlayerData *player2)
     wchar_t *player1_name = run_prompt(&prompt);
     wcscpy(player1->name, player1_name);
     free(player1_name);
-    prompt.message = L"Player2의 이름을 입력하세요";
+    prompt.message = L"Player 2의 이름을 입력하세요";
     prompt.outline_tbcolor = TO_TBCOLOR(LIGHT_PURPLE, BLACK);
     prompt.text_tbcolor = TO_TBCOLOR(LIGHT_PURPLE, BLACK);
     prompt.message_tbcolor = TO_TBCOLOR(BLACK, WHITE);
@@ -151,20 +164,52 @@ void run_player_name_prompt(PlayerData *player1, PlayerData *player2)
 }
 
 /**
- * @brief 메인 화면 메뉴를 실행한다.
- * @param 선택한 메뉴 색인
+ * @brief 타이머 설정 메뉴를 실행한다.
+ * @return 타이머 열거형 값
  */
-int run_main_menu()
+TimerValue run_select_timer_time_menu()
+{
+    MenuData menu;
+    menu.name = L"타이머 시간";
+    wchar_t **list = malloc(sizeof(wchar_t *) * 4);
+    list[0] = L"   10초";
+    list[1] = L"   20초";
+    list[2] = L"   30초";
+    list[3] = L"   무한";
+    menu.list = list;
+    menu.length = 4;
+    menu.current_index = 0;
+
+    menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);
+    menu.name_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+    menu.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
+    menu.selected_tbcolor = TO_TBCOLOR(JADE, LIGHT_RED);
+    menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, GRAY);
+
+    menu.x = 38;
+    menu.y = 15;
+
+    int index = run_menu(&menu, true);
+    free(list);
+    return index;
+}
+
+/**
+ * @brief 메인 화면 메뉴를 실행한다.
+ * @return 선택한 메뉴 색인
+ */
+MainMenu run_main_menu()
 {
     MenuData menu;
     menu.name = L" 메뉴";
-    wchar_t **list = malloc(sizeof(wchar_t *) * 4);
+    wchar_t **list = malloc(sizeof(wchar_t *) * 5);
     list[0] = L" 오목";
-    list[1] = L" N목";
-    list[2] = L"도움말";
-    list[3] = L"나가기";
+    list[1] = L"  N목";
+    list[2] = L" 랭킹";
+    list[3] = L"도움말";
+    list[4] = L"나가기";
     menu.list = list;
-    menu.length = 4;
+    menu.length = 5;
     menu.current_index = 0;
 
     menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);
@@ -179,4 +224,68 @@ int run_main_menu()
     int index = run_menu(&menu, true);
     free(list);
     return index;
+}
+
+/**
+ * @brief N목 선택 화면을 실행한다
+ * @return 선택한 승리 조건
+ */
+int run_select_nmok_menu()
+{
+    MenuData menu;
+    menu.name = L" 조건 ";
+    wchar_t **list = malloc(sizeof(wchar_t *) * 6);
+    list[0] = L"  4목";
+    list[1] = L"  6목";
+    list[2] = L"  7목";
+    list[3] = L"  8목";
+    list[4] = L"  9목";
+    list[5] = L" 10목";
+    menu.list = list;
+    menu.length = 6;
+    menu.current_index = 0;
+
+    menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);
+    menu.name_tbcolor = TO_TBCOLOR(WHITE, BLACK);
+    menu.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
+    menu.selected_tbcolor = TO_TBCOLOR(JADE, LIGHT_RED);
+    menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, GRAY);
+
+    menu.x = 40;
+    menu.y = 14;
+
+    int index = run_menu(&menu, true);
+    free(list);
+    return index + 4 + (index > 0);
+}
+
+
+/**
+ * @brief 이긴 줄을 점멸합니다.
+ * @param grid 격자 렌더 데이터
+ * @param player_glyph 플레이어 SimpleGlyph
+ * @param blink_color 점멸할 색
+ * @param number 점멸 횟수
+ * @param wait_time 점멸간 대기 시간 (MS)
+ */
+void run_win_line_blink(GridRenderData *grd, int victory_condition, char player_glyph, short blink_color, int number,
+                        int wait_time)
+{
+    int **win_line = get_win_line(grd->grid, victory_condition, grd->width, grd->height,
+                                  player_glyph);
+    for (int j = 0; j < number; j++)
+    {
+        for (int i = 0; i < victory_condition; i++)
+        {
+            coloring_stone(grd->x, grd->y, win_line[i][0], win_line[i][1], player_glyph, blink_color);
+        }
+        wait(wait_time);
+        for (int i = 0; i < victory_condition; i++)
+        {
+            coloring_stone(grd->x, grd->y, win_line[i][0], win_line[i][1], player_glyph,
+                           player_glyph == SG_BLACK ? grd->black_color : grd->white_color);
+        }
+        wait(wait_time);
+    }
+    free(win_line);
 }

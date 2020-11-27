@@ -219,7 +219,7 @@ void xyprintf(int x, int y, char *format, ...)
         {
             buffer_ptr[i] = '\0';
             set_cursor_position(x, y + delta++);
-            printf("%s", target);
+            printf(target);
             target = buffer_ptr + i + 1;
         }
     }
@@ -265,7 +265,7 @@ void xywprintf(int x, int y, wchar_t *format, ...)
         {
             buffer_ptr[i] = '\0';
             set_cursor_position(x, y + delta++);
-            wprintf(L"%s", target);
+            wprintf(target);
             target = buffer_ptr + i + 1;
         }
     }
@@ -310,10 +310,14 @@ int wait_with_handler(unsigned long ms, int (*handler)(int, void *), void *data)
         {
             int c = _getwch();
             c = (c == 0xE0 || c == 0) ? _getwch() : c;
-            int result = handler(c, data);
-            if (result > -1)
-            {
-                return result;
+            if(handler == NULL){
+                return c;
+            }else{
+                int result = handler(c, data);
+                if (result > -1)
+                {
+                    return result;
+                }
             }
         }
         clock_gettime(CLOCK_MONOTONIC, &end);
