@@ -187,7 +187,7 @@ void run_game(GameData *data)
                 case 'S':
                     if (is_saved == true)
                         continue;
-                    make_dump(data->dump_string);
+                    make_dump(data->dump_string, data);
                     add_message_to_list(data->msg, L"덤프 저장 완료!");
                     add_message_to_list(data->msg, L"(r)egame");
                     add_message_to_list(data->msg, L"(b)ack to main");

@@ -6,6 +6,7 @@
 #include <wchar.h>
 #include <time.h>
 #include "consoleutils.h"
+#include "gamedata.h"
 
 typedef struct
 {
@@ -26,6 +27,6 @@ void print_ranking();
 
 void ascending(RankedPlayer player[], int length);
 
-void make_dump(wchar_t* string);
+void make_dump(wchar_t* string, GameData *data);
 
 #endif
