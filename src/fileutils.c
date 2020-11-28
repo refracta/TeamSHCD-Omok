@@ -220,3 +220,21 @@ void ascending(RankedPlayer player[], int length)
         }
     }
 }
+
+/**
+ * @brief 덤프파일 생성
+ * @param string 저장할 게임 플레이 데이터 문자열
+*/
+void make_dump(wchar_t *string)
+{
+    
+    wchar_t file_name[BUFSIZ] = { '\0', };
+    time_t now_time = time(NULL);
+    struct tm *tm = (struct tm*)localtime(&now_time);
+
+    swprintf(file_name, BUFSIZ, L"omok-%04d-%02d-%02d-%02d-%02d-%02d.txt", tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday, tm->tm_hour, tm->tm_min, tm->tm_sec);
+    FILE *stream = _wfopen(file_name, L"w");
+    fwprintf(stream, L"%s", string);
+    fclose(stream);
+    
+}

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <wchar.h>
+#include <time.h>
 #include "consoleutils.h"
 
 typedef struct
@@ -24,5 +25,7 @@ fpos_t *get_file_cur(char path[], int curIndex, fpos_t pos[]);
 void print_ranking();
 
 void ascending(RankedPlayer player[], int length);
+
+void make_dump(wchar_t* string);
 
 #endif
