@@ -32,6 +32,8 @@ char **generate_grid(int width, int height);
 
 void copy_grid(char **grid, char **copygrid, int width, int height);
 
+void send_location(int* tox, int* toy, int n);
+
 bool check_double_three(char **grid, int width, int height, int x, int y, char glyph);
 
 bool check_all_conditions(char **grid, int n, int width, int height, int x, int y, char glyph, CheckType check_type);
