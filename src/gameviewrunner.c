@@ -1,5 +1,5 @@
 /**
-  @file gameviewrenderer.c
+  @file gameviewrunner.c
   @brief 게임 화면과 함께 인게임 이벤트 핸들링에 관련된 함수들이 구현된 소스 파일
 */
 #include "gameviewrunner.h"

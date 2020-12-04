@@ -22,6 +22,9 @@
 #define INTRO_FULL_TICK 210
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 
+/**
+ * @brief 메뉴 렌더링 데이터들을 포함하는 구조체
+ */
 typedef struct
 {
     int x;
@@ -37,6 +40,9 @@ typedef struct
     short non_selected_tbcolor;
 } MenuData;
 
+/**
+ * @brief 프롬프트 렌더링 데이터들을 포함하는 구조체
+ */
 typedef struct
 {
     int x;
@@ -48,12 +54,18 @@ typedef struct
     short text_tbcolor;
 } PromptData;
 
+/**
+ * @brief 타이머 렌더링 데이터들을 포함하는 구조체
+ */
 typedef struct
 {
     int percent;
     int left_seconds;
 } TimerData;
 
+/**
+ * @brief 플레이어 데이터를 포함하는 구조체
+ */
 typedef struct
 {
     int player_number;
@@ -64,12 +76,14 @@ typedef struct
     char glyph;
 } PlayerData;
 
+/**
+ * @brief 플레이어 인터페이스 렌더링 데이터를 포함하는 구조체
+ */
 typedef struct
 {
     int x;
     int y;
     int width;
-
     short glyph_tbcolor;
     short outline_tbcolor;
     short text_tbcolor;
