@@ -171,7 +171,7 @@ void run_player_name_prompt(PlayerData *player1, PlayerData *player2)
 {
     PromptData prompt;
     prompt.message = L"Player 1의 이름을 입력하세요";
-    prompt.x = 26;
+    prompt.x = 30;
     prompt.y = 16;
     prompt.rlen = 12;
     prompt.outline_tbcolor = TO_TBCOLOR(LIGHT_JADE, BLACK);
