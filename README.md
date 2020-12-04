@@ -1,4 +1,4 @@
-# TeamSHCD : 오목
+# TeamSHCD - 오목
 
 ------
 
@@ -10,7 +10,7 @@
 
 `콘솔 환경의 보드게임`이라는 주제에서 많은 의견이 오고갔습니다. 기본적으로 체스형과 카드형로 구분되는 이 장르는 각각 `말` 혹은 `카드`' 를 사용합니다. 둘 모두 훌륭한 방식이지만, `카드`를 사용하는 게임은 제한된 콘솔 환경에서 정보를 표현할 때 많은 부피를 차지한다는 단점이 있습니다.
 
-예를 들어서 흔히 사용하는 포커 카드와 같은 경우 정보를 표현하기위해 최대 3자리(예를 들면, '♥10')를 차지하고, 카드 이미지를 출력하기 위해 카드를 감싸는 Box-drawing 문자(┌, ─, ┐ 등)를 사용할 필요가 있었습니다. 그렇지만 `말`을 이용한 게임은 우선 Box-drawing문자로 게임판을 그린 뒤, 문자 하나(●, ○ 등)로 표현할 수 있다는 장점이 있습니다. 어떠한 경우에도 게임판 자체는 변하지 않으며, 판 위에 말을 놓는 방식으로 진행됩니다. 콘솔에서 출력하기엔 '카드'보단 '말'이 쉬웠습니다.
+예를 들어서 흔히 사용하는 포커 카드와 같은 경우 정보를 표현하기위해 최대 3자리(예를 들면, '♥10')를 차지하고, 카드 이미지를 출력하기 위해 카드를 감싸는 Box-drawing 문자(┌, ─, ┐ 등)를 사용할 필요가 있었습니다. 그렇지만 `말`을 이용한 게임은 체스의 우선 Box-drawing문자로 게임판을 그린 뒤, 문자 하나(●, ○ 등)로 표현할 수 있다는 장점이 있습니다. 어떠한 경우에도 게임판 자체는 변하지 않으며, 판 위에 말을 놓는 방식으로 진행됩니다. 콘솔에서 출력하기엔 '카드'보단 '말'이 쉬웠습니다.
 
 #### 	어떤 게임이 더욱 매력적인가?
 
@@ -56,17 +56,44 @@
 
 TeamSHCD-Omok.exe를 실행시키면 별도의 installation 없이 즉시 시작됩니다.
 
-![6](https://user-images.githubusercontent.com/69423873/99976430-c83b7580-2de6-11eb-8e5a-f1f6f10b8773.png)
+![1](https://user-images.githubusercontent.com/69423873/101163707-54675b80-3677-11eb-810f-c47600056676.png)
+
 
 ▲ '오목'과 'N목'을 선택하여 시작할 수 있습니다.
 
-![7](https://user-images.githubusercontent.com/69423873/99976424-c70a4880-2de6-11eb-9286-1c327fde4be2.png)
+![4](https://user-images.githubusercontent.com/69423873/101163709-54fff200-3677-11eb-8356-3dada14fdee1.png)
+
 
 ▲ Player의 이름을 선택하여 시작할 수 있습니다.
 
-![8](https://user-images.githubusercontent.com/69423873/99976428-c83b7580-2de6-11eb-95e9-598973b73da2.png)
+![5](https://user-images.githubusercontent.com/69423873/101163711-55988880-3677-11eb-9ec2-21f983e24745.png)
 
-▲ 초록색 커서를 이동한 후 `Space`나 `Enter`를 이용하여 착수할 수 있습니다.
+
+▲ 타이머 시간을 설정할 수 있습니다.
+
+![8](https://user-images.githubusercontent.com/69423873/101164055-e8d1be00-3677-11eb-9640-b0e0a1df1bac.png)
+
+▲ 초록색 커서를 방향키로 이동 시킨 후, `Enter`나 `Space`를 눌러서 착수 가능합니다.
+
+![6](https://user-images.githubusercontent.com/69423873/101163713-55988880-3677-11eb-8e0f-9e50f09f113b.png)
+
+
+▲ 승리 조건을 만족하면 대국이 종료됩니다. 아래와 같은 동작을 선택할 수 있습니다.
+
+* 재대국 (r)
+* 메인 화면으로 돌아가기 (b)
+* 덤프 파일로 저장하기 (s)
+<br><br>
+덤프 파일은 아래와 같이 생성이 됩니다.
+
+![9](https://user-images.githubusercontent.com/69423873/101164836-fd628600-3678-11eb-86ba-1ddf3a416b72.png)
+
+
+![7](https://user-images.githubusercontent.com/69423873/101163714-56311f00-3677-11eb-80e2-b8b62599979e.png)
+
+
+▲ 승리 횟수를 기준으로 랭킹을 확인할 수 있습니다. 1위부터 3위는 노란 글씨로 표시됩니다.
+
 
 ------
 
@@ -76,18 +103,20 @@ TeamSHCD-Omok.exe를 실행시키면 별도의 installation 없이 즉시 시작
 
 ```makefile
 cmake_minimum_required(VERSION 3.10)
-project(BoardGame C)
+project(TeamSHCD-Omok C)
 
 set(CMAKE_C_STANDARD 99)
 
-file(GLOB PROJECT_C_FILES "*.c")
+file(GLOB PROJECT_C_FILES "src/*.c")
 
 file(GLOB PROJECT_HEADER_FILES "inc/*.h")
+
+include_directories(inc/)
 
 add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
-add_executable(BoardGame ${PROJECT_C_FILES} ${PROJECT_HEADER_FILES})
+add_executable(TeamSHCD-Omok ${PROJECT_C_FILES} ${PROJECT_HEADER_FILES})
 ```
 
 CMakeLists.txt에서 볼 수 있듯 소스 파일은 UTF-8로 저장되어야 하며, C99를 사용합니다.
