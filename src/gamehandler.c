@@ -223,7 +223,7 @@ void run_help(GameData *data)
     xywprintf(5, 3, HELP_TEXT);
     set_print_color(TO_TBCOLOR(YELLOW, BLACK));
     xywprintf(38, 17, L"간단한 오목을 즐길 수 있는 프로그램입니다.");
-    xywprintf(60, 18, L"SHCD, VERSION 1.0.0");
+    xywprintf(60, 18, L"SHCD, VERSION 1.2.1");
     set_print_color(TO_TBCOLOR(GREEN, BLACK));
     xyprintf(46, 22, ASCII_PEOPLE1);
     set_print_color(TO_TBCOLOR(JADE, BLACK));
