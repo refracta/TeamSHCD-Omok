@@ -190,7 +190,8 @@ void draw_player_interface(PlayerInterfaceData *data)
 
     //separate line
     int timer_y = 0, timebar_y = 0;
-    timer_y = data->direction == 0 ? 4 : 2; // 0 -> 타이머가 아래, 플레이어 정보가 위
+    timer_y = data->direction == 0 ? 4 : 2;
+    // 0 -> 타이머가 아래, 플레이어 정보가 위
     timebar_y = data->direction == 0 ? timer_y + 1 : timer_y - 1;
     xywprintf(data->x, data->y + timer_y, L"├");
     for (int i = 0; i < (data->width - 3); i++)
