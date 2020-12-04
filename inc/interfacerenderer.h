@@ -1,3 +1,7 @@
+/**
+ @file interfacerenderer.h
+ @brief interfacerenderer의 헤더 파일
+*/
 #ifndef INTERFACERENDERER_H
 #define INTERFACERENDERER_H
 
@@ -46,7 +50,7 @@ typedef struct
 
 typedef struct
 {
-    int percent; // 0~100
+    int percent;
     int left_seconds;
 } TimerData;
 

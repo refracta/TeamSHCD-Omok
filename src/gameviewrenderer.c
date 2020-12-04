@@ -1,6 +1,6 @@
 /**
   @file gameviewrenderer.c
-  @brief 게임 화면 렌더러
+  @brief 게임 화면 세부 렌더링 함수가 구현된 소스 파일
 */
 #include "gameviewrenderer.h"
 

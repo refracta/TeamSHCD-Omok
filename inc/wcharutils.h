@@ -1,3 +1,7 @@
+/**
+ @file wcharutils.h
+ @brief wcharutils의 헤더 파일
+*/
 #ifndef WCHARUTILS_H
 #define WCHARUTILS_H
 

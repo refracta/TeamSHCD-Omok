@@ -1,3 +1,7 @@
+/**
+ @file gamehandler.h
+ @brief gamehandler의 헤더 파일
+*/
 #ifndef GAMEHANDLER_H
 #define GAMEHANDLER_H
 

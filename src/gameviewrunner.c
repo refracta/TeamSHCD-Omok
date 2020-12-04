@@ -1,6 +1,6 @@
 /**
   @file gameviewrenderer.c
-  @brief 게임 화면 실행
+  @brief 게임 화면과 함께 인게임 이벤트 핸들링에 관련된 함수들이 구현된 소스 파일
 */
 #include "gameviewrunner.h"
 
@@ -47,10 +47,14 @@ int handle_ssp_key_input(int c, void *param)
                                                                            : grd->white_color);
                         draw_grid(grd);
 
-                        update_position_message(data->turn + 1, data->grd->cursor_x + 1, data->grd->height - data->grd->cursor_y, pid->player.player_number - 1);
+                        update_position_message(data->turn + 1, data->grd->cursor_x + 1,
+                                                data->grd->height - data->grd->cursor_y, pid->player.player_number - 1);
 
-                        data->dump_string = (wchar_t*)realloc(data->dump_string, sizeof(wchar_t) * BUFSIZ * (data->turn)); //턴당 wchar_t 크기를 버퍼사이즈만큼 메모리 할당
-                        swprintf(data->dump_string, BUFSIZ * (data->turn), L"%s%s %2d수  (%2d, %2d)\n", data->dump_string, pid->player.player_number == 1 ? L"흑" : L"백", data->turn - 1, data->grd->cursor_x + 1, data->grd->height - data->grd->cursor_y);
+                        data->dump_string = (wchar_t *) realloc(data->dump_string, sizeof(wchar_t) * BUFSIZ *
+                                                                                   (data->turn)); //턴당 wchar_t 크기를 버퍼사이즈만큼 메모리 할당
+                        swprintf(data->dump_string, BUFSIZ * (data->turn), L"%s%s %2d수  (%2d, %2d)\n",
+                                 data->dump_string, pid->player.player_number == 1 ? L"흑" : L"백", data->turn - 1,
+                                 data->grd->cursor_x + 1, data->grd->height - data->grd->cursor_y);
 
                         RA(OCTAVE_4, 20);
                         return 0;
@@ -85,7 +89,8 @@ int handle_ssp_key_input(int c, void *param)
             break;
     }
 
-    update_position_message(data->turn, data->grd->cursor_x + 1, data->grd->height - data->grd->cursor_y, pid->player.player_number);
+    update_position_message(data->turn, data->grd->cursor_x + 1, data->grd->height - data->grd->cursor_y,
+                            pid->player.player_number);
     draw_select_stone(grd);
     return -1;
 }
@@ -138,7 +143,8 @@ void run_select_stone_position(GameData *data, int player_number)
             add_message_to_list(data->msg, position_text);
             draw_game_message(data->msg);
             //xywprintf(2, 4, L"%s이 수를 두었습니다.", player_glyph == SG_BLACK ? L"흑": L"백");
-            update_position_message(data->turn + 1, data->grd->cursor_x + 1, data->grd->height - data->grd->cursor_y, copy_id.player.player_number - 1);
+            update_position_message(data->turn + 1, data->grd->cursor_x + 1, data->grd->height - data->grd->cursor_y,
+                                    copy_id.player.player_number - 1);
             return;
         }
     }
@@ -146,10 +152,13 @@ void run_select_stone_position(GameData *data, int player_number)
     draw_player_interface(&copy_id);
     add_message_to_list(data->msg, id->player.glyph == SG_BLACK ? L"흑의 시간 초과" : L"백의 시간 초과");
 
-    data->dump_string = (wchar_t*)realloc(data->dump_string, sizeof(wchar_t) * BUFSIZ * (data->turn)); //턴당 wchar_t 크기를 버퍼사이즈만큼 메모리 할당
-    swprintf(data->dump_string, BUFSIZ * (data->turn), L"%s%s %2d수  시간초과로 인해 착수하지 못했습니다.\n", data->dump_string, copy_id.player.player_number == 1 ? L"흑" : L"백", data->turn - 1);
+    data->dump_string = (wchar_t *) realloc(data->dump_string,
+                                            sizeof(wchar_t) * BUFSIZ * (data->turn)); //턴당 wchar_t 크기를 버퍼사이즈만큼 메모리 할당
+    swprintf(data->dump_string, BUFSIZ * (data->turn), L"%s%s %2d수  시간초과로 인해 착수하지 못했습니다.\n", data->dump_string,
+             copy_id.player.player_number == 1 ? L"흑" : L"백", data->turn - 1);
 
-    update_position_message(data->turn + 1, data->grd->cursor_x + 1, data->grd->height - data->grd->cursor_y, copy_id.player.player_number - 1);
+    update_position_message(data->turn + 1, data->grd->cursor_x + 1, data->grd->height - data->grd->cursor_y,
+                            copy_id.player.player_number - 1);
     draw_game_message(data->msg);
     //xywprintf(2, 5, L"시간 초과로 %s의 턴이 넘어갑니다.", player_glyph == SG_BLACK ? L"흑": L"백");
     return;
@@ -276,7 +285,6 @@ int run_select_nmok_menu()
     return index + 4 + (index > 0);
 }
 
-
 /**
  * @brief 이긴 줄을 점멸합니다.
  * @param grid 격자 렌더 데이터
@@ -319,7 +327,7 @@ void update_position_message(int turn, int x, int y, int player_number)
     MenuData data;
     data.x = 53;
     data.y = 14;
-    wchar_t** list = malloc(sizeof(wchar_t*) * 4);
+    wchar_t **list = malloc(sizeof(wchar_t *) * 4);
     wchar_t text[BUFSIZ];
     swprintf(text, BUFSIZ, L" %s %2d수  (%2d, %2d)", player_number == 1 ? L"흑" : L"백", turn - 1, x, y);
     list[0] = text;

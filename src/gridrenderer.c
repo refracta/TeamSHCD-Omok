@@ -1,6 +1,6 @@
 /**
-  @file gamerenderer.c
-  @brief 게임 렌더러
+  @file gridrenderer.c
+  @brief 격자 관련 렌더링 함수들이 구현된 소스 파일
 */
 
 #include "gridrenderer.h"
@@ -41,8 +41,6 @@ void free_grd(GridRenderData *grd)
 */
 void draw_grid(GridRenderData *grd)
 {
-    //wchar_t* grid_string = (wchar_t*)calloc(grd->width * grd->height * 2 * sizeof(wchar_t) + 1, sizeof(wchar_t));
-
     short origin_color = get_print_color();
 
     const int last_w_index = grd->width - 1;
