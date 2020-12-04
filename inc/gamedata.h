@@ -93,6 +93,7 @@ typedef struct
     bool status_inited;
     int tick;
     int turn;
+    wchar_t* dump_string;
 } GameData;
 
 #endif

@@ -48,6 +48,10 @@ int handle_ssp_key_input(int c, void *param)
                         draw_grid(grd);
 
                         update_position_message(data->turn + 1, data->grd->cursor_x + 1, data->grd->height - data->grd->cursor_y, pid->player.player_number - 1);
+
+                        data->dump_string = (wchar_t*)realloc(data->dump_string, sizeof(wchar_t) * BUFSIZ * (data->turn)); //턴당 wchar_t 크기를 버퍼사이즈만큼 메모리 할당
+                        swprintf(data->dump_string, BUFSIZ * (data->turn), L"%s%s %2d수  (%2d, %2d)\n", data->dump_string, pid->player.player_number == 1 ? L"흑" : L"백", data->turn - 1, data->grd->cursor_x + 1, data->grd->height - data->grd->cursor_y);
+
                         RA(OCTAVE_4, 20);
                         return 0;
                         break;
@@ -142,6 +146,9 @@ void run_select_stone_position(GameData *data, int player_number)
     draw_player_interface(&copy_id);
     add_message_to_list(data->msg, id->player.glyph == SG_BLACK ? L"흑의 시간 초과" : L"백의 시간 초과");
 
+    data->dump_string = (wchar_t*)realloc(data->dump_string, sizeof(wchar_t) * BUFSIZ * (data->turn)); //턴당 wchar_t 크기를 버퍼사이즈만큼 메모리 할당
+    swprintf(data->dump_string, BUFSIZ * (data->turn), L"%s%s %2d수  시간초과로 인해 착수하지 못했습니다.\n", data->dump_string, copy_id.player.player_number == 1 ? L"흑" : L"백", data->turn - 1);
+
     update_position_message(data->turn + 1, data->grd->cursor_x + 1, data->grd->height - data->grd->cursor_y, copy_id.player.player_number - 1);
     draw_game_message(data->msg);
     //xywprintf(2, 5, L"시간 초과로 %s의 턴이 넘어갑니다.", player_glyph == SG_BLACK ? L"흑": L"백");
@@ -157,7 +164,7 @@ void run_player_name_prompt(PlayerData *player1, PlayerData *player2)
     prompt.message = L"Player 1의 이름을 입력하세요";
     prompt.x = 26;
     prompt.y = 16;
-    prompt.rlen = 30;
+    prompt.rlen = 12;
     prompt.outline_tbcolor = TO_TBCOLOR(LIGHT_JADE, BLACK);
     prompt.text_tbcolor = TO_TBCOLOR(LIGHT_JADE, BLACK);
     prompt.message_tbcolor = TO_TBCOLOR(BLACK, WHITE);
