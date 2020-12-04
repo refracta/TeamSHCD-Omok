@@ -19,7 +19,7 @@
 #include "gamedata.h"
 #include "keycode.h"
 #include "beeputils.h"
-#include "fileutils.h"
+#include "rankingutils.h"
 
 void start_game();
 

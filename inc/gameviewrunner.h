@@ -10,6 +10,7 @@
 #include "gameviewutils.h"
 #include "gamedata.h"
 #include "keycode.h"
+#include "rankingutils.h"
 
 /**
  * @brief 메인 화면 메뉴 열거형
@@ -34,5 +35,5 @@ int run_select_nmok_menu();
 void run_win_line_blink(GridRenderData *grd, int victory_condition, char player_glyph, short blink_color, int number,
                         int wait_time);
 
-void update_position_message(GameData* data, int player_number);
+void update_position_message(int turn, int x, int y, int player_number);
 #endif

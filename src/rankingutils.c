@@ -2,7 +2,7 @@
   @file fileutils.c
   @brief 파일 유틸
 */
-#include "fileutils.h"
+#include "rankingutils.h"
 
 /**
  * @brief 파일에 값을 추가한다
@@ -58,8 +58,6 @@ int file_append(char path[], wchar_t data[])
 void append_rank(wchar_t winner_name[], wchar_t loser_name[])
 {
     file_append("winData.omok", winner_name);
-    //lose Data 필요시 주석 해제
-    //file_append("loseData.omok", loser_name);
 }
 
 /**
@@ -125,72 +123,6 @@ fpos_t *get_file_cur(char path[], int curIndex, fpos_t pos[])
 }
 
 /**
- * @brief 랭킹 출력
-*/
-void print_ranking()
-{
-    RankedPlayer player[BUFSIZ] = {-1};
-    FILE *stream = fopen("winData.omok", "r+");
-    wchar_t *tempbuf;
-
-    if (stream == NULL)
-    {
-        xywprintf(50, 10, L"아직 랭킹이 없습니다!");
-        return;
-    }
-
-    wchar_t buf[BUFSIZ];
-    int index = 0;
-    while (!feof(stream))
-    {
-        fwscanf(stream, L"%s %04d", player[index].name, &player[index].win);
-        index++;
-    }
-    index--;
-    fclose(stream);
-
-    for (int i = 0; i < index; i++)
-    {
-        player[i].rank = 1;
-        for (int j = 0; j < index; j++)
-        {
-            if (player[i].win < player[j].win)
-            {
-                player[i].rank++;
-            }
-        }
-    }
-
-    ascending(player, index);
-    set_print_color(TO_TBCOLOR(BLACK, LIGHT_YELLOW));
-    xywprintf(52, 4, L" 명 예 의   전 당 ");
-    set_print_color(TO_TBCOLOR(WHITE, BLACK));
-    xywprintf(43, 6, L"순위");
-    xywprintf(43, 6, L"순위");
-    xywprintf(49, 6, L"닉네임");
-    xywprintf(75, 6, L"승리");
-    if (index > 9)
-    {
-        index = 9;
-    }
-    short origin_color = get_print_color();
-    for (int i = 0; i < index; i++)
-    {
-        if (player[i].rank <= 3)
-        {
-            set_print_color(14);
-        }
-        else
-        {
-            set_print_color(origin_color);
-        }
-        xywprintf(43, 9 + i * 2, L"%2d위: ", player[i].rank);
-        xywprintf(49, 9 + i * 2, player[i].name);
-        xywprintf(75, 9 + i * 2, L"%d회", player[i].win);
-    }
-}
-
-/**
  * @brief 오름차순 정렬
  * @param player[] 랭킹순으로 정렬할 구조체
  * @param length 정렬할 요소의 개수
@@ -219,44 +151,4 @@ void ascending(RankedPlayer player[], int length)
             }
         }
     }
-}
-
-/**
- * @brief 덤프파일 생성
- * @param string 저장할 게임 플레이 데이터 문자열
-*/
-void make_dump(wchar_t *string, GameData *data)
-{
-    wchar_t file_name[BUFSIZ] = { '\0', };
-    time_t now_time = time(NULL);
-    struct tm *tm = (struct tm*)localtime(&now_time);
-
-    swprintf(file_name, BUFSIZ, L"[%s]vs[%s]_%04d%02d%02d_%02d%02d%02d.txt", data->p1id.player.name, data->p2id.player.name, tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday, tm->tm_hour, tm->tm_min, tm->tm_sec);
-    FILE *stream = _wfopen(file_name, L"w");
-    fwprintf(stream, L"%s\n\n", string);
-
-    for (int i = 0; i < data->grd->height; i++)
-    {
-        for (int j = 0; j < data->grd->width; j++)
-        {
-            if (data->grd->grid[j][i] != SG_EMPTY)
-            {
-                if (data->grd->grid[j][i] == 'b') fwprintf(stream, L"●");
-                else if (data->grd->grid[j][i] == 'w') fwprintf(stream, L"○");
-                continue;
-            }
-            if (i == 0 && j == 0)                                               fwprintf(stream, L"┌");
-            else if (i == 0 && j == data->grd->width - 1)                       fwprintf(stream, L"┐");
-            else if (i == 0)                                                    fwprintf(stream, L"┬");
-            else if (i != data->grd->height - 1 && j == 0)                      fwprintf(stream, L"├");
-            else if (i != data->grd->height - 1 && j == data->grd->width - 1)   fwprintf(stream, L"┤");
-            else if (i == data->grd->height - 1 && j == 0)                      fwprintf(stream, L"└");
-            else if (i == data->grd->height - 1 && j == data->grd->width - 1)   fwprintf(stream, L"┘");
-            else if (i == data->grd->height - 1)                                fwprintf(stream, L"┴");
-            else                                                                fwprintf(stream, L"┼");
-        }
-        fwprintf(stream, L"\n");
-    }
-
-    fclose(stream);
 }

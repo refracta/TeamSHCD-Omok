@@ -58,8 +58,6 @@ void free_grd(GridRenderData *grd);
 
 void draw_grid(GridRenderData *grd);
 
-wchar_t *generate_grid_string(GridRenderData *grd);
-
 void coloring_stone(int x, int y, int cursor_x, int cursor_y, char glyph, short color);
 
 #endif

@@ -337,3 +337,69 @@ void update_position_message(int turn, int x, int y, int player_number)
     free(list);
 
 }
+
+/**
+ * @brief 랭킹 출력
+*/
+void print_ranking()
+{
+    RankedPlayer player[BUFSIZ] = { -1 };
+    FILE* stream = fopen("winData.omok", "r+");
+    wchar_t* tempbuf;
+
+    if (stream == NULL)
+    {
+        xywprintf(50, 10, L"아직 랭킹이 없습니다!");
+        return;
+    }
+
+    wchar_t buf[BUFSIZ];
+    int index = 0;
+    while (!feof(stream))
+    {
+        fwscanf(stream, L"%s %04d", player[index].name, &player[index].win);
+        index++;
+    }
+    index--;
+    fclose(stream);
+
+    for (int i = 0; i < index; i++)
+    {
+        player[i].rank = 1;
+        for (int j = 0; j < index; j++)
+        {
+            if (player[i].win < player[j].win)
+            {
+                player[i].rank++;
+            }
+        }
+    }
+
+    ascending(player, index);
+    set_print_color(TO_TBCOLOR(BLACK, LIGHT_YELLOW));
+    xywprintf(52, 4, L" 명 예 의   전 당 ");
+    set_print_color(TO_TBCOLOR(WHITE, BLACK));
+    xywprintf(43, 6, L"순위");
+    xywprintf(43, 6, L"순위");
+    xywprintf(49, 6, L"닉네임");
+    xywprintf(75, 6, L"승리");
+    if (index > 9)
+    {
+        index = 9;
+    }
+    short origin_color = get_print_color();
+    for (int i = 0; i < index; i++)
+    {
+        if (player[i].rank <= 3)
+        {
+            set_print_color(14);
+        }
+        else
+        {
+            set_print_color(origin_color);
+        }
+        xywprintf(43, 9 + i * 2, L"%2d위: ", player[i].rank);
+        xywprintf(49, 9 + i * 2, player[i].name);
+        xywprintf(75, 9 + i * 2, L"%d회", player[i].win);
+    }
+}
