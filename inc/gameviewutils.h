@@ -1,3 +1,7 @@
+/**
+ @file gameviewutils.h
+ @brief gameviewutils의 헤더 파일
+*/
 #ifndef GAMEVIEWUTILS_H
 #define GAMEVIEWUTILS_H
 

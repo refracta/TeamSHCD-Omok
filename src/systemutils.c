@@ -1,6 +1,6 @@
 /**
   @file systemutils.c
-  @brief 시스템 유틸
+  @brief 시스템 유틸 함수들이 구현된 소스 파일
 */
 #include "systemutils.h"
 

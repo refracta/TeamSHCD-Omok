@@ -1,3 +1,7 @@
+/**
+ @file gameviewrenderer.h
+ @brief gameviewrenderer의 헤더 파일
+*/
 #ifndef GAMEVIEWRENDERER_H
 #define GAMEVIEWRENDERER_H
 

@@ -1,3 +1,7 @@
+/**
+ @file memoryutils.h
+ @brief memoryutils의 헤더 파일
+*/
 #ifndef MEMORYUTILS_H
 #define MEMORYUTILS_H
 

@@ -1,4 +1,4 @@
-# TeamSHCD : 오목
+# TeamSHCD - 오목
 
 ------
 

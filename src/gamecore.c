@@ -1,6 +1,6 @@
 /**
  @file gamecore.c
- @brief 게임 코어
+ @brief 게임의 핵심 구현 로직이 구현된 소스 파일
 */
 #include "gamecore.h"
 
@@ -52,10 +52,10 @@ void copy_grid(char **grid, char **copygrid, int width, int height)
  * @param n N개를 둬야 승리하는지 알려준다.
  * @param numbeer 0일 경우 좌표를 저장하고, 1일 경우 좌표를 전달한다.
  */
-void send_location(int* inx, int* iny, int n, int number)
+void send_location(int *inx, int *iny, int n, int number)
 {
-    static int savex[20] = { 0 };
-    static int savey[20] = { 0 };
+    static int savex[20] = {0};
+    static int savey[20] = {0};
     if (number == 0)
     {
         for (int i = 0; i < n; i++)
@@ -139,7 +139,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
     countemptytwo = countemptyone;
     if (countemptyone == 1)
-    { 
+    {
         countemptyone = 0;
     }
     emptycheck = 0;
@@ -180,7 +180,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             }
             else
             {
-                break; 
+                break;
             }
         }
     }
@@ -377,7 +377,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
     countemptytwo = countemptyone;
     if (countemptyone == 1)
-    { 
+    {
         countemptyone = 0;
     }
     emptycheck = 0;
@@ -496,7 +496,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
     countemptytwo = countemptyone;
     if (countemptyone == 1)
-    { 
+    {
         countemptyone = 0;
     }
     emptycheck = 0;
@@ -605,8 +605,8 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
     int overemptytwo = 0;
     int overfourtwo = 0;
     int wincheck = 0;
-    int winx[20] = { 0 };
-    int winy[20] = { 0 };
+    int winx[20] = {0};
+    int winy[20] = {0};
 
     if (check_type == 2 || check_type == 3)
     {
@@ -752,7 +752,7 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
         {
             winx[wincheck] = x;
             winy[wincheck] = y;
-            send_location(winx, winy, n,0);
+            send_location(winx, winy, n, 0);
             return true;
         }
     }
@@ -914,7 +914,7 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
         {
             winx[wincheck] = x;
             winy[wincheck] = y;
-            send_location(winx, winy, n,0);
+            send_location(winx, winy, n, 0);
             return true;
         }
     }
@@ -1077,7 +1077,7 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
         {
             winx[wincheck] = x;
             winy[wincheck] = y;
-            send_location(winx, winy, n,0);
+            send_location(winx, winy, n, 0);
             return true;
         }
     }
@@ -1243,7 +1243,7 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
         {
             winx[wincheck] = x;
             winy[wincheck] = y;
-            send_location(winx, winy, n,0);
+            send_location(winx, winy, n, 0);
             return true;
         }
         else
@@ -1406,8 +1406,8 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
 bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char glyph)
 {
     int checkglyph = 0;
-    int winx[20] = { 0 };
-    int winy[20] = { 0 };
+    int winx[20] = {0};
+    int winy[20] = {0};
     int wincheck = 0;
     for (int i = 0; i < width - (n - 1); i++)
     {
@@ -1578,7 +1578,7 @@ int **get_win_line(char **grid, int n, int width, int height, char glyph)
     int **win_line = (int **) malloc_double_pointer(sizeof(int), n, 2);
     int winx[20] = {0};
     int winy[20] = {0};
-    send_location(winx, winy, n,1);
+    send_location(winx, winy, n, 1);
     for (int i = 0; i < n; i++)
     {
         win_line[i][0] = winx[i];

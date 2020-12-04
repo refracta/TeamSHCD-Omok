@@ -1,3 +1,7 @@
+/**
+ @file asciiart.h
+ @brief 게임에 사용되는 아스키 아트들이 정의된 헤더 파일
+*/
 #ifndef ASCIIART_H
 #define ASCIIART_H
 #define ASCII_TITLE_SHCD (\

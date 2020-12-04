@@ -1,3 +1,7 @@
+/**
+ @file gamehandler.h
+ @brief gamehandler의 헤더 파일
+*/
 #ifndef GAMEHANDLER_H
 #define GAMEHANDLER_H
 
@@ -19,7 +23,7 @@
 #include "gamedata.h"
 #include "keycode.h"
 #include "beeputils.h"
-#include "fileutils.h"
+#include "rankingutils.h"
 
 void start_game();
 

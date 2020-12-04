@@ -1,3 +1,7 @@
+/**
+ @file beeputils.h
+ @brief Beep 함수를 쉽게 사용 할 수 있게 래핑한 매크로가 정의된 헤더 파일
+*/
 #ifndef BEEPUTILS_H
 #define BEEPUTILS_H
 
