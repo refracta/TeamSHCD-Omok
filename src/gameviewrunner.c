@@ -351,9 +351,9 @@ void update_position_message(int turn, int x, int y, int player_number)
 */
 void print_ranking()
 {
-    RankedPlayer player[BUFSIZ] = { -1 };
-    FILE* stream = fopen("winData.omok", "r+");
-    wchar_t* tempbuf;
+    RankedPlayer player[BUFSIZ] = {-1};
+    FILE *stream = fopen("winData.omok", "r+");
+    wchar_t *tempbuf;
 
     if (stream == NULL)
     {

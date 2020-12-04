@@ -40,4 +40,5 @@ void run_win_line_blink(GridRenderData *grd, int victory_condition, char player_
                         int wait_time);
 
 void update_position_message(int turn, int x, int y, int player_number);
+
 #endif

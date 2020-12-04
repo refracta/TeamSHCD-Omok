@@ -1,6 +1,6 @@
 /**
-  @file fileutils.c
-  @brief 파일 유틸
+  @file rankingutils.c
+  @brief 랭킹 기능 관련 함수들이 구현된 소스 파일
 */
 #include "rankingutils.h"
 

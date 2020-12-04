@@ -10,6 +10,6 @@
 #include "gamedata.h"
 #include "gamecore.h"
 
-void make_dump(wchar_t* string, GameData* data);
+void make_dump(wchar_t *string, GameData *data);
 
 #endif
