@@ -229,7 +229,6 @@ void run_help(GameData *data)
     set_print_color(TO_TBCOLOR(JADE, BLACK));
     xyprintf(64, 20, ASCII_PEOPLE2);
 
-
     get_key_input();
     for (int i = 0; i < 10; i++)
     {
