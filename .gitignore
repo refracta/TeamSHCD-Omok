@@ -1,5 +1,6 @@
 out/*
 .vs/*
 .idea/*
+CMakeSettings.json
 cmake-build-*
 winData.omok
