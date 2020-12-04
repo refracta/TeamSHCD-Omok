@@ -209,7 +209,7 @@ TimerValue run_select_timer_time_menu()
     menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);
     menu.name_tbcolor = TO_TBCOLOR(WHITE, BLACK);
     menu.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
-    menu.selected_tbcolor = TO_TBCOLOR(JADE, LIGHT_RED);
+    menu.selected_tbcolor = TO_TBCOLOR(LIGHT_JADE, LIGHT_PURPLE);
     menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, GRAY);
 
     menu.x = 38;
@@ -241,7 +241,7 @@ MainMenu run_main_menu()
     menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);
     menu.name_tbcolor = TO_TBCOLOR(WHITE, BLACK);
     menu.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
-    menu.selected_tbcolor = TO_TBCOLOR(JADE, LIGHT_RED);
+    menu.selected_tbcolor = TO_TBCOLOR(LIGHT_JADE, LIGHT_PURPLE);
     menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, GRAY);
 
     menu.x = 51;
@@ -274,7 +274,7 @@ int run_select_nmok_menu()
     menu.element_tbcolor = TO_TBCOLOR(BLUE, RED);
     menu.name_tbcolor = TO_TBCOLOR(WHITE, BLACK);
     menu.outline_tbcolor = TO_TBCOLOR(GRAY, BLACK);
-    menu.selected_tbcolor = TO_TBCOLOR(JADE, LIGHT_RED);
+    menu.selected_tbcolor = TO_TBCOLOR(LIGHT_JADE, LIGHT_PURPLE);
     menu.non_selected_tbcolor = TO_TBCOLOR(WHITE, GRAY);
 
     menu.x = 40;
