@@ -1,6 +1,6 @@
 /**
   @file wcharutils.c
-  @brief wchar 처리 유틸
+  @brief wchar 문자열 처리 유틸 함수들이 구현된 소스 파일
 */
 #include "wcharutils.h"
 

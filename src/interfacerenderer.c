@@ -1,6 +1,6 @@
 /**
   @file interfacerenderer.c
-  @brief 인터페이스 렌더러
+  @brief 게임 인터페이스 함수들이 구현된 소스 파일
 */
 
 #include "interfacerenderer.h"

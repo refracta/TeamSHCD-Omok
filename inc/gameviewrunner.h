@@ -1,3 +1,7 @@
+/**
+ @file gameviewrunner.h
+ @brief gameviewrunner의 헤더 파일
+*/
 #ifndef GAMEVIEWRUNNER_H
 #define GAMEVIEWRUNNER_H
 
@@ -34,5 +38,6 @@ int run_select_nmok_menu();
 void run_win_line_blink(GridRenderData *grd, int victory_condition, char player_glyph, short blink_color, int number,
                         int wait_time);
 
-void update_position_message(GameData* data, int player_number);
+void update_position_message(int turn, int x, int y, int player_number);
+
 #endif

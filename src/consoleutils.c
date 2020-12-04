@@ -1,6 +1,6 @@
 /**
   @file consoleutils.c
-  @brief 콘솔 유틸
+  @brief 콘솔 처리용 유틸 함수가 구현된 소스 파일
 */
 #include "consoleutils.h"
 
@@ -294,7 +294,7 @@ int get_key_input()
  * @brief wait 중 키 핸들링을 같이 수행한다.
  * @description wait를 UNIT_WAIT로 쪼개어 수행하고 도중 키가 눌렸는지 검사하여 handler에 전달한다.
  *	handler(int c)의 반환값이 1 이상일 때 wait를 중지하고 handler의 반환 값을 반환한다.
- *	키 핸들링이 일어나지 않는 경우에는 항상 -1을 반환한다.
+ *	키 핸들링이 일어나지 않는 경우에는 항상 -1을 반환한다. handler가 NULL인 경우 항상 즉시 입력을 반환한다.
  * @param ms 대기할 시간 (밀리초)
  * @param handler 텍스트의 배경 색깔
  * @param data 자유형 데이터

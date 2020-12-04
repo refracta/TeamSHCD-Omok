@@ -1,5 +1,9 @@
-#ifndef GAMERENDERER_H
-#define GAMERENDERER_H
+/**
+ @file gridrenderer.h
+ @brief gridrenderer의 헤더 파일
+*/
+#ifndef GRIDRENDERER_H
+#define GRIDRENDERER_H
 
 #include <stdio.h>
 #include <stdlib.h>

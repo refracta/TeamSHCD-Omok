@@ -1,6 +1,6 @@
 /**
   @file interfacerunner.c
-  @brief 인터페이스 실행
+  @brief 인터페이스 실행 관련 함수들이 구현된 소스 파일
 */
 #include "interfacerunner.h"
 
@@ -80,8 +80,10 @@ wchar_t *run_prompt(PromptData *data)
                 {
                     continue;
                 }
-                if (crl == 1 && strchr("\\/:*?\"<>|", (char)c)) //파일명에 사용할 수 없는 문자는 애초에 플레이어 이름으로 쓸 수 없게 한다.
+                if (crl == 1 && strchr("\\/:*?\"<>|", (char) c))
+                { //파일명에 사용할 수 없는 문자는 애초에 플레이어 이름으로 쓸 수 없게 한다.
                     continue;
+                }
                 text[index++] = c;
                 crlen += crl;
                 wprintf(L"%c", c);
