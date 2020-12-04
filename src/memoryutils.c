@@ -1,6 +1,6 @@
 /**
   @file memoryutils.c
-  @brief 메모리 유틸
+  @brief 메모리 제어 관련 유틸 함수들이 구현된 소스 파일
 */
 #include "memoryutils.h"
 

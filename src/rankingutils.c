@@ -1,12 +1,8 @@
 /**
-  @file fileutils.c
-  @brief 파일 유틸
+  @file rankingutils.c
+  @brief 랭킹 기능 관련 함수들이 구현된 소스 파일
 */
-#include <stdio.h>
-#include <string.h>
-#include <wchar.h>
-#include "fileutils.h"
-#include "consoleutils.h"
+#include "rankingutils.h"
 
 /**
  * @brief 파일에 값을 추가한다
@@ -18,36 +14,36 @@ int file_append(char path[], wchar_t data[])
 {
     if (get_exist(path, data) == -1)
     {
-        FILE *pStream = fopen(path, "a");
-        if (pStream == NULL)
+        FILE *stream = fopen(path, "a");
+        if (stream == NULL)
         {
             return -1;
         }
-        fwprintf(pStream, L"%s %04d\n", data, 1);
-        fclose(pStream);
+        fwprintf(stream, L"%s %04d\n", data, 1);
+        fclose(stream);
     }
     else
     {
-        FILE *pStream = fopen(path, "r+");
-        if (pStream == NULL)
+        FILE *stream = fopen(path, "r+");
+        if (stream == NULL)
         {
             return -1;
         }
-        int tempCount = 0;
+        int temp_count = 0;
 
         fpos_t pos[2] = {0};
         get_file_cur(path, get_exist(path, data), pos);
         fpos_t point = pos[0] - 6;
-        fpos_t prevLinePos = pos[1];
+        fpos_t prev_line_pos = pos[1];
 
-        fsetpos(pStream, &point);
+        fsetpos(stream, &point);
 
-        fscanf(pStream, "%d", &tempCount);
-        tempCount++;
-        fsetpos(pStream, &prevLinePos);
-        fwprintf(pStream, L"%s %04d\n", data, tempCount);
+        fscanf(stream, "%d", &temp_count);
+        temp_count++;
+        fsetpos(stream, &prev_line_pos);
+        fwprintf(stream, L"%s %04d\n", data, temp_count);
 
-        fclose(pStream);
+        fclose(stream);
     }
 
     return 0;
@@ -62,8 +58,6 @@ int file_append(char path[], wchar_t data[])
 void append_rank(wchar_t winner_name[], wchar_t loser_name[])
 {
     file_append("winData.omok", winner_name);
-    //lose Data 필요시 주석 해제
-    //file_append("loseData.omok", loser_name);
 }
 
 /**
@@ -74,27 +68,27 @@ void append_rank(wchar_t winner_name[], wchar_t loser_name[])
 */
 int get_exist(char path[], wchar_t name[])
 {
-    FILE *pStream = fopen(path, "rt");
+    FILE *stream = fopen(path, "rt");
 
-    if (pStream == NULL)
+    if (stream == NULL)
     {
         return -1;
     }
 
-    wchar_t compareName[BUFSIZ];
+    wchar_t compare_name[BUFSIZ];
     wchar_t buf[BUFSIZ];
     wchar_t *tempbuf;
 
-    wcscpy(compareName, name);
-    wcscat(compareName, L"\n");
+    wcscpy(compare_name, name);
+    wcscat(compare_name, L"\n");
 
     int index = 0;
 
-    while (fgetws(buf, BUFSIZ, pStream) != NULL)
+    while (fgetws(buf, BUFSIZ, stream) != NULL)
     {
         tempbuf = wcstok(buf, L" ", NULL);
         wcscat(tempbuf, L"\n");
-        if (wcscmp(tempbuf, compareName) == 0)
+        if (wcscmp(tempbuf, compare_name) == 0)
         {
             return index;
         }
@@ -112,86 +106,20 @@ int get_exist(char path[], wchar_t name[])
 */
 fpos_t *get_file_cur(char path[], int curIndex, fpos_t pos[])
 {
-    FILE *pStream = fopen(path, "rt");
+    FILE *stream = fopen(path, "rt");
     wchar_t buf[BUFSIZ];
     int index = 0;
-    while (fgetws(buf, BUFSIZ, pStream) != NULL)
+    while (fgetws(buf, BUFSIZ, stream) != NULL)
     {
         if (index == curIndex)
         {
-            fgetpos(pStream, &pos[0]);
+            fgetpos(stream, &pos[0]);
             return pos;
         }
-        fgetpos(pStream, &pos[1]);
+        fgetpos(stream, &pos[1]);
         index++;
     }
     return -1;
-}
-
-/**
- * @brief 랭킹 출력
-*/
-void print_ranking()
-{
-    rankedPlayer player[BUFSIZ] = {-1};
-    FILE *pStream = fopen("winData.omok", "r+");
-    wchar_t *tempbuf;
-
-    if (pStream == NULL)
-    {
-        xywprintf(50, 10, L"아직 랭킹이 없습니다!");
-        return;
-    }
-
-    wchar_t buf[BUFSIZ];
-    int index = 0;
-    while (!feof(pStream))
-    {
-        fwscanf(pStream, L"%s %04d", player[index].name, &player[index].win);
-        index++;
-    }
-    index--;
-    fclose(pStream);
-
-    for (int i = 0; i < index; i++)
-    {
-        player[i].rank = 1;
-        for (int j = 0; j < index; j++)
-        {
-            if (player[i].win < player[j].win)
-            {
-                player[i].rank++;
-            }
-        }
-    }
-
-    ascending(player, index);
-    set_print_color(TO_TBCOLOR(BLACK, LIGHT_YELLOW));
-    xywprintf(52, 4, L" 명 예 의   전 당 ");
-    set_print_color(TO_TBCOLOR(WHITE, BLACK));
-    xywprintf(43, 6, L"순위");
-    xywprintf(43, 6, L"순위");
-    xywprintf(49, 6, L"닉네임");
-    xywprintf(75, 6, L"승리");
-    if (index > 9)
-    {
-        index = 9;
-    }
-    short origin_color = get_print_color();
-    for (int i = 0; i < index; i++)
-    {
-        if (player[i].rank <= 3)
-        {
-            set_print_color(14);
-        }
-        else
-        {
-            set_print_color(origin_color);
-        }
-        xywprintf(43, 9 + i * 2, L"%2d위: ", player[i].rank);
-        xywprintf(49, 9 + i * 2, player[i].name);
-        xywprintf(75, 9 + i * 2, L"%d회", player[i].win);
-    }
 }
 
 /**
@@ -199,7 +127,7 @@ void print_ranking()
  * @param player[] 랭킹순으로 정렬할 구조체
  * @param length 정렬할 요소의 개수
 */
-void ascending(rankedPlayer player[], int length)
+void ascending(RankedPlayer player[], int length)
 {
     int tmp = 0;
     wchar_t tmpstr[BUFSIZ] = {0};

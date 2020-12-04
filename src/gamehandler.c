@@ -1,9 +1,8 @@
 /**
   @file gamehandler.c
-  @brief 게임 핸들러
+  @brief 게임을 핸들링하는 중요 함수들이 구현된 소스 파일
 */
 #include "gamehandler.h"
-
 
 /**
  * @brief 현재 게임의 상태를 변경합니다. 게임 데이터의 상태 변수를 변경하고, 상태 변경시의 초기화 작업을 수행한다.
@@ -87,7 +86,7 @@ void run_game(GameData *data)
     {
         if (!data->regame)
         {
-            set_console_size(98, 35);
+            set_console_size(GAME_VIEW_COLS, GAME_VIEW_LINES);
             if (data->nmok_mode)
             {
                 data->victory_condition = run_select_nmok_menu();
@@ -102,12 +101,16 @@ void run_game(GameData *data)
             TimerValue timer_value = run_select_timer_time_menu();
             clear_console();
             data->timer_value = timer_value;
+            data->dump_string = (wchar_t *) calloc(BUFSIZ, sizeof(wchar_t));
+            swprintf(data->dump_string, BUFSIZ * (data->turn), L"[%s] vs [%s]\n\n", data->p1id.player.name,
+                     data->p2id.player.name);
         }
 
         init_grd(data);
         init_pid(data);
         draw_player_interface(&data->p1id);
         draw_player_interface(&data->p2id);
+        update_position_message(2, 10, 10, 1);
         data->p2id.bar_tbcolor = PI_BAR_TBCOLOR;
         data->p2id.outline_tbcolor = PI_OUTLINE_TBCOLOR;
 
@@ -140,6 +143,7 @@ void run_game(GameData *data)
                              player_glyph, CHECK_WIN))
     {
         add_message_to_list(data->msg, player_glyph == SG_BLACK ? L"흑의 승리입니다." : L"백의 승리입니다.");
+
         add_message_to_list(data->msg, L"<대국이 끝났습니다>");
         add_message_to_list(data->msg, L"(r)egame");
         add_message_to_list(data->msg, L"(b)ack to main");
@@ -148,12 +152,18 @@ void run_game(GameData *data)
         append_rank(player_glyph == SG_BLACK ? data->p1id.player.name : data->p2id.player.name,
                     player_glyph == SG_BLACK ? data->p2id.player.name : data->p1id.player.name);
 
+        data->dump_string = (wchar_t *) realloc(data->dump_string, sizeof(wchar_t) * BUFSIZ *
+                                                                   (data->turn)); //턴당 wchar_t 크기를 버퍼사이즈만큼 메모리 할당
+        swprintf(data->dump_string, BUFSIZ * (data->turn), L"%s\n%s의 승리입니다!\n소요 턴 수: %d", data->dump_string,
+                 player_glyph == SG_BLACK ? L"흑" : L"백", data->turn - 1);
+
         draw_game_message(data->msg);
 
-        // run_win_line_blink(data->grd, data->victory_condition, player_glyph, player_color, 5, 100);
+        run_win_line_blink(data->grd, data->victory_condition, player_glyph, player_color, 5, 100);
 
         VICTORY_FANFARE();
 
+        bool is_saved = false;
         while (true)
         {
             char c = get_key_input();
@@ -162,19 +172,31 @@ void run_game(GameData *data)
                 case 'r':
                 case 'R':
                     free_grd(data->grd);
+                    free(data->dump_string);
+                    data->dump_string = (wchar_t *) calloc(BUFSIZ, sizeof(wchar_t));
                     data->regame = true;
                     change_status(data, GS_GAME);
                     return;
                 case 'b':
                 case 'B':
                     free_grd(data->grd);
+                    free(data->dump_string);
+                    data->dump_string = (wchar_t *) calloc(BUFSIZ, sizeof(wchar_t));
                     data->regame = false;
                     change_status(data, GS_MAIN);
                     return;
                 case 's':
                 case 'S':
-                    // save_dump() ?
-                    return;
+                    if (is_saved == true)
+                    {
+                        continue;
+                    }
+                    make_dump(data->dump_string, data);
+                    add_message_to_list(data->msg, L"덤프 저장 완료!");
+                    add_message_to_list(data->msg, L"(r)egame");
+                    add_message_to_list(data->msg, L"(b)ack to main");
+                    draw_game_message(data->msg);
+                    is_saved = true;
             }
         }
     }
@@ -192,7 +214,6 @@ void run_ranking(GameData *data)
     change_status(data, GS_MAIN);
 }
 
-
 /**
  * @brief 도움말 상태에서 실행되는 함수
  * @param data 게임 데이터 구조체의 포인터
@@ -207,7 +228,6 @@ void run_help(GameData *data)
     xyprintf(46, 22, ASCII_PEOPLE1);
     set_print_color(TO_TBCOLOR(JADE, BLACK));
     xyprintf(64, 20, ASCII_PEOPLE2);
-
 
     get_key_input();
     for (int i = 0; i < 10; i++)
@@ -255,7 +275,7 @@ void game_loop(GameData *data)
 void init_game()
 {
     set_encoding_utf8();
-    set_console_title(u8"오목 - SHCD");
+    set_console_title(u8"TeamSHCD - 오목");
     set_default_mode();
     set_cursor_visibility(false);
     set_console_size(CONSOLE_COLS, CONSOLE_LINES);

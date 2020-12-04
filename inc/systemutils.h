@@ -1,3 +1,7 @@
+/**
+ @file systemutils.h
+ @brief systemutils의 헤더 파일
+*/
 #ifndef SYSTEMUTILS_H
 #define SYSTEMUTILS_H
 

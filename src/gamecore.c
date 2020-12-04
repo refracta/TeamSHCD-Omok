@@ -1,6 +1,6 @@
 /**
  @file gamecore.c
- @brief 게임 코어
+ @brief 게임의 핵심 구현 로직이 구현된 소스 파일
 */
 #include "gamecore.h"
 
@@ -41,6 +41,36 @@ void copy_grid(char **grid, char **copygrid, int width, int height)
         for (int j = 0; j < height; j++)
         {
             copygrid[i][j] = grid[i][j];
+        }
+    }
+}
+
+/**
+ * @brief 좌표를 저장하고, 전달한다.
+ * @param inx 저장하거나, 전달받는 x좌표의 배열
+ * @param iny 저장하거나, 전달받는 y좌표의 배열
+ * @param n N개를 둬야 승리하는지 알려준다.
+ * @param numbeer 0일 경우 좌표를 저장하고, 1일 경우 좌표를 전달한다.
+ */
+void send_location(int *inx, int *iny, int n, int number)
+{
+    static int savex[20] = {0};
+    static int savey[20] = {0};
+    if (number == 0)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            savex[i] = inx[i];
+            savey[i] = iny[i];
+        }
+    }
+
+    else if (number == 1)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            inx[i] = savex[i];
+            iny[i] = savey[i];
         }
     }
 }
@@ -109,7 +139,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
     countemptytwo = countemptyone;
     if (countemptyone == 1)
-    { //빈공간을 만나지않은경우 없었음을기록
+    {
         countemptyone = 0;
     }
     emptycheck = 0;
@@ -127,7 +157,6 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             countglyphtwo++;
         }
 
-        //상대돌을 만나면 탐색중지
         if (grid[x + i][y] == TO_REVERSE_SG(glyph))
         {
             break;
@@ -135,7 +164,6 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
         if (grid[x + i][y] == SG_EMPTY)
         {
-            //두번연속으로 빈공간만날시 blink카운트를 되돌림.
             if (emptycheck == 0)
             {
                 emptycheck++;
@@ -152,7 +180,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             }
             else
             {
-                break; //빈공간을만났으나 빈공간을 두번만나면 끝임
+                break;
             }
         }
     }
@@ -160,12 +188,10 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
     if (countglyph == 3)
     {
-        //돌갯수가 3이면 열린 3인지 파악.
 
         int left = (countglyphone + countemptyone);
         int right = (countglyphtwo + countemptytwo);
 
-        //벽으로 막힌경우 - 열린3이 아님
         if (x - left != 0 && x + right != width - 1)
         {
             if (x - left - 1 < 0 || x + right + 1 > width - 1)
@@ -231,7 +257,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
     countemptytwo = countemptyone;
     if (countemptyone == 1)
-    { //빈공간을 만나지않은경우 없었음을기록
+    {
         countemptyone = 0;
     }
     emptycheck = 0;
@@ -282,12 +308,10 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
     if (countglyph == 3)
     {
-        //돌갯수가 3이면 열린 3인지 파악.
 
         int up = (countglyphone + countemptyone);
         int down = (countglyphtwo + countemptytwo);
 
-        //벽으로 막힌경우 - 열린3이 아님
         if (y - up != 0 && y + down != height - 1)
         {
             if (y - up - 1 < 0 || y + down + 1 > height - 1)
@@ -353,7 +377,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
     countemptytwo = countemptyone;
     if (countemptyone == 1)
-    { //빈공간을 만나지않은경우 없었음을기록
+    {
         countemptyone = 0;
     }
     emptycheck = 0;
@@ -402,11 +426,10 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
     countglyph += (countglyphone + countglyphtwo);
     if (countglyph == 3)
     {
-        //돌갯수가 3이면 열린 3인지 파악.
 
         int leftup = (countglyphone + countemptyone);
         int rightDown = (countglyphtwo + countemptytwo);
-        //벽으로 막힌경우 - 열린3이 아님
+
         if (x - leftup != 0 && y - leftup != 0 && x + rightDown != width - 1 && y + rightDown != height - 1)
         {
             if (x - leftup - 1 < 0 || y - leftup - 1 < 0 || x + rightDown + 1 > width - 1 ||
@@ -473,7 +496,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
     countemptytwo = countemptyone;
     if (countemptyone == 1)
-    { //빈공간을 만나지않은경우 없었음을기록
+    {
         countemptyone = 0;
     }
     emptycheck = 0;
@@ -522,12 +545,10 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
     countglyph += (countglyphone + countglyphtwo);
     if (countglyph == 3)
     {
-        //돌갯수가 3이면 열린 3인지 파악.
 
         int leftDown = (countglyphone + countemptyone);
         int rightUp = (countglyphtwo + countemptytwo);
 
-        //벽으로 막힌경우 - 열린3이 아님
         if (x - leftDown != 0 && y - rightUp != 0 && x + rightUp != width - 1 && y + leftDown != height - 1)
         {
             if (x - leftDown - 1 < 0 || y - rightUp - 1 < 0 || x + rightUp + 1 > width - 1 ||
@@ -583,9 +604,9 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
     int overfourone = 0;
     int overemptytwo = 0;
     int overfourtwo = 0;
+    int wincheck = 0;
     int winx[20] = {0};
     int winy[20] = {0};
-    int wincheck = 0;
 
     if (check_type == 2 || check_type == 3)
     {
@@ -729,7 +750,9 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
     {
         if (countglyph == n)
         {
-            //get_win_line(grid, n, winx, winy, width, height, glyph);
+            winx[wincheck] = x;
+            winy[wincheck] = y;
+            send_location(winx, winy, n, 0);
             return true;
         }
     }
@@ -746,6 +769,7 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
     overemptytwo = 0;
     overfourtwo = 0;
     wincheck = 0;
+
     if (check_type == 2 || check_type == 3)
     {
         countemptyone = 0;
@@ -888,7 +912,9 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
     {
         if (countglyph == n)
         {
-            //get_win_line(grid, n, winx, winy, width, height, glyph);
+            winx[wincheck] = x;
+            winy[wincheck] = y;
+            send_location(winx, winy, n, 0);
             return true;
         }
     }
@@ -1049,7 +1075,9 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
     {
         if (countglyph == n)
         {
-            //get_win_line(grid, n, winx, winy, width, height, glyph);
+            winx[wincheck] = x;
+            winy[wincheck] = y;
+            send_location(winx, winy, n, 0);
             return true;
         }
     }
@@ -1213,7 +1241,9 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
     {
         if (countglyph == n)
         {
-            //get_win_line(grid, n, winx, winy, width, height, glyph);
+            winx[wincheck] = x;
+            winy[wincheck] = y;
+            send_location(winx, winy, n, 0);
             return true;
         }
         else
@@ -1376,6 +1406,9 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
 bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char glyph)
 {
     int checkglyph = 0;
+    int winx[20] = {0};
+    int winy[20] = {0};
+    int wincheck = 0;
     for (int i = 0; i < width - (n - 1); i++)
     {
         for (int a = 0; a < n; a++)
@@ -1383,14 +1416,19 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
             if (grid[i + a][y] == glyph)
             {
                 checkglyph++;
+                winx[wincheck] = i + a;
+                winy[wincheck] = y;
+                wincheck++;
             }
             else
             {
+                wincheck = 0;
                 break;
             }
         }
         if (checkglyph == n)
         {
+            send_location(winx, winy, n, 0);
             return true;
         }
         checkglyph = 0;
@@ -1403,14 +1441,19 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
             if (grid[x][i + a] == glyph)
             {
                 checkglyph++;
+                winx[wincheck] = x;
+                winy[wincheck] = i + a;
+                wincheck++;
             }
             else
             {
+                wincheck = 0;
                 break;
             }
         }
         if (checkglyph == n)
         {
+            send_location(winx, winy, n, 0);
             return true;
         }
         checkglyph = 0;
@@ -1424,15 +1467,20 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
             {
                 if (grid[i + a][j + a] == glyph)
                 {
+                    winx[wincheck] = i + a;
+                    winy[wincheck] = j + a;
+                    wincheck++;
                     checkglyph++;
                 }
                 else
                 {
+                    wincheck = 0;
                     break;
                 }
             }
             if (checkglyph == n)
             {
+                send_location(winx, winy, n, 0);
                 return true;
             }
             checkglyph = 0;
@@ -1448,14 +1496,19 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
                 if (grid[i + a][j - a] == glyph)
                 {
                     checkglyph++;
+                    winx[wincheck] = i + a;
+                    winy[wincheck] = j - a;
+                    wincheck++;
                 }
                 else
                 {
+                    wincheck = 0;
                     break;
                 }
             }
             if (checkglyph == n)
             {
+                send_location(winx, winy, n, 0);
                 return true;
             }
             checkglyph = 0;
@@ -1523,11 +1576,13 @@ CheckResult check_confirm_omok(char **grid, int width, int height, int x, int y,
 int **get_win_line(char **grid, int n, int width, int height, char glyph)
 {
     int **win_line = (int **) malloc_double_pointer(sizeof(int), n, 2);
-    // Test Case
+    int winx[20] = {0};
+    int winy[20] = {0};
+    send_location(winx, winy, n, 1);
     for (int i = 0; i < n; i++)
     {
-        win_line[i][0] = glyph == SG_BLACK ? 10 : 11;
-        win_line[i][1] = i;
+        win_line[i][0] = winx[i];
+        win_line[i][1] = winy[i];
     }
     return win_line;
 }

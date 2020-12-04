@@ -1,3 +1,7 @@
+/**
+ @file gamecore.h
+ @brief gamecore의 헤더 파일
+*/
 #ifndef GAMECORE_H
 #define GAMECORE_H
 
@@ -31,6 +35,8 @@ typedef enum
 char **generate_grid(int width, int height);
 
 void copy_grid(char **grid, char **copygrid, int width, int height);
+
+void send_location(int *inx, int *iny, int n, int number);
 
 bool check_double_three(char **grid, int width, int height, int x, int y, char glyph);
 

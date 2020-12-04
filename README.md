@@ -1,4 +1,4 @@
-# TeamSHCD : 오목
+# TeamSHCD - 오목
 
 ------
 
@@ -38,6 +38,12 @@
 
 우리는 이 사례들을 보며 '차별 요소가 있는 오목'을 만들기로 했습니다. 높은 인지도와 쉬운 주제는 진부함으로 이어지기 쉽지만, 차별점이 더해진다면 진부함은 대중성으로 바뀔 수 있습니다.
 
+저희가 가진 차별 요소는 아래와 같습니다.
+
+* 외부 라이브러리를 사용하지 않은, 높은 수준의 UI 처리 (타이머, 오목판 등의 처리) 
+* 높은 완성도와 다양한 부가 기능 (N목 모드, 랭킹 기능, 덤프파일 생성 등)
+* 비프음과 애니메이션 적극 활용
+
 ------
 
 ## 구동 조건 (Prerequisites)
@@ -50,17 +56,44 @@
 
 TeamSHCD-Omok.exe를 실행시키면 별도의 installation 없이 즉시 시작됩니다.
 
-![6](https://user-images.githubusercontent.com/69423873/99976430-c83b7580-2de6-11eb-8e5a-f1f6f10b8773.png)
+![1](https://user-images.githubusercontent.com/69423873/101163707-54675b80-3677-11eb-810f-c47600056676.png)
+
 
 ▲ '오목'과 'N목'을 선택하여 시작할 수 있습니다.
 
-![7](https://user-images.githubusercontent.com/69423873/99976424-c70a4880-2de6-11eb-9286-1c327fde4be2.png)
+![4](https://user-images.githubusercontent.com/69423873/101163709-54fff200-3677-11eb-8356-3dada14fdee1.png)
+
 
 ▲ Player의 이름을 선택하여 시작할 수 있습니다.
 
-![8](https://user-images.githubusercontent.com/69423873/99976428-c83b7580-2de6-11eb-95e9-598973b73da2.png)
+![5](https://user-images.githubusercontent.com/69423873/101163711-55988880-3677-11eb-9ec2-21f983e24745.png)
 
-▲ 초록색 커서를 이동한 후 `Space`나 `Enter`를 이용하여 착수할 수 있습니다.
+
+▲ 타이머 시간을 설정할 수 있습니다.
+
+![8](https://user-images.githubusercontent.com/69423873/101164055-e8d1be00-3677-11eb-9640-b0e0a1df1bac.png)
+
+▲ 초록색 커서를 방향키로 이동 시킨 후, `Enter`나 `Space`를 눌러서 착수 가능합니다.
+
+![6](https://user-images.githubusercontent.com/69423873/101163713-55988880-3677-11eb-8e0f-9e50f09f113b.png)
+
+
+▲ 승리 조건을 만족하면 대국이 종료됩니다. 아래와 같은 동작을 선택할 수 있습니다.
+
+* 재대국 (r)
+* 메인 화면으로 돌아가기 (b)
+* 덤프 파일로 저장하기 (s)
+<br><br>
+덤프 파일은 아래와 같이 생성이 됩니다.
+
+![9](https://user-images.githubusercontent.com/69423873/101164836-fd628600-3678-11eb-86ba-1ddf3a416b72.png)
+
+
+![7](https://user-images.githubusercontent.com/69423873/101163714-56311f00-3677-11eb-80e2-b8b62599979e.png)
+
+
+▲ 승리 횟수를 기준으로 랭킹을 확인할 수 있습니다. 1위부터 3위는 노란 글씨로 표시됩니다.
+
 
 ------
 
@@ -70,18 +103,20 @@ TeamSHCD-Omok.exe를 실행시키면 별도의 installation 없이 즉시 시작
 
 ```makefile
 cmake_minimum_required(VERSION 3.10)
-project(BoardGame C)
+project(TeamSHCD-Omok C)
 
 set(CMAKE_C_STANDARD 99)
 
-file(GLOB PROJECT_C_FILES "*.c")
+file(GLOB PROJECT_C_FILES "src/*.c")
 
 file(GLOB PROJECT_HEADER_FILES "inc/*.h")
+
+include_directories(inc/)
 
 add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
-add_executable(BoardGame ${PROJECT_C_FILES} ${PROJECT_HEADER_FILES})
+add_executable(TeamSHCD-Omok ${PROJECT_C_FILES} ${PROJECT_HEADER_FILES})
 ```
 
 CMakeLists.txt에서 볼 수 있듯 소스 파일은 UTF-8로 저장되어야 하며, C99를 사용합니다.

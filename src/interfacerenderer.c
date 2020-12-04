@@ -1,6 +1,6 @@
 /**
   @file interfacerenderer.c
-  @brief 인터페이스 렌더러
+  @brief 게임 인터페이스 함수들이 구현된 소스 파일
 */
 
 #include "interfacerenderer.h"
@@ -160,8 +160,8 @@ void draw_prompt(PromptData *data)
 }
 
 /**
-* @brief 타이머를 그린다.
-* @param data 타이머 정보 데이터
+* @brief 플레이어 인터페이스 정보(타이머 및 플레이어 정보)를 그린다.
+* @param data 플레이어 인터페이스 정보 데이터
 */
 void draw_player_interface(PlayerInterfaceData *data)
 {
@@ -190,7 +190,8 @@ void draw_player_interface(PlayerInterfaceData *data)
 
     //separate line
     int timer_y = 0, timebar_y = 0;
-    timer_y = data->direction == 0 ? 4 : 2; // 0 -> 타이머가 아래, 플레이어 정보가 위
+    timer_y = data->direction == 0 ? 4 : 2;
+    // 0 -> 타이머가 아래, 플레이어 정보가 위
     timebar_y = data->direction == 0 ? timer_y + 1 : timer_y - 1;
     xywprintf(data->x, data->y + timer_y, L"├");
     for (int i = 0; i < (data->width - 3); i++)

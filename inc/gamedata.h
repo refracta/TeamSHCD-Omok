@@ -1,3 +1,7 @@
+/**
+ @file gamedata.h
+ @brief 게임에서 사용되는 구조체, 상수, 데이터, 유틸 매크로등이 정의된 헤더 파일
+*/
 #ifndef GAMEDATA_H
 #define GAMEDATA_H
 
@@ -93,6 +97,7 @@ typedef struct
     bool status_inited;
     int tick;
     int turn;
+    wchar_t *dump_string;
 } GameData;
 
 #endif

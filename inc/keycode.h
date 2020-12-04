@@ -1,3 +1,7 @@
+/**
+ @file keycode.h
+ @brief 키 핸들링용 키 코드가 정의된 헤더 파일
+*/
 #ifndef KEYCODE_H
 #define KEYCODE_H
 

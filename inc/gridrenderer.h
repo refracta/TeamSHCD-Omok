@@ -1,5 +1,9 @@
-#ifndef GAMERENDERER_H
-#define GAMERENDERER_H
+/**
+ @file gridrenderer.h
+ @brief gridrenderer의 헤더 파일
+*/
+#ifndef GRIDRENDERER_H
+#define GRIDRENDERER_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,6 +39,9 @@
         NULL                          \
     )
 
+/**
+ * @brief 격자 렌더링 데이터들을 포함하는 구조체
+ */
 typedef struct
 {
     int x;
@@ -57,8 +64,6 @@ GridRenderData *malloc_grd(int width, int height);
 void free_grd(GridRenderData *grd);
 
 void draw_grid(GridRenderData *grd);
-
-wchar_t *generate_grid_string(GridRenderData *grd);
 
 void coloring_stone(int x, int y, int cursor_x, int cursor_y, char glyph, short color);
 

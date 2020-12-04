@@ -1,3 +1,7 @@
+/**
+ @file interfacerunner.h
+ @brief interfacerunner의 헤더 파일
+*/
 #ifndef INTERFACERUNNER_H
 #define INTERFACERUNNER_H
 

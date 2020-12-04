@@ -1,3 +1,7 @@
+/**
+ @file consoleutils.h
+ @brief consoleutils의 헤더 파일
+*/
 #ifndef CONSOLEUTILS_H
 #define CONSOLEUTILS_H
 
