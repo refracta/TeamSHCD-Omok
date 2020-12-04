@@ -276,7 +276,7 @@ void game_loop(GameData *data)
 void init_game()
 {
     set_encoding_utf8();
-    set_console_title(u8"오목 - SHCD");
+    set_console_title(u8"TeamSHCD - 오목");
     set_default_mode();
     set_cursor_visibility(false);
     set_console_size(CONSOLE_COLS, CONSOLE_LINES);

@@ -39,6 +39,9 @@
         NULL                          \
     )
 
+/**
+ * @brief 격자 렌더링 데이터들을 포함하는 구조체
+ */
 typedef struct
 {
     int x;
