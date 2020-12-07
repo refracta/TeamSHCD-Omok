@@ -1,6 +1,6 @@
 /**
  @file gamecore.c
- @brief 게임 코어
+ @brief 게임의 핵심 구현 로직이 구현된 소스 파일
 */
 #include "gamecore.h"
 
@@ -1363,9 +1363,7 @@ bool check_all_conditions(char** grid, int n, int width, int height, int x, int 
 
         copygrid[x][y] = glyph;
 
-        // 추가 경우의 수
-        // B B 빈칸 B B 빈칸 B B
-        for (int j = 0; j < width - 7; j++) // 세로
+        for (int j = 0; j < width - 7; j++) 
         {
             if ((x == j + 3 || x == j + 4) && copygrid[j][y] == glyph && copygrid[j + 1][y] == glyph && copygrid[j + 2][y] == SG_EMPTY &&
                 copygrid[j + 3][y] == glyph && copygrid[j + 4][y] == glyph && copygrid[j + 5][y] == SG_EMPTY &&
@@ -1378,7 +1376,7 @@ bool check_all_conditions(char** grid, int n, int width, int height, int x, int 
 
         }
 
-        for (int i = 0; i < height - 7; i++) // 가로
+        for (int i = 0; i < height - 7; i++) 
         {
             if ((y == i + 3 || y == i + 4) && copygrid[x][i] == glyph && copygrid[x][i + 1] == glyph && copygrid[x][i + 2] == SG_EMPTY &&
                 copygrid[x][i + 3] == glyph && copygrid[x][i + 4] == glyph && copygrid[x][i + 5] == SG_EMPTY &&
@@ -1391,7 +1389,7 @@ bool check_all_conditions(char** grid, int n, int width, int height, int x, int 
 
         }
 
-        for (int j = 0; j < width - 7; j++) // 우측으로 떨어지는 대각선
+        for (int j = 0; j < width - 7; j++)
         {
             for (int i = 0; i < height - 7; i++)
             {
@@ -1408,7 +1406,7 @@ bool check_all_conditions(char** grid, int n, int width, int height, int x, int 
 
             }
         }
-        for (int j = 0; j < width - 7; j++) // 좌측으로 떨어지는 대각선
+        for (int j = 0; j < width - 7; j++) 
         {
             for (int i = 7; i < height; i++)
             {
@@ -1426,9 +1424,7 @@ bool check_all_conditions(char** grid, int n, int width, int height, int x, int 
             }
         }
 
-        // B 빈칸 B B B 빈칸 B
-
-        for (int j = 0; j < width - 6; j++) // 가로
+        for (int j = 0; j < width - 6; j++) 
         {
             if ((x != j || x == j + 6) && (copygrid[j][y] == glyph && copygrid[j + 1][y] == SG_EMPTY && copygrid[j + 2][y] == glyph &&
                 copygrid[j + 3][y] == glyph && copygrid[j + 4][y] == glyph && copygrid[j + 5][y] == SG_EMPTY &&
@@ -1441,8 +1437,7 @@ bool check_all_conditions(char** grid, int n, int width, int height, int x, int 
 
         }
 
-
-        for (int i = 0; i < height - 6; i++) // 세로
+        for (int i = 0; i < height - 6; i++) 
         {
             if ((y != i || y != i + 6) && (copygrid[x][i] == glyph && copygrid[x][i + 1] == SG_EMPTY && copygrid[x][i + 2] == glyph &&
                 copygrid[x][i + 3] == glyph && copygrid[x][i + 4] == glyph && copygrid[x][i + 5] == SG_EMPTY &&
@@ -1455,7 +1450,7 @@ bool check_all_conditions(char** grid, int n, int width, int height, int x, int 
 
         }
 
-        for (int j = 0; j < width - 6; j++) // 우측으로 떨어지는 대각선
+        for (int j = 0; j < width - 6; j++) 
         {
             for (int i = 0; i < height - 6; i++)
             {
@@ -1471,7 +1466,7 @@ bool check_all_conditions(char** grid, int n, int width, int height, int x, int 
 
             }
         }
-        for (int j = 0; j < width - 6; j++) // 좌측으로 떨어지는 대각선
+        for (int j = 0; j < width - 6; j++)
         {
             for (int i = 6; i < height; i++)
             {
