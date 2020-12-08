@@ -10,9 +10,9 @@
 * @param width 격자의 세로 길이
 * @return 격자 이중 포인터
 */
-char **generate_grid(int width, int height)
+char** generate_grid(int width, int height)
 {
-    char **grid = (char **) malloc_double_pointer(sizeof(char), width, height);
+    char** grid = (char**)malloc_double_pointer(sizeof(char), width, height);
     if (grid == NULL)
     {
         return NULL;
@@ -34,7 +34,7 @@ char **generate_grid(int width, int height)
  * @param width 격자의 가로 길이
  * @param height 격자의 세로 길이
  */
-void copy_grid(char **grid, char **copygrid, int width, int height)
+void copy_grid(char** grid, char** copygrid, int width, int height)
 {
     for (int i = 0; i < width; i++)
     {
@@ -52,10 +52,10 @@ void copy_grid(char **grid, char **copygrid, int width, int height)
  * @param n N개를 둬야 승리하는지 알려준다.
  * @param numbeer 0일 경우 좌표를 저장하고, 1일 경우 좌표를 전달한다.
  */
-void send_location(int *inx, int *iny, int n, int number)
+void send_location(int* inx, int* iny, int n, int number)
 {
-    static int savex[20] = {0};
-    static int savey[20] = {0};
+    static int savex[20] = { 0 };
+    static int savey[20] = { 0 };
     if (number == 0)
     {
         for (int i = 0; i < n; i++)
@@ -85,7 +85,7 @@ void send_location(int *inx, int *iny, int n, int number)
  * @param glyph 현재 돌의 색
  * @return 정상적인 수면 ture 3*3이면 false
  */
-bool check_double_three(char **grid, int width, int height, int x, int y, char glyph)
+bool check_double_three(char** grid, int width, int height, int x, int y, char glyph)
 {
     // 가로
     int check__33 = 0;
@@ -184,6 +184,10 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
             }
         }
     }
+    if (countemptytwo == 1)
+    {
+        countemptytwo = 0;
+    }
     countglyph += (countglyphone + countglyphtwo);
 
     if (countglyph == 3)
@@ -194,11 +198,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
         if (x - left != 0 && x + right != width - 1)
         {
-            if (x - left - 1 < 0 || x + right + 1 > width - 1)
-            {
-                check__33++;
-            }
-            else if (grid[x - left - 1][y] != TO_REVERSE_SG(glyph) && grid[x + right + 1][y] != TO_REVERSE_SG(glyph))
+            if ((x - left - 1 >= 0 && x + right + 1 <= width - 1) && grid[x - left - 1][y] != TO_REVERSE_SG(glyph) && grid[x + right + 1][y] != TO_REVERSE_SG(glyph))
             {
                 check__33++;
             }
@@ -304,6 +304,10 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
     }
 
+    if (countemptytwo == 1)
+    {
+        countemptytwo = 0;
+    }
     countglyph += (countglyphone + countglyphtwo);
 
     if (countglyph == 3)
@@ -314,11 +318,8 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
         if (y - up != 0 && y + down != height - 1)
         {
-            if (y - up - 1 < 0 || y + down + 1 > height - 1)
-            {
-                check__33++;
-            }
-            else if (grid[x][y - up - 1] != TO_REVERSE_SG(glyph) && grid[x][y + down + 1] != TO_REVERSE_SG(glyph))
+
+            if ((y - up - 1 >= 0 && y + down + 1 <= height - 1) && grid[x][y - up - 1] != TO_REVERSE_SG(glyph) && grid[x][y + down + 1] != TO_REVERSE_SG(glyph))
             {
                 check__33++;
             }
@@ -423,6 +424,10 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
         }
     }
 
+    if (countemptytwo == 1)
+    {
+        countemptytwo = 0;
+    }
     countglyph += (countglyphone + countglyphtwo);
     if (countglyph == 3)
     {
@@ -432,13 +437,9 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
         if (x - leftup != 0 && y - leftup != 0 && x + rightDown != width - 1 && y + rightDown != height - 1)
         {
-            if (x - leftup - 1 < 0 || y - leftup - 1 < 0 || x + rightDown + 1 > width - 1 ||
-                y + rightDown + 1 > height - 1)
-            {
-                check__33++;
-            }
-            else if (grid[x - leftup - 1][y - leftup - 1] != TO_REVERSE_SG(glyph) &&
-                     grid[x + rightDown + 1][y + rightDown + 1] != TO_REVERSE_SG(glyph))
+            if ((x - leftup - 1 >= 0 && y - leftup - 1 >= 0 && x + rightDown + 1 <= width - 1 &&
+                y + rightDown + 1 <= height - 1) && grid[x - leftup - 1][y - leftup - 1] != TO_REVERSE_SG(glyph) &&
+                grid[x + rightDown + 1][y + rightDown + 1] != TO_REVERSE_SG(glyph))
             {
                 check__33++;
             }
@@ -542,6 +543,10 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
         }
     }
 
+    if (countemptytwo == 1)
+    {
+        countemptytwo = 0;
+    }
     countglyph += (countglyphone + countglyphtwo);
     if (countglyph == 3)
     {
@@ -551,13 +556,9 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
 
         if (x - leftDown != 0 && y - rightUp != 0 && x + rightUp != width - 1 && y + leftDown != height - 1)
         {
-            if (x - leftDown - 1 < 0 || y - rightUp - 1 < 0 || x + rightUp + 1 > width - 1 ||
-                y + leftDown + 1 > height - 1)
-            {
-                check__33++;
-            }
-            else if (grid[x - leftDown - 1][y + leftDown + 1] != TO_REVERSE_SG(glyph) &&
-                     grid[x + rightUp + 1][y - rightUp - 1] != TO_REVERSE_SG(glyph))
+            if ((x - leftDown - 1 >= 0 && y - rightUp - 1 >= 0 && x + rightUp + 1 <= width - 1 &&
+                y + leftDown + 1 <= height - 1) && grid[x - leftDown - 1][y + leftDown + 1] != TO_REVERSE_SG(glyph) &&
+                grid[x + rightUp + 1][y - rightUp - 1] != TO_REVERSE_SG(glyph))
             {
                 check__33++;
             }
@@ -586,7 +587,7 @@ bool check_double_three(char **grid, int width, int height, int x, int y, char g
  * @param glyph 현재 돌의 색
  * @return 정상적인 수거나 승리하였으면 ture 금수이거나 승리하지 않았으면 false
  */
-bool check_all_conditions(char **grid, int n, int width, int height, int x, int y, char glyph, CheckType check_type)
+bool check_all_conditions(char** grid, int n, int width, int height, int x, int y, char glyph, CheckType check_type)
 {
     if (glyph == SG_WHITE)
     {
@@ -605,8 +606,8 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
     int overemptytwo = 0;
     int overfourtwo = 0;
     int wincheck = 0;
-    int winx[20] = {0};
-    int winy[20] = {0};
+    int winx[20] = { 0 };
+    int winy[20] = { 0 };
 
     if (check_type == 2 || check_type == 3)
     {
@@ -669,6 +670,10 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
     }
 
     countemptytwo = countemptyone;
+    if (countemptyone == 1)
+    {
+        countemptyone = 0;
+    }
     emptycheck = 0;
 
     for (int i = 1;; i++)
@@ -725,12 +730,33 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
     }
 
     countglyph += (countglyphone + countglyphtwo);
+    if (countemptytwo == 1)
+    {
+        countemptytwo = 0;
+    }
 
     if (check_type == 1)
     {
         if (countglyph == 4)
         {
-            check__44++;
+            int left = (countglyphone + countemptyone);
+            int right = (countglyphtwo + countemptytwo);
+
+            if (x - left == 0)
+            {
+                if (grid[x + right + 1][y] != TO_REVERSE_SG(glyph))
+                    check__44++;
+            }
+            else if (x + right == width - 1)
+            {
+                if (grid[x - left - 1][y] != TO_REVERSE_SG(glyph))
+                    check__44++;
+            }
+            else if ((x - left - 1 >= 0 && x + right + 1 <= width - 1) &&
+                (grid[x - left - 1][y] != TO_REVERSE_SG(glyph)) || (x + right != width - 1 && grid[x + right + 1][y] != TO_REVERSE_SG(glyph)))
+            {
+                check__44++;
+            }
         }
         else if ((countglyphone == 3 && overfourtwo == 1) || (countglyphtwo == 3 && overfourone == 1))
         {
@@ -830,6 +856,10 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
     }
 
     countemptytwo = countemptyone;
+    if (countemptyone == 1)
+    {
+        countemptyone = 0;
+    }
     emptycheck = 0;
 
     for (int i = 1;; i++)
@@ -886,13 +916,34 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
 
     }
 
+    if (countemptytwo == 1)
+    {
+        countemptytwo = 0;
+    }
     countglyph += (countglyphone + countglyphtwo);
+
 
     if (check_type == 1)
     {
         if (countglyph == 4)
         {
-            check__44++;
+            int up = (countglyphone + countemptyone);
+            int down = (countglyphtwo + countemptytwo);
+            if (y - up == 0)
+            {
+                if (grid[x][y + down + 1] != TO_REVERSE_SG(glyph))
+                    check__44++;
+            }
+            else if (y + down == height - 1)
+            {
+                if (grid[x][y - up - 1] != TO_REVERSE_SG(glyph))
+                    check__44++;
+            }
+            else if ((y - up - 1 >= 0 && y + down + 1 <= height - 1) &&
+                (grid[x][y - up - 1] != TO_REVERSE_SG(glyph)) || (grid[x][y + down + 1] != TO_REVERSE_SG(glyph)))
+            {
+                check__44++;
+            }
         }
         else if ((countglyphone == 3 && overfourtwo == 1) || (countglyphtwo == 3 && overfourone == 1))
         {
@@ -994,6 +1045,10 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
 
 
     countemptytwo = countemptyone;
+    if (countemptyone == 1)
+    {
+        countemptyone = 0;
+    }
     emptycheck = 0;
 
     for (int i = 1;; i++)
@@ -1049,13 +1104,34 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
         }
     }
 
+    if (countemptytwo == 1)
+    {
+        countemptytwo = 0;
+    }
     countglyph += (countglyphone + countglyphtwo);
 
     if (check_type == 1)
     {
+        int leftup = (countglyphone + countemptyone);
+        int rightDown = (countglyphtwo + countemptytwo);
+
         if (countglyph == 4)
         {
-            check__44++;
+            if (x - leftup == 0 || y - leftup == 0)
+            {
+                if (grid[x + rightDown + 1][y + rightDown + 1] != TO_REVERSE_SG(glyph))
+                    check__44++;
+            }
+            else if (x + rightDown == width - 1 || y + rightDown == height - 1)
+            {
+                if (grid[x - leftup - 1][y - leftup - 1] != TO_REVERSE_SG(glyph))
+                    check__44++;
+            }
+            else if ((x - leftup - 1 >= 0 && y - leftup - 1 >= 0 && x + rightDown + 1 <= width - 1 && y + rightDown + 1 <= height - 1) &&
+                (grid[x + rightDown + 1][y + rightDown + 1] != TO_REVERSE_SG(glyph) || grid[x - leftup - 1][y - leftup - 1] != TO_REVERSE_SG(glyph)))
+            {
+                check__44++;
+            }
         }
         else if ((countglyphone == 3 && overfourtwo == 1) || (countglyphtwo == 3 && overfourone == 1))
         {
@@ -1156,6 +1232,10 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
     }
 
     countemptytwo = countemptyone;
+    if (countemptyone == 1)
+    {
+        countemptyone = 0;
+    }
     emptycheck = 0;
 
     for (int i = 1;; i++)
@@ -1211,13 +1291,37 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
         }
     }
 
+    if (countemptytwo == 1)
+    {
+        countemptytwo = 0;
+    }
     countglyph += (countglyphone + countglyphtwo);
 
     if (check_type == 1)
     {
         if (countglyph == 4)
         {
-            check__44++;
+            if (countglyph == 4)
+            {
+                int leftDown = (countglyphone + countemptyone);
+                int rightUp = (countglyphtwo + countemptytwo);
+
+                if (x + rightUp == width - 1 || y - rightUp == 0)
+                {
+                    if (grid[x - leftDown - 1][y + leftDown + 1] != TO_REVERSE_SG(glyph))
+                        check__44++;
+                }
+                else if (x - leftDown == 0 || y + leftDown == height - 1)
+                {
+                    if (grid[x + rightUp + 1][y - rightUp - 1] != TO_REVERSE_SG(glyph))
+                        check__44++;
+                }
+                else if ((x - leftDown - 1 >= 0 && y - rightUp - 1 >= 0 && x + rightUp + 1 <= width - 1 && y + leftDown + 1 <= height - 1) &&
+                    (grid[x - leftDown - 1][y + leftDown + 1] != TO_REVERSE_SG(glyph) || grid[x + rightUp + 1][y - rightUp - 1] != TO_REVERSE_SG(glyph)))
+                {
+                    check__44++;
+                }
+            }
         }
         else if ((countglyphone == 3 && overfourtwo == 1) || (countglyphtwo == 3 && overfourone == 1))
         {
@@ -1254,16 +1358,14 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
 
     if (check_type == 1)
     {
-        char **copygrid = generate_grid(width, height);
+        char** copygrid = generate_grid(width, height);
         copy_grid(grid, copygrid, width, height);
 
         copygrid[x][y] = glyph;
 
-        // 추가 경우의 수
-        // B B 빈칸 B B 빈칸 B B
-        for (int j = 0; j < width - 7; j++) // 세로
+        for (int j = 0; j < width - 7; j++) 
         {
-            if (copygrid[j][y] == glyph && copygrid[j + 1][y] == glyph && copygrid[j + 2][y] == SG_EMPTY &&
+            if ((x == j + 3 || x == j + 4) && copygrid[j][y] == glyph && copygrid[j + 1][y] == glyph && copygrid[j + 2][y] == SG_EMPTY &&
                 copygrid[j + 3][y] == glyph && copygrid[j + 4][y] == glyph && copygrid[j + 5][y] == SG_EMPTY &&
                 copygrid[j + 6][y] == glyph && copygrid[j + 7][y] == glyph &&
                 ((j != 0 && copygrid[j - 1][y] != glyph) && (j != width - 8 && copygrid[j + 8][y] != glyph)))
@@ -1274,9 +1376,9 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
 
         }
 
-        for (int i = 0; i < height - 7; i++) // 가로
+        for (int i = 0; i < height - 7; i++) 
         {
-            if (copygrid[x][i] == glyph && copygrid[x][i + 1] == glyph && copygrid[x][i + 2] == SG_EMPTY &&
+            if ((y == i + 3 || y == i + 4) && copygrid[x][i] == glyph && copygrid[x][i + 1] == glyph && copygrid[x][i + 2] == SG_EMPTY &&
                 copygrid[x][i + 3] == glyph && copygrid[x][i + 4] == glyph && copygrid[x][i + 5] == SG_EMPTY &&
                 copygrid[x][i + 6] == glyph && copygrid[x][i + 7] == glyph &&
                 ((i != 0 && copygrid[x][i - 1] != glyph) && (i != height - 8 && copygrid[x][i + 8] != glyph)))
@@ -1287,16 +1389,16 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
 
         }
 
-        for (int j = 0; j < width - 7; j++) // 우측으로 떨어지는 대각선
+        for (int j = 0; j < width - 7; j++)
         {
             for (int i = 0; i < height - 7; i++)
             {
-                if (copygrid[j][i] == glyph && copygrid[j + 1][i + 1] == glyph && copygrid[j + 2][i + 2] == SG_EMPTY &&
+                if ((x == j + 3 && y == i + 3 || x == j + 4 && y == i + 4) && copygrid[j][i] == glyph && copygrid[j + 1][i + 1] == glyph && copygrid[j + 2][i + 2] == SG_EMPTY &&
                     copygrid[j + 3][i + 3] == glyph && copygrid[j + 4][i + 4] == glyph &&
                     copygrid[j + 5][i + 5] == SG_EMPTY && copygrid[j + 6][i + 6] == glyph &&
                     copygrid[j + 7][i + 7] == glyph && ((j != 0 && i != 0 && copygrid[j - 1][i - 1] != glyph) &&
-                                                        (j != width - 8 && i != height - 8 &&
-                                                         copygrid[j + 8][i + 8] != glyph)))
+                        (j != width - 8 && i != height - 8 &&
+                            copygrid[j + 8][i + 8] != glyph)))
                 {
                     free_double_pointer(copygrid, width);
                     return false;
@@ -1304,16 +1406,16 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
 
             }
         }
-        for (int j = 0; j < width - 7; j++) // 좌측으로 떨어지는 대각선
+        for (int j = 0; j < width - 7; j++) 
         {
             for (int i = 7; i < height; i++)
             {
-                if (copygrid[j][i] == glyph && copygrid[j + 1][i - 1] == glyph && copygrid[j + 2][i - 2] == SG_EMPTY &&
+                if ((x == j + 3 && y == i - 3 || x == j + 4 && y == i - 4) && copygrid[j][i] == glyph && copygrid[j + 1][i - 1] == glyph && copygrid[j + 2][i - 2] == SG_EMPTY &&
                     copygrid[j + 3][i - 3] == glyph && copygrid[j + 4][i - 4] == glyph &&
                     copygrid[j + 5][i - 5] == SG_EMPTY && copygrid[j + 6][i - 6] == glyph &&
                     copygrid[j + 7][i - 7] == glyph &&
                     ((j != 0 && i != height - 1 && copygrid[j - 1][i + 1] != glyph) &&
-                     (j != width - 8 && i != 7 && copygrid[j + 8][i - 8] != glyph)))
+                        (j != width - 8 && i != 7 && copygrid[j + 8][i - 8] != glyph)))
                 {
                     free_double_pointer(copygrid, width);
                     return false;
@@ -1322,13 +1424,11 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
             }
         }
 
-        // B 빈칸 B B B 빈칸 B
-
-        for (int j = 0; j < width - 6; j++) // 가로
+        for (int j = 0; j < width - 6; j++) 
         {
-            if ((copygrid[j][y] == glyph && copygrid[j + 1][y] == SG_EMPTY && copygrid[j + 2][y] == glyph &&
-                 copygrid[j + 3][y] == glyph && copygrid[j + 4][y] == glyph && copygrid[j + 5][y] == SG_EMPTY &&
-                 copygrid[j + 6][y] == glyph) &&
+            if ((x != j || x == j + 6) && (copygrid[j][y] == glyph && copygrid[j + 1][y] == SG_EMPTY && copygrid[j + 2][y] == glyph &&
+                copygrid[j + 3][y] == glyph && copygrid[j + 4][y] == glyph && copygrid[j + 5][y] == SG_EMPTY &&
+                copygrid[j + 6][y] == glyph) &&
                 ((j != 0 && copygrid[j - 1][y] != glyph) && (j != width - 7 && copygrid[j + 7][y] != glyph)))
             {
                 free_double_pointer(copygrid, width);
@@ -1337,12 +1437,11 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
 
         }
 
-
-        for (int i = 0; i < height - 6; i++) // 세로
+        for (int i = 0; i < height - 6; i++) 
         {
-            if ((copygrid[x][i] == glyph && copygrid[x][i + 1] == SG_EMPTY && copygrid[x][i + 2] == glyph &&
-                 copygrid[x][i + 3] == glyph && copygrid[x][i + 4] == glyph && copygrid[x][i + 5] == SG_EMPTY &&
-                 copygrid[x][i + 6] == glyph) &&
+            if ((y != i || y != i + 6) && (copygrid[x][i] == glyph && copygrid[x][i + 1] == SG_EMPTY && copygrid[x][i + 2] == glyph &&
+                copygrid[x][i + 3] == glyph && copygrid[x][i + 4] == glyph && copygrid[x][i + 5] == SG_EMPTY &&
+                copygrid[x][i + 6] == glyph) &&
                 ((i != 0 && copygrid[x][i - 1] != glyph) && (i != height - 7 && copygrid[x][i + 7] != glyph)))
             {
                 free_double_pointer(copygrid, width);
@@ -1351,15 +1450,15 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
 
         }
 
-        for (int j = 0; j < width - 6; j++) // 우측으로 떨어지는 대각선
+        for (int j = 0; j < width - 6; j++) 
         {
             for (int i = 0; i < height - 6; i++)
             {
-                if (copygrid[j][i] == glyph && copygrid[j + 1][i + 1] == SG_EMPTY && copygrid[j + 2][i + 2] == glyph &&
+                if ((x != j && y != i || x != j + 6 && y != i + 6) && copygrid[j][i] == glyph && copygrid[j + 1][i + 1] == SG_EMPTY && copygrid[j + 2][i + 2] == glyph &&
                     copygrid[j + 3][i + 3] == glyph && copygrid[j + 4][i + 4] == glyph &&
                     copygrid[j + 5][i + 5] == SG_EMPTY && copygrid[j + 6][i + 6] == glyph &&
                     ((j != 0 && i != 0 && copygrid[j - 1][i - 1] != glyph) &&
-                     (j != width - 7 && i != height - 7 && copygrid[j + 7][i + 7] != glyph)))
+                        (j != width - 7 && i != height - 7 && copygrid[j + 7][i + 7] != glyph)))
                 {
                     free_double_pointer(copygrid, width);
                     return false;
@@ -1367,15 +1466,15 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
 
             }
         }
-        for (int j = 0; j < width - 6; j++) // 좌측으로 떨어지는 대각선
+        for (int j = 0; j < width - 6; j++)
         {
             for (int i = 6; i < height; i++)
             {
-                if (copygrid[j][i] == glyph && copygrid[j + 1][i - 1] == SG_EMPTY && copygrid[j + 2][i - 2] == glyph &&
+                if ((x != j && y != i || x != j + 6 && y != i - 6) && copygrid[j][i] == glyph && copygrid[j + 1][i - 1] == SG_EMPTY && copygrid[j + 2][i - 2] == glyph &&
                     copygrid[j + 3][i - 3] == glyph && copygrid[j + 4][i - 4] == glyph &&
                     copygrid[j + 5][i - 5] == SG_EMPTY && copygrid[j + 6][i - 6] == glyph &&
                     ((j != 0 && i != height - 1 && copygrid[j - 1][i + 1] != glyph) &&
-                     (j != width - 7 && i != 6 && copygrid[j + 7][i - 7] != glyph)))
+                        (j != width - 7 && i != 6 && copygrid[j + 7][i - 7] != glyph)))
                 {
                     free_double_pointer(copygrid, width);
                     return false;
@@ -1403,11 +1502,11 @@ bool check_all_conditions(char **grid, int n, int width, int height, int x, int 
  * @glyph 현재 돌의 색깔
  * @return 승리했으면 true, 패배했으면 false
  */
-bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char glyph)
+bool check_winnmok(char** grid, int n, int width, int height, int x, int y, char glyph)
 {
     int checkglyph = 0;
-    int winx[20] = {0};
-    int winy[20] = {0};
+    int winx[20] = { 0 };
+    int winy[20] = { 0 };
     int wincheck = 0;
     for (int i = 0; i < width - (n - 1); i++)
     {
@@ -1529,7 +1628,7 @@ bool check_winnmok(char **grid, int n, int width, int height, int x, int y, char
  * @return 승리하거나 유효하면 PLACE_VALID, 3*3 조건에 부합하지 않으면 PLACE_33,
            4*4조건에 부합하지 않으면 PLACE_44, 장목 조건에 부합하지 않으면 PLACE_OVERLINE
  */
-CheckResult check_confirm_omok(char **grid, int width, int height, int x, int y, char glyph)
+CheckResult check_confirm_omok(char** grid, int width, int height, int x, int y, char glyph)
 {
     if (glyph == SG_BLACK)
     {
@@ -1539,8 +1638,8 @@ CheckResult check_confirm_omok(char **grid, int width, int height, int x, int y,
             return PLACE_VALID;
         }
         else if (check_double_three(grid, width, height, x, y, glyph) &&
-                 check_all_conditions(grid, 5, width, height, x, y, glyph, 1) &&
-                 check_all_conditions(grid, 5, width, height, x, y, glyph, 2))
+            check_all_conditions(grid, 5, width, height, x, y, glyph, 1) &&
+            check_all_conditions(grid, 5, width, height, x, y, glyph, 2))
         {
             return PLACE_VALID;
         }
@@ -1573,11 +1672,11 @@ CheckResult check_confirm_omok(char **grid, int width, int height, int x, int y,
  * @glyph 현재 돌의 색깔
  * @return 승리한 돌 라인 데이터 Example:  { {stone1_x, stone1_y}, {stone2_x, stone2_y}, {stone3_x, stone3_y}, ... }
  */
-int **get_win_line(char **grid, int n, int width, int height, char glyph)
+int** get_win_line(char** grid, int n, int width, int height, char glyph)
 {
-    int **win_line = (int **) malloc_double_pointer(sizeof(int), n, 2);
-    int winx[20] = {0};
-    int winy[20] = {0};
+    int** win_line = (int**)malloc_double_pointer(sizeof(int), n, 2);
+    int winx[20] = { 0 };
+    int winy[20] = { 0 };
     send_location(winx, winy, n, 1);
     for (int i = 0; i < n; i++)
     {
